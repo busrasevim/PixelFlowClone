@@ -1,0 +1,56 @@
+using System;
+using _Project.Scripts.Data;
+using _Project.Scripts.State_Machine.State_Machines;
+using Cysharp.Threading.Tasks;
+using UIManager = _Project.Scripts.UI.UIManager;
+
+namespace _Project.Scripts.State_Machine.States
+{
+    public class LevelEndUIState : BaseState<UIStateMachine.UIState>
+    {
+        private bool _isWin;
+        private readonly GameSettings _settings;
+        private readonly UIManager _uiManager;
+
+        public LevelEndUIState(UIStateMachine.UIState key, UIStateMachine.UIState nextStateKey, GameSettings settings, UIManager uiManager) : base(key)
+        {
+            NextStateKey = nextStateKey;
+            _settings = settings;
+            _uiManager = uiManager;
+        }
+
+        public override void OnEnter()
+        {
+            if (_isWin)
+            {
+                DelayComplete(_settings.levelCompletedUIDelay);
+            }
+            else
+            {
+                DelayFail(_settings.levelFailedUIDelay);
+            }
+        }
+        
+        private async UniTask DelayFail(float delay)
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(delay));
+            _uiManager.ShowFail();
+        }
+        
+        private async UniTask DelayComplete(float delay)
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(delay-1f));
+            _uiManager.ShowCompleted(_settings.defaultLevelEarnMoneyCount);
+        }
+
+        public override void OnExit()
+        {
+            
+        }
+        
+        public void SetWin(bool isWin)
+        {
+            _isWin = isWin;
+        }
+    }
+}

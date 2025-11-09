@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6065c50257a4b9c4791b9f6069c912e8, type: 3}
+  m_Name: Game Settings
+  m_EditorClassIdentifier: 
+  defaultLevelEarnMoneyCount: 30
+  randomStartIndex: 3
+  levels:
+  - {fileID: 3154087053831341421, guid: 3278305065e924a27b71a0e7f709cba2, type: 3}
