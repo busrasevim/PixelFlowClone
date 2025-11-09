@@ -30,6 +30,11 @@ namespace _Project.Scripts.Game
         public bool useCustomZEnd; // Özel bitiş Z değeri
         public float customZEnd;
 
+        public virtual void Init(Vector2Int size)
+        {
+            
+        }
+        
         protected virtual void SpawnNodes(Transform parent = null, bool editorSpawn = false)
         {
             // Initialize the grid array

@@ -21,6 +21,8 @@ namespace _Project.Scripts.Level
             }
 
             Level levelInstance = Object.Instantiate(level);
+            
+            levelInstance.Init();
             return levelInstance;
         }
 
