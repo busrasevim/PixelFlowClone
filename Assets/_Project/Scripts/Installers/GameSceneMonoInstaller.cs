@@ -50,6 +50,8 @@ namespace _Project.Scripts.Installers
             Container.Bind<UIManager>().FromComponentInHierarchy().AsSingle();
             Container.BindInterfacesAndSelfTo<FXManager>().AsSingle();
             Container.BindInterfacesAndSelfTo<SettingsManager>().AsSingle();
+            Container.BindInterfacesAndSelfTo<GameInputController>().AsSingle();
+            Container.Bind<ShooterManager>().AsSingle();
             
             Container.BindInstance(levelPrefab)
                 .WithId("LevelPrefab")

@@ -11,24 +11,30 @@ namespace _Project.Scripts.Level
         [SerializeField] private ShooterGridSystem shooterGridSystem;
         [SerializeField] private ColorCubeGridSystem colorCubeGridSystem;
         [SerializeField] private ReservedSlotGridSystem reservedSlotGridSystem;
+        [SerializeField] private Conveyor conveyor;
 
         [SerializeField] private GameObject shooterPrefab;
         [SerializeField] private GameObject colorCubePrefab;
         
         public LevelData LevelData { get; private set; }
-        public void Init(LevelData data)
+        public Conveyor Conveyor => conveyor;
+        
+        private GameSettings _gameSettings;
+
+        public void Init(LevelData data, GameSettings settings)
         {
             LevelData = data;
+            _gameSettings = settings;
             
             shooterGridSystem.Init(data.shooterGridSize);
             colorCubeGridSystem.Init(data.colorCubeGridSize);
             reservedSlotGridSystem.Init();
             
-            CreateShooters();
+            CreateShooters(_gameSettings.shooterSpeed);
             CreateColorCubes();
         }
 
-        private void CreateShooters()
+        private void CreateShooters(float shooterFollowSpeed)
         {
             for (int i = 0; i < LevelData.CellsData.GetLength(0); i++)
             {
@@ -38,7 +44,7 @@ namespace _Project.Scripts.Level
                     var node = shooterGridSystem.GetNode(i, shooterGridSystem.gridHeight - j - 1);
                     
                     var shooter = Instantiate(shooterPrefab, node.transform).GetComponent<Shooter>();
-                    shooter.Init(data);
+                    shooter.Init(data, shooterFollowSpeed);
                     shooter.Initialize(node);
                     node.AssignNodeObject(shooter);
                 }

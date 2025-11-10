@@ -32,7 +32,7 @@ namespace _Project.Scripts.Level
             _signalBus = signal;
             _gameSettings = settings;
             
-            _generator = new LevelGenerator(this, levelPrefab);
+            _generator = new LevelGenerator(this, levelPrefab, settings);
         }
         
         public void SetUpLevel()

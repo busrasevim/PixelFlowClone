@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Game Settings
   m_EditorClassIdentifier: 
   defaultLevelEarnMoneyCount: 30
-  randomStartIndex: 3
+  randomStartIndex: 0
   levelCompletedUIDelay: 1
   levelFailedUIDelay: 2
   levels:
   - {fileID: 11400000, guid: 55f2d825637da4355836a812427c3067, type: 2}
+  - {fileID: 11400000, guid: ad04f998e47bf44329f139092b9ce3a6, type: 2}
+  - {fileID: 11400000, guid: 12faf43cf2b1b484d922a8e7e7cde656, type: 2}

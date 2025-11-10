@@ -1,3 +1,4 @@
+using _Project.Scripts.Data;
 using UnityEngine;
 
 namespace _Project.Scripts.Level
@@ -6,10 +7,13 @@ namespace _Project.Scripts.Level
     {
         private LevelManager _levelManager;
         private GameObject _levelPrefab;
-        public LevelGenerator(LevelManager levelManager, GameObject levelPrefab)
+        private GameSettings _gameSettings;
+
+        public LevelGenerator(LevelManager levelManager, GameObject levelPrefab, GameSettings gameSettings)
         {
             _levelManager = levelManager;
             _levelPrefab = levelPrefab;
+            _gameSettings = gameSettings;
         }
 
         public Level GenerateLevel(LevelData data)
@@ -23,15 +27,15 @@ namespace _Project.Scripts.Level
             }
 
             Level levelInstance = Object.Instantiate(_levelPrefab).GetComponent<Level>();
-            
-            levelInstance.Init(data);
+
+            levelInstance.Init(data, _gameSettings);
             return levelInstance;
         }
 
         private void ResetLevel()
         {
-            if(_levelManager.CurrentLevel == null) return;
-            
+            if (_levelManager.CurrentLevel == null) return;
+
             Object.Destroy(_levelManager.CurrentLevel.gameObject);
         }
     }

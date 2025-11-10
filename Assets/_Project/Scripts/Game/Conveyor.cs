@@ -1,16 +1,11 @@
+using Dreamteck.Splines;
 using UnityEngine;
 
-public class Conveyor : MonoBehaviour
+namespace _Project.Scripts.Game
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class Conveyor : MonoBehaviour
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        [SerializeField] private SplineComputer _spline;
+        public SplineComputer SplineComputer => _spline;
     }
 }
