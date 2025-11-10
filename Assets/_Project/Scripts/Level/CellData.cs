@@ -9,6 +9,7 @@ namespace _Project.Scripts.Level
         public Vector2Int coordinates;
         public Color cellColor;
         public int shootCount;
+        public int colorID;
 
         public CellData(Vector2Int coordinates)
         {

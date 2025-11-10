@@ -61,11 +61,18 @@ namespace _Project.Scripts.Level
                     var node = colorCubeGridSystem.GetNode(i, j);
                     var cube = Instantiate(colorCubePrefab, node.transform).GetComponent<ColorCube>();
                     
-                    cube.Init(texture.GetPixel(i, j));
+                    cube.Init(texture.GetPixel(i, j), LevelData.levelColors,
+                        LevelData.colorThreshold);
                     cube.Initialize(node);
                     node.AssignNodeObject(cube);
                 }
             }
+        }
+
+        public ReservedSlot GetAvailableReservedSlot()
+        {
+            var slot = reservedSlotGridSystem.GetAvailableSlot();
+            return slot;
         }
     }
 }

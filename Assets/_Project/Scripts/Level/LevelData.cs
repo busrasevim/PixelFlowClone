@@ -14,11 +14,13 @@ namespace _Project.Scripts.Level
         [Serializable]
         public class LevelColorData
         {
+            public int id;
             public Color color;
             public int size;
 
-            public LevelColorData(Color color, int size)
+            public LevelColorData(int id, Color color, int size)
             {
+                this.id = id;
                 this.color = color;
                 this.size = size;
             }
@@ -121,11 +123,12 @@ namespace _Project.Scripts.Level
                     groupedColors.Add(c);
             }
 
-
+            int idCounter = 0;
             foreach (var groupColor in groupedColors)
             {
                 int count = pixels.Count(p => IsSimilarColor(p, groupColor, colorThreshold));
-                levelColors.Add(new LevelColorData(groupColor, count));
+                levelColors.Add(new LevelColorData(idCounter, groupColor, count));
+                idCounter++;
             }
 
             levelColors = levelColors.OrderByDescending(c => c.size).ToList();
@@ -215,6 +218,7 @@ namespace _Project.Scripts.Level
                 var dictIndex = Random.Range(0, shooterData[randomColor].Count);
                 cell.cellColor = randomColor;
                 cell.shootCount = shooterData[randomColor][dictIndex];
+                cell.colorID = levelColors.First(l => l.color == randomColor).id;
                 
                 shooterData[randomColor].RemoveAt(dictIndex);
                 

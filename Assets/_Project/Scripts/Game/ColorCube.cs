@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using _Project.Scripts.Level;
 using UnityEngine;
 
 namespace _Project.Scripts.Game
@@ -5,14 +7,44 @@ namespace _Project.Scripts.Game
     public class ColorCube : MonoBehaviour, INodeObject
     {
         [SerializeField] private Renderer cubeRenderer;
+        public int colorID;
+
         public void Initialize(Node node)
         {
         
         }
 
-        public void Init(Color pixelColor)
+        public void Init(Color pixelColor, List<LevelData.LevelColorData> levelColors, float threshold)
         {
             cubeRenderer.material.color = pixelColor.linear;
+            colorID = FindClosestColorID(pixelColor, levelColors, threshold);
+        }
+        
+        private int FindClosestColorID(Color pixelColor, List<LevelData.LevelColorData> levelColors, float threshold)
+        {
+            float minDistance = float.MaxValue;
+            int bestID = -1;
+
+            foreach (var lc in levelColors)
+            {
+                float dr = pixelColor.r - lc.color.r;
+                float dg = pixelColor.g - lc.color.g;
+                float db = pixelColor.b - lc.color.b;
+                float distance = Mathf.Sqrt(dr * dr + dg * dg + db * db);
+
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    bestID = lc.id;
+                }
+            }
+
+            return bestID;
+        }
+
+        public void Blast()
+        {
+            gameObject.SetActive(false);
         }
     }
 }

@@ -250,6 +250,7 @@ Transform:
   - {fileID: 2072306272503039945}
   - {fileID: 6560962429066232037}
   - {fileID: 3369586083354953968}
+  - {fileID: 3972416976263263074}
   m_Father: {fileID: 3351453249245961357}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5946809094455876359
@@ -500,7 +501,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3100220304695074922}
-  - {fileID: 3972416976263263074}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &600182426183278221
@@ -523,6 +523,7 @@ MonoBehaviour:
   - {fileID: 1358012476368864453}
   shootCountText: {fileID: 3731292888902696484}
   splineFollower: {fileID: 6231850460208604983}
+  model: {fileID: 2426173967662180050}
 --- !u!114 &6231850460208604983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -663,7 +664,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3351453249245961357}
+  m_Father: {fileID: 3100220304695074922}
   m_LocalEulerAnglesHint: {x: 90, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
