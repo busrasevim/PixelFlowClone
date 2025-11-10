@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a45753dc6c4445649f8b68c17a99670, type: 3}
-  m_Name: Level_1
+  m_Name: Level_2
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -29,7 +29,7 @@ MonoBehaviour:
       Data: 24
     - Name: ranks
       Entry: 1
-      Data: 3|8
+      Data: 4|6
     - Name: 
       Entry: 7
       Data: 1|_Project.Scripts.Level.CellData, Assembly-CSharp
@@ -50,13 +50,13 @@ MonoBehaviour:
       Data: UnityEngine.Color, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0.509803951
+      Data: 0.7960785
     - Name: 
       Entry: 4
-      Data: 0.733333349
+      Data: 0.792156935
     - Name: 
       Entry: 4
-      Data: 0.4431373
+      Data: 0.866666734
     - Name: 
       Entry: 4
       Data: 1
@@ -65,7 +65,7 @@ MonoBehaviour:
       Data: 
     - Name: shootCount
       Entry: 3
-      Data: 20
+      Data: 16
     - Name: 
       Entry: 8
       Data: 
@@ -89,13 +89,13 @@ MonoBehaviour:
       Data: UnityEngine.Color, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 0.7960785
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 0.792156935
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 0.866666734
     - Name: 
       Entry: 4
       Data: 1
@@ -104,7 +104,7 @@ MonoBehaviour:
       Data: 
     - Name: shootCount
       Entry: 3
-      Data: 16
+      Data: 15
     - Name: 
       Entry: 8
       Data: 
@@ -128,13 +128,13 @@ MonoBehaviour:
       Data: UnityEngine.Color, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 1
+      Data: 0.7960785
     - Name: 
       Entry: 4
-      Data: 0.360784322
+      Data: 0.792156935
     - Name: 
       Entry: 4
-      Data: 0.5176471
+      Data: 0.866666734
     - Name: 
       Entry: 4
       Data: 1
@@ -167,13 +167,13 @@ MonoBehaviour:
       Data: UnityEngine.Color, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0.509803951
+      Data: 1
     - Name: 
       Entry: 4
-      Data: 0.733333349
+      Data: 1
     - Name: 
       Entry: 4
-      Data: 0.4431373
+      Data: 0.450980425
     - Name: 
       Entry: 4
       Data: 1
@@ -206,13 +206,13 @@ MonoBehaviour:
       Data: UnityEngine.Color, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0.9725491
+      Data: 0.7960785
     - Name: 
       Entry: 4
-      Data: 0.5764706
+      Data: 0.792156935
     - Name: 
       Entry: 4
-      Data: 0.6666667
+      Data: 0.866666734
     - Name: 
       Entry: 4
       Data: 1
@@ -245,130 +245,13 @@ MonoBehaviour:
       Data: UnityEngine.Color, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0.2509804
+      Data: 0.376470625
     - Name: 
       Entry: 4
-      Data: 0.607843161
+      Data: 0.121568635
     - Name: 
       Entry: 4
-      Data: 0.141176477
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: shootCount
-      Entry: 3
-      Data: 4
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 7|_Project.Scripts.Level.CellData, Assembly-CSharp
-    - Name: coordinates
-      Entry: 7
-      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
-    - Name: 
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 3
-      Data: 6
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: cellColor
-      Entry: 7
-      Data: UnityEngine.Color, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 4
-      Data: 0.360784322
-    - Name: 
-      Entry: 4
-      Data: 0.5176471
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: shootCount
-      Entry: 3
-      Data: 16
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 8|_Project.Scripts.Level.CellData, Assembly-CSharp
-    - Name: coordinates
-      Entry: 7
-      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
-    - Name: 
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 3
-      Data: 7
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: cellColor
-      Entry: 7
-      Data: UnityEngine.Color, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 4
-      Data: 0.360784322
-    - Name: 
-      Entry: 4
-      Data: 0.5176471
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: shootCount
-      Entry: 3
-      Data: 15
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 9|_Project.Scripts.Level.CellData, Assembly-CSharp
-    - Name: coordinates
-      Entry: 7
-      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
-    - Name: 
-      Entry: 3
-      Data: 1
-    - Name: 
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: cellColor
-      Entry: 7
-      Data: UnityEngine.Color, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 0.9725491
-    - Name: 
-      Entry: 4
-      Data: 0.5764706
-    - Name: 
-      Entry: 4
-      Data: 0.6666667
+      Data: 0.0431372561
     - Name: 
       Entry: 4
       Data: 1
@@ -383,7 +266,46 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 10|_Project.Scripts.Level.CellData, Assembly-CSharp
+      Data: 7|_Project.Scripts.Level.CellData, Assembly-CSharp
+    - Name: coordinates
+      Entry: 7
+      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: cellColor
+      Entry: 7
+      Data: UnityEngine.Color, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0.3372549
+    - Name: 
+      Entry: 4
+      Data: 0.82745105
+    - Name: 
+      Entry: 4
+      Data: 0.6039216
+    - Name: 
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: shootCount
+      Entry: 3
+      Data: 14
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 8|_Project.Scripts.Level.CellData, Assembly-CSharp
     - Name: coordinates
       Entry: 7
       Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
@@ -401,13 +323,13 @@ MonoBehaviour:
       Data: UnityEngine.Color, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 0.964705944
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 0.8862746
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 0.345098048
     - Name: 
       Entry: 4
       Data: 1
@@ -416,13 +338,13 @@ MonoBehaviour:
       Data: 
     - Name: shootCount
       Entry: 3
-      Data: 15
+      Data: 17
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 11|_Project.Scripts.Level.CellData, Assembly-CSharp
+      Data: 9|_Project.Scripts.Level.CellData, Assembly-CSharp
     - Name: coordinates
       Entry: 7
       Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
@@ -440,13 +362,13 @@ MonoBehaviour:
       Data: UnityEngine.Color, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0.509803951
+      Data: 0.7960785
     - Name: 
       Entry: 4
-      Data: 0.733333349
+      Data: 0.792156935
     - Name: 
       Entry: 4
-      Data: 0.4431373
+      Data: 0.866666734
     - Name: 
       Entry: 4
       Data: 1
@@ -455,13 +377,13 @@ MonoBehaviour:
       Data: 
     - Name: shootCount
       Entry: 3
-      Data: 20
+      Data: 17
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 12|_Project.Scripts.Level.CellData, Assembly-CSharp
+      Data: 10|_Project.Scripts.Level.CellData, Assembly-CSharp
     - Name: coordinates
       Entry: 7
       Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
@@ -479,13 +401,13 @@ MonoBehaviour:
       Data: UnityEngine.Color, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 1
+      Data: 0.9686275
     - Name: 
       Entry: 4
-      Data: 0.8745099
+      Data: 0.321568638
     - Name: 
       Entry: 4
-      Data: 0.372549027
+      Data: 0.776470661
     - Name: 
       Entry: 4
       Data: 1
@@ -494,13 +416,13 @@ MonoBehaviour:
       Data: 
     - Name: shootCount
       Entry: 3
-      Data: 17
+      Data: 20
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 13|_Project.Scripts.Level.CellData, Assembly-CSharp
+      Data: 11|_Project.Scripts.Level.CellData, Assembly-CSharp
     - Name: coordinates
       Entry: 7
       Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
@@ -518,13 +440,13 @@ MonoBehaviour:
       Data: UnityEngine.Color, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0.8313726
+      Data: 1
     - Name: 
       Entry: 4
-      Data: 0.8470589
+      Data: 1
     - Name: 
       Entry: 4
-      Data: 0.164705887
+      Data: 0.450980425
     - Name: 
       Entry: 4
       Data: 1
@@ -533,13 +455,13 @@ MonoBehaviour:
       Data: 
     - Name: shootCount
       Entry: 3
-      Data: 12
+      Data: 16
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 14|_Project.Scripts.Level.CellData, Assembly-CSharp
+      Data: 12|_Project.Scripts.Level.CellData, Assembly-CSharp
     - Name: coordinates
       Entry: 7
       Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
@@ -557,13 +479,13 @@ MonoBehaviour:
       Data: UnityEngine.Color, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0.509803951
+      Data: 0.9921569
     - Name: 
       Entry: 4
-      Data: 0.733333349
+      Data: 0.6901961
     - Name: 
       Entry: 4
-      Data: 0.4431373
+      Data: 0.0627451
     - Name: 
       Entry: 4
       Data: 1
@@ -572,22 +494,61 @@ MonoBehaviour:
       Data: 
     - Name: shootCount
       Entry: 3
-      Data: 17
+      Data: 15
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 15|_Project.Scripts.Level.CellData, Assembly-CSharp
+      Data: 13|_Project.Scripts.Level.CellData, Assembly-CSharp
     - Name: coordinates
       Entry: 7
       Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
     - Name: 
       Entry: 3
-      Data: 1
+      Data: 2
     - Name: 
       Entry: 3
-      Data: 6
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: cellColor
+      Entry: 7
+      Data: UnityEngine.Color, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 4
+      Data: 0.450980425
+    - Name: 
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: shootCount
+      Entry: 3
+      Data: 19
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 14|_Project.Scripts.Level.CellData, Assembly-CSharp
+    - Name: coordinates
+      Entry: 7
+      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 3
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -603,6 +564,45 @@ MonoBehaviour:
     - Name: 
       Entry: 4
       Data: 0
+    - Name: 
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: shootCount
+      Entry: 3
+      Data: 16
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 15|_Project.Scripts.Level.CellData, Assembly-CSharp
+    - Name: coordinates
+      Entry: 7
+      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: cellColor
+      Entry: 7
+      Data: UnityEngine.Color, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0.9921569
+    - Name: 
+      Entry: 4
+      Data: 0.6901961
+    - Name: 
+      Entry: 4
+      Data: 0.0627451
     - Name: 
       Entry: 4
       Data: 1
@@ -623,162 +623,6 @@ MonoBehaviour:
       Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
     - Name: 
       Entry: 3
-      Data: 1
-    - Name: 
-      Entry: 3
-      Data: 7
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: cellColor
-      Entry: 7
-      Data: UnityEngine.Color, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 4
-      Data: 0.8745099
-    - Name: 
-      Entry: 4
-      Data: 0.372549027
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: shootCount
-      Entry: 3
-      Data: 20
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 17|_Project.Scripts.Level.CellData, Assembly-CSharp
-    - Name: coordinates
-      Entry: 7
-      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
-    - Name: 
-      Entry: 3
-      Data: 2
-    - Name: 
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: cellColor
-      Entry: 7
-      Data: UnityEngine.Color, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 4
-      Data: 0.8745099
-    - Name: 
-      Entry: 4
-      Data: 0.372549027
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: shootCount
-      Entry: 3
-      Data: 17
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 18|_Project.Scripts.Level.CellData, Assembly-CSharp
-    - Name: coordinates
-      Entry: 7
-      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
-    - Name: 
-      Entry: 3
-      Data: 2
-    - Name: 
-      Entry: 3
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: cellColor
-      Entry: 7
-      Data: UnityEngine.Color, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 4
-      Data: 0.8745099
-    - Name: 
-      Entry: 4
-      Data: 0.372549027
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: shootCount
-      Entry: 3
-      Data: 17
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 19|_Project.Scripts.Level.CellData, Assembly-CSharp
-    - Name: coordinates
-      Entry: 7
-      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
-    - Name: 
-      Entry: 3
-      Data: 2
-    - Name: 
-      Entry: 3
-      Data: 2
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: cellColor
-      Entry: 7
-      Data: UnityEngine.Color, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 4
-      Data: 0.360784322
-    - Name: 
-      Entry: 4
-      Data: 0.5176471
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: shootCount
-      Entry: 3
-      Data: 16
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 20|_Project.Scripts.Level.CellData, Assembly-CSharp
-    - Name: coordinates
-      Entry: 7
-      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
-    - Name: 
-      Entry: 3
       Data: 2
     - Name: 
       Entry: 3
@@ -794,10 +638,10 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 4
-      Data: 0.360784322
+      Data: 1
     - Name: 
       Entry: 4
-      Data: 0.5176471
+      Data: 0.450980425
     - Name: 
       Entry: 4
       Data: 1
@@ -806,13 +650,13 @@ MonoBehaviour:
       Data: 
     - Name: shootCount
       Entry: 3
-      Data: 16
+      Data: 18
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 21|_Project.Scripts.Level.CellData, Assembly-CSharp
+      Data: 17|_Project.Scripts.Level.CellData, Assembly-CSharp
     - Name: coordinates
       Entry: 7
       Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
@@ -822,6 +666,45 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: cellColor
+      Entry: 7
+      Data: UnityEngine.Color, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 4
+      Data: 0.450980425
+    - Name: 
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: shootCount
+      Entry: 3
+      Data: 18
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 18|_Project.Scripts.Level.CellData, Assembly-CSharp
+    - Name: coordinates
+      Entry: 7
+      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 3
+      Data: 5
     - Name: 
       Entry: 8
       Data: 
@@ -851,16 +734,16 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 22|_Project.Scripts.Level.CellData, Assembly-CSharp
+      Data: 19|_Project.Scripts.Level.CellData, Assembly-CSharp
     - Name: coordinates
       Entry: 7
       Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
     - Name: 
       Entry: 3
-      Data: 2
+      Data: 3
     - Name: 
       Entry: 3
-      Data: 5
+      Data: 0
     - Name: 
       Entry: 8
       Data: 
@@ -869,13 +752,130 @@ MonoBehaviour:
       Data: UnityEngine.Color, UnityEngine.CoreModule
     - Name: 
       Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
       Data: 1
     - Name: 
-      Entry: 4
-      Data: 0.360784322
+      Entry: 8
+      Data: 
+    - Name: shootCount
+      Entry: 3
+      Data: 17
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 20|_Project.Scripts.Level.CellData, Assembly-CSharp
+    - Name: coordinates
+      Entry: 7
+      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 3
+    - Name: 
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: cellColor
+      Entry: 7
+      Data: UnityEngine.Color, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0.5176471
+      Data: 0.7960785
+    - Name: 
+      Entry: 4
+      Data: 0.792156935
+    - Name: 
+      Entry: 4
+      Data: 0.866666734
+    - Name: 
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: shootCount
+      Entry: 3
+      Data: 18
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 21|_Project.Scripts.Level.CellData, Assembly-CSharp
+    - Name: coordinates
+      Entry: 7
+      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 3
+    - Name: 
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: cellColor
+      Entry: 7
+      Data: UnityEngine.Color, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0.7960785
+    - Name: 
+      Entry: 4
+      Data: 0.792156935
+    - Name: 
+      Entry: 4
+      Data: 0.866666734
+    - Name: 
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: shootCount
+      Entry: 3
+      Data: 16
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 22|_Project.Scripts.Level.CellData, Assembly-CSharp
+    - Name: coordinates
+      Entry: 7
+      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 3
+    - Name: 
+      Entry: 3
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: cellColor
+      Entry: 7
+      Data: UnityEngine.Color, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
     - Name: 
       Entry: 4
       Data: 1
@@ -896,10 +896,10 @@ MonoBehaviour:
       Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
     - Name: 
       Entry: 3
-      Data: 2
+      Data: 3
     - Name: 
       Entry: 3
-      Data: 6
+      Data: 4
     - Name: 
       Entry: 8
       Data: 
@@ -908,13 +908,13 @@ MonoBehaviour:
       Data: UnityEngine.Color, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 1
+      Data: 0.7960785
     - Name: 
       Entry: 4
-      Data: 0.8745099
+      Data: 0.792156935
     - Name: 
       Entry: 4
-      Data: 0.372549027
+      Data: 0.866666734
     - Name: 
       Entry: 4
       Data: 1
@@ -923,7 +923,7 @@ MonoBehaviour:
       Data: 
     - Name: shootCount
       Entry: 3
-      Data: 17
+      Data: 18
     - Name: 
       Entry: 8
       Data: 
@@ -935,10 +935,10 @@ MonoBehaviour:
       Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
     - Name: 
       Entry: 3
-      Data: 2
+      Data: 3
     - Name: 
       Entry: 3
-      Data: 7
+      Data: 5
     - Name: 
       Entry: 8
       Data: 
@@ -947,13 +947,13 @@ MonoBehaviour:
       Data: UnityEngine.Color, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 0.7960785
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 0.792156935
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 0.866666734
     - Name: 
       Entry: 4
       Data: 1
@@ -962,7 +962,7 @@ MonoBehaviour:
       Data: 
     - Name: shootCount
       Entry: 3
-      Data: 15
+      Data: 16
     - Name: 
       Entry: 8
       Data: 
@@ -973,21 +973,23 @@ MonoBehaviour:
       Entry: 8
       Data: 
   levelColors:
-  - color: {r: 1, g: 0.36078432, b: 0.5176471, a: 1}
-    size: 94
-  - color: {r: 0, g: 0, b: 0, a: 1}
-    size: 92
-  - color: {r: 1, g: 0.8745099, b: 0.37254903, a: 1}
+  - color: {r: 0.7960785, g: 0.79215693, b: 0.86666673, a: 1}
+    size: 149
+  - color: {r: 1, g: 1, b: 0.45098042, a: 1}
     size: 88
-  - color: {r: 0.50980395, g: 0.73333335, b: 0.4431373, a: 1}
-    size: 74
-  - color: {r: 0.9725491, g: 0.5764706, b: 0.6666667, a: 1}
-    size: 36
-  - color: {r: 0.8313726, g: 0.8470589, b: 0.16470589, a: 1}
-    size: 12
-  - color: {r: 0.2509804, g: 0.60784316, b: 0.14117648, a: 1}
-    size: 4
+  - color: {r: 0, g: 0, b: 0, a: 1}
+    size: 63
+  - color: {r: 0.9921569, g: 0.6901961, b: 0.0627451, a: 1}
+    size: 30
+  - color: {r: 0.9686275, g: 0.32156864, b: 0.77647066, a: 1}
+    size: 20
+  - color: {r: 0.37647063, g: 0.121568635, b: 0.043137256, a: 1}
+    size: 19
+  - color: {r: 0.96470594, g: 0.8862746, b: 0.34509805, a: 1}
+    size: 17
+  - color: {r: 0.3372549, g: 0.82745105, b: 0.6039216, a: 1}
+    size: 14
   colorThreshold: 0.1
-  levelTexture: {fileID: 2800000, guid: c4d043c0153ee49329e7a8ca6002260f, type: 3}
+  levelTexture: {fileID: 2800000, guid: d7852c511521f405fa658f04bdbebaa9, type: 3}
   colorCubeGridSize: {x: 20, y: 20}
-  shooterGridSize: {x: 3, y: 8}
+  shooterGridSize: {x: 4, y: 6}

@@ -13,6 +13,7 @@ namespace _Project.Scripts.Level
         [SerializeField] private ReservedSlotGridSystem reservedSlotGridSystem;
 
         [SerializeField] private GameObject shooterPrefab;
+        [SerializeField] private GameObject colorCubePrefab;
         
         public LevelData LevelData { get; private set; }
         public void Init(LevelData data)
@@ -24,6 +25,7 @@ namespace _Project.Scripts.Level
             reservedSlotGridSystem.Init();
             
             CreateShooters();
+            CreateColorCubes();
         }
 
         private void CreateShooters()
@@ -39,6 +41,23 @@ namespace _Project.Scripts.Level
                     shooter.Init(data);
                     shooter.Initialize(node);
                     node.AssignNodeObject(shooter);
+                }
+            }
+        }
+
+        private void CreateColorCubes()
+        {
+            Texture2D texture = LevelData.levelTexture;
+            for (int i = 0; i < texture.width; i++)
+            {
+                for (int j = 0; j < texture.height; j++)
+                {
+                    var node = colorCubeGridSystem.GetNode(i, j);
+                    var cube = Instantiate(colorCubePrefab, node.transform).GetComponent<ColorCube>();
+                    
+                    cube.Init(texture.GetPixel(i, j));
+                    cube.Initialize(node);
+                    node.AssignNodeObject(cube);
                 }
             }
         }
