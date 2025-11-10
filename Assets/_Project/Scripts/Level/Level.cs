@@ -10,13 +10,15 @@ namespace _Project.Scripts.Level
     {
         [SerializeField] private ShooterGridSystem shooterGridSystem;
         [SerializeField] private ColorCubeGridSystem colorCubeGridSystem;
+        [SerializeField] private ReservedSlotGridSystem reservedSlotGridSystem;
         
         public Vector2Int ShooterGridSystemSize = new Vector2Int(3, 5);
 
         public void Init()
         {
             shooterGridSystem.Init(ShooterGridSystemSize);
-            colorCubeGridSystem.Init(new Vector2Int(10,10));
+            colorCubeGridSystem.Init(new Vector2Int(16,16));
+            reservedSlotGridSystem.Init();
         }
     }
 }

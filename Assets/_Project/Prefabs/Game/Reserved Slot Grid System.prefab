@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2100727947009015016
+--- !u!1 &6936228709489455131
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2478230595356984216}
-  - component: {fileID: 289848688261796300}
+  - component: {fileID: 5458345857278639416}
+  - component: {fileID: 5735964763489480847}
   m_Layer: 0
-  m_Name: Shooter Grid System
+  m_Name: Reserved Slot Grid System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2478230595356984216
+--- !u!4 &5458345857278639416
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2100727947009015016}
+  m_GameObject: {fileID: 6936228709489455131}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -32,20 +32,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &289848688261796300
+--- !u!114 &5735964763489480847
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2100727947009015016}
+  m_GameObject: {fileID: 6936228709489455131}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc1a8dd60dcd94fcd81172f36e6c4006, type: 3}
+  m_Script: {fileID: 11500000, guid: 5fdbeaf90b87a44d584e2b2faaada929, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridWidth: 3
-  gridHeight: 10
+  gridWidth: 5
+  gridHeight: 1
   coordinateXY: 0
   coordinateXZ: 1
   coordinateYZ: 0
@@ -55,8 +55,8 @@ MonoBehaviour:
   gridSpaceX: 1
   gridSpaceY: 1
   gridSpaceZ: 1
-  nodePrefab: {fileID: 8871067700690599841, guid: cdd9b6f941a6046a6b9eb72a0763d450, type: 3}
+  nodePrefab: {fileID: 4787271265891423120, guid: 4acc9fdd41438412c86caa7cc05079f1, type: 3}
   useCustomZStart: 0
   customZStart: 0
-  useCustomZEnd: 1
-  customZEnd: -1.5
+  useCustomZEnd: 0
+  customZEnd: 0
