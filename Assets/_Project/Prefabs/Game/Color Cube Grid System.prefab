@@ -51,12 +51,12 @@ MonoBehaviour:
   coordinateYZ: 0
   centerX: 0
   centerY: 0
-  centerZ: 0
+  centerZ: 4.43
   gridSpaceX: 0.2
   gridSpaceY: 1
   gridSpaceZ: 0.2
   nodePrefab: {fileID: 5842881658341230400, guid: 70c9ad60ed219450e90ea71b573ab28c, type: 3}
-  useCustomZStart: 1
-  customZStart: 2.03
+  useCustomZStart: 0
+  customZStart: 2.9
   useCustomZEnd: 0
   customZEnd: 0
