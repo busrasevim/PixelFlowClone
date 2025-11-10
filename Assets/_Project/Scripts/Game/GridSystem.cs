@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
 
@@ -12,22 +13,53 @@ namespace _Project.Scripts.Game
         public bool coordinateXZ;
         public bool coordinateYZ;
 
+#if UNITY_EDITOR
+        [OnValueChanged(nameof(OnInspectorChanged))]
+#endif
         public float centerX;
+#if UNITY_EDITOR
+        [OnValueChanged(nameof(OnInspectorChanged))]
+#endif
         public float centerY;
+#if UNITY_EDITOR
+        [OnValueChanged(nameof(OnInspectorChanged))]
+#endif
         public float centerZ;
 
+#if UNITY_EDITOR
+        [OnValueChanged(nameof(OnInspectorChanged))]
+#endif
         public float gridSpaceX;
+#if UNITY_EDITOR
+        [OnValueChanged(nameof(OnInspectorChanged))]
+#endif
         public float gridSpaceY;
+#if UNITY_EDITOR
+        [OnValueChanged(nameof(OnInspectorChanged))]
+#endif
         public float gridSpaceZ;
 
         protected Node[,] _nodes;
 
         public GameObject nodePrefab;
 
-        [Header("Z Position Control")] public bool useCustomZStart; // Özel başlangıç Z değeri
+        [Header("Z Position Control")] 
+#if UNITY_EDITOR
+        [OnValueChanged(nameof(OnInspectorChanged))]
+#endif
+        public bool useCustomZStart; // Özel başlangıç Z değeri
+#if UNITY_EDITOR
+        [OnValueChanged(nameof(OnInspectorChanged))]
+#endif
         public float customZStart;
 
+#if UNITY_EDITOR
+        [OnValueChanged(nameof(OnInspectorChanged))]
+#endif
         public bool useCustomZEnd; // Özel bitiş Z değeri
+#if UNITY_EDITOR
+        [OnValueChanged(nameof(OnInspectorChanged))]
+#endif
         public float customZEnd;
 
         public virtual void Init(Vector2Int size)
@@ -135,5 +167,32 @@ namespace _Project.Scripts.Game
 
             return new Vector3(xPosition, yPosition, zPosition);
         }
+        
+#if UNITY_EDITOR
+        private void OnInspectorChanged()
+        {
+            if (_nodes == null || _nodes.Length == 0)
+                return;
+
+            UpdateNodePositions();
+            SceneView.RepaintAll();
+        }
+#endif
+
+        protected virtual void UpdateNodePositions()
+        {
+            for (int i = 0; i < gridWidth; i++)
+            {
+                for (int j = 0; j < gridHeight; j++)
+                {
+                    if (_nodes[i, j] == null) continue;
+                    _nodes[i, j].transform.position = GetNodePosition(i, j);
+#if UNITY_EDITOR
+                    EditorUtility.SetDirty(_nodes[i, j]);
+#endif
+                }
+            }
+        }
+        
     }
 }
