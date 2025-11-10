@@ -17,6 +17,8 @@ namespace _Project.Scripts.Installers
     {
         [SerializeField] private GameObject objectPoolObject;
        [SerializeField] private GameObject audioManagerObject;
+       [SerializeField] private GameObject levelPrefab;   // inspector’da atarsın
+
 
         public override void InstallBindings()
         {
@@ -48,6 +50,10 @@ namespace _Project.Scripts.Installers
             Container.Bind<UIManager>().FromComponentInHierarchy().AsSingle();
             Container.BindInterfacesAndSelfTo<FXManager>().AsSingle();
             Container.BindInterfacesAndSelfTo<SettingsManager>().AsSingle();
+            
+            Container.BindInstance(levelPrefab)
+                .WithId("LevelPrefab")
+                .AsSingle();
         }
     }
 }

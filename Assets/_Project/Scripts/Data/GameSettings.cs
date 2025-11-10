@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using _Project.Scripts.Level;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -17,20 +18,20 @@ namespace _Project.Scripts.Data
         [TabGroup("General")]public float levelFailedUIDelay = 2f;
 
         [TabGroup("Levels")] [ListDrawerSettings(Expanded = true, DraggableItems = false, ShowIndexLabels = true)]
-        public Level.Level[] levels;
+        public LevelData[] levels;
 
         [ShowInInspector, ReadOnly, TabGroup("Debug")]
         [LabelText("Total Level Count")]
         public int TotalLevelCount => levels != null ? levels.Length : 0;
 
-        private Dictionary<int, Level.Level> _levelCache;
+        private Dictionary<int, LevelData> _levelCache;
 
 
         [Button(ButtonSizes.Medium), GUIColor(0.4f, 0.8f, 1f)]
         [TabGroup("Debug")]
         private void RebuildCache() => BuildCache();
 
-        public Level.Level GetLevel(int index)
+        public LevelData GetLevel(int index)
         {
             if (levels == null || levels.Length == 0)
             {
@@ -69,7 +70,7 @@ namespace _Project.Scripts.Data
 
         private void BuildCache()
         {
-            _levelCache = new Dictionary<int, Level.Level>();
+            _levelCache = new Dictionary<int, LevelData>();
 
             if (levels == null) return;
 

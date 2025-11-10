@@ -1,6 +1,7 @@
 using _Project.Scripts.Data;
 using _Project.Scripts.Level.Signals;
 using _Project.Scripts.SaveSystem;
+using UnityEngine;
 using Zenject;
 
 namespace _Project.Scripts.Level
@@ -24,19 +25,20 @@ namespace _Project.Scripts.Level
 
         [Inject]
         private void SpecialInit(DataManager dataManager, 
-            GameSettings settings, SignalBus signal)
+            GameSettings settings, SignalBus signal,
+            [Inject(Id = "LevelPrefab")] GameObject levelPrefab)
         {
             _dataManager = dataManager;
             _signalBus = signal;
             _gameSettings = settings;
             
-            _generator = new LevelGenerator(this);
+            _generator = new LevelGenerator(this, levelPrefab);
         }
         
         public void SetUpLevel()
         {
-            var levelPrefab = _gameSettings.GetLevel(CurrentLevelNo);
-            CurrentLevel = _generator.GenerateLevel(levelPrefab);
+            var levelData = _gameSettings.GetLevel(CurrentLevelNo);
+            CurrentLevel = _generator.GenerateLevel(levelData);
         }
 
         public void NextLevel()

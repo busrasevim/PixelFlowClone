@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27ca0d75625bc46158f933914919a39e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridWidth: 10
-  gridHeight: 10
+  gridWidth: 1
+  gridHeight: 1
   coordinateXY: 0
   coordinateXZ: 1
   coordinateYZ: 0

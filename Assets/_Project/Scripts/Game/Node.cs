@@ -21,7 +21,7 @@ namespace _Project.Scripts.Game
             GridPosition = new Vector2Int(x, y);
         }
 
-        public virtual void AsiignNodeObject(INodeObject nodeObj)
+        public virtual void AssignNodeObject(INodeObject nodeObj)
         {
             NodeObject = nodeObj;
             IsFull = true;

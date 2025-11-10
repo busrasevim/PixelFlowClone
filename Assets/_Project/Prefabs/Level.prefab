@@ -50,7 +50,7 @@ MonoBehaviour:
   shooterGridSystem: {fileID: 2565332098575778895}
   colorCubeGridSystem: {fileID: 7833111768692053617}
   reservedSlotGridSystem: {fileID: 2370657248339935583}
-  ShooterGridSystemSize: {x: 3, y: 5}
+  shooterPrefab: {fileID: 8145174122574774961, guid: b6141cf863d834affae30e5f98b6af44, type: 3}
 --- !u!1001 &2854257603950761347
 PrefabInstance:
   m_ObjectHideFlags: 0

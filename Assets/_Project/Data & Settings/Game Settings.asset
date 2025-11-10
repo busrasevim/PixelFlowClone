@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultLevelEarnMoneyCount: 30
   randomStartIndex: 3
+  levelCompletedUIDelay: 1
+  levelFailedUIDelay: 2
   levels:
-  - {fileID: 3154087053831341421, guid: 3278305065e924a27b71a0e7f709cba2, type: 3}
+  - {fileID: 11400000, guid: 55f2d825637da4355836a812427c3067, type: 2}
