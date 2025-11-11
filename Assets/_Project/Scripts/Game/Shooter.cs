@@ -151,14 +151,6 @@ namespace _Project.Scripts.Game
             _reservedSlot = reservedSlot;
         }
 
-        public void NextDirection()
-        {
-            int next = ((int)_currentDirection + 1) % Enum.GetValues(typeof(ShooterDirection)).Length;
-            _currentDirection = (ShooterDirection)next;
-
-            ResetBlastData();
-        }
-
         public void ResetDirection()
         {
             _currentDirection = ShooterDirection.Forward;
@@ -216,6 +208,12 @@ namespace _Project.Scripts.Game
         {
             _currentShooterNode = to;
             transform.DOMove(to.transform.position, 0.3f);
+        }
+
+        public void SetDirection(ShooterDirection shooterNextDirection)
+        {
+            _currentDirection  = shooterNextDirection;
+            ResetBlastData();
         }
     }
 
