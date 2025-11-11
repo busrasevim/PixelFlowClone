@@ -35,6 +35,7 @@ namespace _Project.Scripts.Game
 
         private List<int> blastedCoordinateValues = new List<int>();
 
+        private static MaterialPropertyBlock _mpb;
 
         public void Initialize(Node node)
         {
@@ -43,10 +44,20 @@ namespace _Project.Scripts.Game
 
         public void Init(CellData data, float followerSpeed)
         {
+            if (_mpb == null)
+                _mpb = new MaterialPropertyBlock();
+
             foreach (var renderer in renderers)
             {
-                renderer.material.color = data.cellColor.linear;
+                renderer.GetPropertyBlock(_mpb);
+                _mpb.SetColor("_Color", data.cellColor.linear);
+                renderer.SetPropertyBlock(_mpb);
             }
+            
+            // foreach (var renderer in renderers)
+            // {
+            //     renderer.material.color = data.cellColor.linear;
+            // }
 
             ShootCount = data.shootCount;
             SetShootCountText();

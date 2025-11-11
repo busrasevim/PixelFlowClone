@@ -12,6 +12,8 @@ namespace _Project.Scripts.Game
 
         public ColorCubeNode CurrentNode { get; set; }
 
+        private static MaterialPropertyBlock _mpb;
+
         public void Initialize(Node node)
         {
             CurrentNode = node as ColorCubeNode;
@@ -19,7 +21,13 @@ namespace _Project.Scripts.Game
 
         public void Init(Color pixelColor, List<LevelData.LevelColorData> levelColors, float threshold)
         {
-            cubeRenderer.material.color = pixelColor.linear;
+            if (_mpb == null)
+                _mpb = new MaterialPropertyBlock();
+
+            cubeRenderer.GetPropertyBlock(_mpb);
+            _mpb.SetColor("_Color", pixelColor.linear);
+            cubeRenderer.SetPropertyBlock(_mpb);
+            
             colorID = FindClosestColorID(pixelColor, levelColors, threshold);
         }
 
