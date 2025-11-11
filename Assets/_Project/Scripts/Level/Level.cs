@@ -34,6 +34,8 @@ namespace _Project.Scripts.Level
             
             CreateShooters(_gameSettings.shooterSpeed);
             CreateColorCubes();
+            reservedSlotGridSystem.SetSlotValues(_gameSettings.reservedSlotWarningEffectDuration,
+                _gameSettings.reservedSlotWarningEffectCount);
 
             conveyor.SetShooterLimit(settings.conveyorShooterLimit);
         }

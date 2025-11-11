@@ -8,22 +8,22 @@ namespace _Project.Scripts.Data
     [CreateAssetMenu(menuName = "Settings/Game Setting", fileName = "New Game Settings")]
     public class GameSettings : ScriptableObject
     {
-        [TabGroup("General")] [MinValue(0), LabelText("Default Earn Money")]
-        public int defaultLevelEarnMoneyCount = 30;
+        [TabGroup("General")] public int defaultLevelEarnMoneyCount = 30;
 
-        [TabGroup("General")] [MinValue(0), LabelText("Random Start Index")]
-        public int randomStartIndex = 3;
-        
-        [TabGroup("General")] [MinValue(0), LabelText("Shooter Speed")]
-        public int shooterSpeed = 3;
-        [TabGroup("General")] [MinValue(0), LabelText("Last Shooter Effect Fast Speed")]
-        public int lastShooterEffectFastSpeed = 3;
-        
-        [TabGroup("General")] [MinValue(0), LabelText("Conveyor Shooter Limit")]
-        public int conveyorShooterLimit = 5;
+        [TabGroup("General")] public int randomStartIndex = 3;
+
+        [TabGroup("General")] public int shooterSpeed = 3;
+        [TabGroup("General")] public int lastShooterEffectFastSpeed = 3;
+
+        [TabGroup("General")] public int conveyorShooterLimit = 5;
 
         [TabGroup("General")] public float levelCompletedUIDelay = 1f;
-        [TabGroup("General")]public float levelFailedUIDelay = 2f;
+        [TabGroup("General")] public float levelFailedUIDelay = 2f;
+
+
+        [TabGroup("General")] public float reservedSlotWarningEffectDuration = 0.5f;
+        [TabGroup("General")] public int reservedSlotWarningEffectCount = 2;
+
 
         [TabGroup("Levels")] [ListDrawerSettings(Expanded = true, DraggableItems = false, ShowIndexLabels = true)]
         public LevelData[] levels;

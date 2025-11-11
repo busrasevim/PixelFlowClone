@@ -33,6 +33,8 @@ public class ShooterManager
         }
         
         shooter.Selected(conveyor.SplineComputer, this);
+        
+        _levelManager.CurrentLevel.ReservedSlotGridSystem.SetWarningEffect();
     }
 
     public void SetReservedSlot(Shooter shooter)
@@ -46,6 +48,7 @@ public class ShooterManager
 
         shooter.SetReservedSlot(reservedSlot);
         reservedSlot.AssignNodeObject(shooter);
+        _levelManager.CurrentLevel.ReservedSlotGridSystem.SetWarningEffect();
     }
 
     //hızlan
