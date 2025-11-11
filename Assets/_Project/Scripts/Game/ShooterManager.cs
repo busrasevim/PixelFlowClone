@@ -1,7 +1,7 @@
+using _Project.Scripts.Data;
 using _Project.Scripts.Game;
 using _Project.Scripts.Level;
 using _Project.Scripts.Managers;
-using DG.Tweening;
 using UnityEngine;
 using Zenject;
 
@@ -9,12 +9,14 @@ public class ShooterManager
 {
     private LevelManager _levelManager;
     private GameManager _gameManager;
+    private GameSettings  _gameSettings;
 
+    public bool  OnLastShooterEffect { get; set; }
     [Inject]
-    public void Construct(LevelManager levelManager, GameManager gameManager)
+    public void Construct(LevelManager levelManager, GameSettings gameSettings)
     {
         _levelManager = levelManager;
-        _gameManager = gameManager;
+        _gameSettings = gameSettings;
     }
 
     public void ShooterSelected(Shooter shooter)
@@ -46,6 +48,9 @@ public class ShooterManager
         reservedSlot.AssignNodeObject(shooter);
     }
 
+    //hızlan
+    //bitince konumu sıfırla devam etsin aynen
+    
     public void RemoveShooterFromConveyor(Shooter shooter)
     {
         _levelManager.CurrentLevel.Conveyor.RemoveShooter(shooter);
@@ -57,5 +62,34 @@ public class ShooterManager
         {
             _gameManager.EndLevel(true);
         }
+    }
+
+    public void ControlLastShooters()
+    {
+        if(OnLastShooterEffect) return;
+        
+        var count = _levelManager.CurrentLevel.ShooterGridSystem.GetCurrentShooterCount();
+        count += _levelManager.CurrentLevel.ReservedSlotGridSystem.GetCurrentShooterCount();
+        count += _levelManager.CurrentLevel.Conveyor.GetCurrentShooterCount();
+
+        if (count <= _gameSettings.conveyorShooterLimit)
+        {
+            OnLastShooterEffect = true;
+            var shooters = Object.FindObjectsByType<Shooter>(FindObjectsSortMode.None);
+            foreach (var shooter in shooters)
+            {
+                shooter.SetSpeed(_gameSettings.lastShooterEffectFastSpeed);
+            }
+        }
+    }
+
+    public void ResetSystem()
+    {
+        OnLastShooterEffect = false;
+    }
+
+    public void SetGameManager(GameManager gameManager)
+    {
+        _gameManager  = gameManager;
     }
 }

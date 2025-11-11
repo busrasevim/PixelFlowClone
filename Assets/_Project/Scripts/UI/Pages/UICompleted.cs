@@ -1,62 +1,60 @@
-using UnityEngine;
-using DG.Tweening;
 using System;
-using TMPro;
-using UnityEngine.UI;
-using _Project.Scripts.Data;
-using _Project.Scripts.Level;
-using _Project.Scripts.UI;
+using DG.Tweening;
+using UnityEngine;
 using Zenject;
 
-public class UICompleted : UIPage
+namespace _Project.Scripts.UI.Pages
 {
-    [SerializeField] private ParticleSystem[] confettis;
-    [SerializeField] private GameObject goPage;
-    [SerializeField] private GameObject goButton;
-
-    private int _earnedCoin;
-    private Action _onCompleted;
-
-    private SignalBus _signalBus;
-
-    [Inject]
-    public void Construct(SignalBus signalBus)
+    public class UICompleted : UIPage
     {
-        _signalBus = signalBus;
-    }
+        [SerializeField] private ParticleSystem[] confettis;
+        [SerializeField] private GameObject goPage;
+        [SerializeField] private GameObject goButton;
 
-    protected override void Awake()
-    {
-        goPage.SetActive(false);
-        base.Awake();
-    }
+        private int _earnedCoin;
+        private Action _onCompleted;
 
-    protected override void Start()
-    {
-        foreach (var confetti in confettis)
-            confetti.Play();
+        private SignalBus _signalBus;
 
-        Taptic.Success();
-
-        DOVirtual.DelayedCall(1f, () =>
+        [Inject]
+        public void Construct(SignalBus signalBus)
         {
-            goPage.SetActive(true);
-            base.Start();
-        });
-    }
+            _signalBus = signalBus;
+        }
 
-    public void Build(int earnedCoin, Action onCompleted = null)
-    {
-        _onCompleted = onCompleted;
-        _earnedCoin = earnedCoin;
-    }
+        protected override void Awake()
+        {
+            goPage.SetActive(false);
+            base.Awake();
+        }
 
-    public void OnTapContinue()
-    {
-        goButton.SetActive(false);
+        protected override void Start()
+        {
+            foreach (var confetti in confettis)
+                confetti.Play();
 
-        _onCompleted?.Invoke();
+            Taptic.Success();
 
-        _signalBus.Fire<OnLevelSetupRequestedSignal>();
+            DOVirtual.DelayedCall(1f, () =>
+            {
+                goPage.SetActive(true);
+                base.Start();
+            });
+        }
+
+        public void Build(int earnedCoin, Action onCompleted = null)
+        {
+            _onCompleted = onCompleted;
+            _earnedCoin = earnedCoin;
+        }
+
+        public void OnTapContinue()
+        {
+            goButton.SetActive(false);
+
+            _onCompleted?.Invoke();
+
+            _signalBus.Fire<OnLevelSetupRequestedSignal>();
+        }
     }
 }

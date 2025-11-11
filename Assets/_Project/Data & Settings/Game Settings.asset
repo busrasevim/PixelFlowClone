@@ -15,6 +15,7 @@ MonoBehaviour:
   defaultLevelEarnMoneyCount: 30
   randomStartIndex: 0
   shooterSpeed: 3
+  lastShooterEffectFastSpeed: 6
   conveyorShooterLimit: 5
   levelCompletedUIDelay: 1
   levelFailedUIDelay: 2

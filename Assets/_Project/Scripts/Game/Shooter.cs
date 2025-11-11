@@ -29,7 +29,7 @@ namespace _Project.Scripts.Game
 
         public int ShootCount { get; set; }
 
-        public bool IsSelectable => _currentShooterNode == null || _currentShooterNode.IsFrontNode(); 
+        public bool IsSelectable => _currentShooterNode == null || _currentShooterNode.IsFrontNode();
 
         private CancellationTokenSource _shootCts;
 
@@ -114,6 +114,7 @@ namespace _Project.Scripts.Game
                             {
                                 _onConveyor = false;
                                 shooterManager.RemoveShooterFromConveyor(this);
+                                shooterManager.ControlLastShooters();
                                 gameObject.SetActive(false);
                             }
                         }
@@ -121,11 +122,20 @@ namespace _Project.Scripts.Game
 
                     if (splineFollower.GetPercent() >= 1f)
                     {
-                        _onConveyor = false;
-                        splineFollower.follow = false;
-                        splineFollower.enabled = false;
-                        shooterManager.RemoveShooterFromConveyor(this);
-                        shooterManager.SetReservedSlot(this);
+                        if (shooterManager.OnLastShooterEffect)
+                        {
+                            splineFollower.SetPercent(0);
+                            splineFollower.Rebuild();
+                            ResetDirection();
+                        }
+                        else
+                        {
+                            _onConveyor = false;
+                            splineFollower.follow = false;
+                            splineFollower.enabled = false;
+                            shooterManager.RemoveShooterFromConveyor(this);
+                            shooterManager.SetReservedSlot(this);
+                        }
                     }
 
                     await UniTask.Yield(PlayerLoopTiming.Update, _shootCts.Token);
@@ -154,7 +164,7 @@ namespace _Project.Scripts.Game
         public void ResetDirection()
         {
             _currentDirection = ShooterDirection.Forward;
-            blastedCoordinateValues.Clear();
+            ResetBlastData();
         }
 
         private Vector3 GetRayDirection()
@@ -212,8 +222,13 @@ namespace _Project.Scripts.Game
 
         public void SetDirection(ShooterDirection shooterNextDirection)
         {
-            _currentDirection  = shooterNextDirection;
+            _currentDirection = shooterNextDirection;
             ResetBlastData();
+        }
+
+        public void SetSpeed(float lastShooterEffectFastSpeed)
+        {
+            splineFollower.followSpeed = lastShooterEffectFastSpeed;
         }
     }
 

@@ -16,6 +16,8 @@ namespace _Project.Scripts.Data
         
         [TabGroup("General")] [MinValue(0), LabelText("Shooter Speed")]
         public int shooterSpeed = 3;
+        [TabGroup("General")] [MinValue(0), LabelText("Last Shooter Effect Fast Speed")]
+        public int lastShooterEffectFastSpeed = 3;
         
         [TabGroup("General")] [MinValue(0), LabelText("Conveyor Shooter Limit")]
         public int conveyorShooterLimit = 5;

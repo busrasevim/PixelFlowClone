@@ -33,5 +33,10 @@ namespace _Project.Scripts.Game
         {
             _conveyorLimit  = shooterLimit;
         }
+
+        public int GetCurrentShooterCount()
+        {
+            return _shootersOnConveyor.Count;
+        }
     }
 }

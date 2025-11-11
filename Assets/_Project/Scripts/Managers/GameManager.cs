@@ -18,13 +18,14 @@ namespace _Project.Scripts.Managers
         private LevelManager _levelManager;
         private UIManager _uiManager;
         private SignalBus _signalBus;
+        private ShooterManager _shooterManager;
         private FXManager _fxManager;
 
         private CancellationTokenSource _restartCts;
 
         [Inject]
         public GameManager(MainStateMachine mainStateMachine, UIStateMachine uiStateMachine, LevelManager levelManager,
-            FXManager fxManager, SignalBus signalBus, UIManager uiManager)
+            FXManager fxManager, SignalBus signalBus, UIManager uiManager, ShooterManager shooterManager)
         {
             _mainStateMachine = mainStateMachine;
             _uIStateMachine = uiStateMachine;
@@ -32,6 +33,7 @@ namespace _Project.Scripts.Managers
             _fxManager = fxManager;
             _signalBus = signalBus;
             _uiManager = uiManager;
+            _shooterManager = shooterManager;
         }
 
         public void Initialize()
@@ -41,11 +43,14 @@ namespace _Project.Scripts.Managers
             _signalBus.Subscribe<OnLevelSetupRequestedSignal>(HandleSetupRequest);
 
             _uiManager.ShowHome();
+
+            _shooterManager.SetGameManager(this);
             SetUpLevel();
         }
 
         private void SetUpLevel(bool fromRestart = false)
         {
+            _shooterManager.ResetSystem();
             _mainStateMachine.SetStateWithKey(MainStateMachine.MainState.Start);
             _uIStateMachine.SetStateWithKey(UIStateMachine.UIState.Start);
 
@@ -68,11 +73,12 @@ namespace _Project.Scripts.Managers
         {
             RestartLevel(arg.Hard);
         }
+
         private async void RestartLevelAfter(float delay)
         {
             _restartCts?.Cancel();
             _restartCts = new CancellationTokenSource();
-            
+
             await UniTask.Delay(TimeSpan.FromSeconds(delay), cancellationToken: _restartCts.Token);
             RestartLevel();
         }
@@ -94,7 +100,7 @@ namespace _Project.Scripts.Managers
         {
             RestartLevel();
         }
-        
+
         #region Game State Events
 
         public void StartLevel()

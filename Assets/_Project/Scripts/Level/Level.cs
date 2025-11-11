@@ -19,7 +19,8 @@ namespace _Project.Scripts.Level
         public LevelData LevelData { get; private set; }
         public Conveyor Conveyor => conveyor;
         public ShooterGridSystem ShooterGridSystem => shooterGridSystem;
-        
+        public ReservedSlotGridSystem ReservedSlotGridSystem => reservedSlotGridSystem;
+
         private GameSettings _gameSettings;
 
         public void Init(LevelData data, GameSettings settings)

@@ -1,5 +1,6 @@
 using _Project.Scripts.Level;
 using _Project.Scripts.UI;
+using _Project.Scripts.UI.Items;
 using UnityEngine;
 using DG.Tweening;
 using Zenject;
