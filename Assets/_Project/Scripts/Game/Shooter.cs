@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using _Project.Scripts.Level;
 using Cysharp.Threading.Tasks;
@@ -18,17 +19,19 @@ namespace _Project.Scripts.Game
 
         private ShooterNode _currentShooterNode;
         private ReservedSlot _reservedSlot;
-        
+
         private LayerMask _layerColorCube;
         private int colorID;
 
         private bool _onConveyor;
+        private ShooterDirection _currentDirection;
 
         public int ShootCount { get; set; }
 
         public bool IsSelectable => _currentShooterNode.IsFrontNode();
-        
+
         private CancellationTokenSource _shootCts;
+
 
         public void Initialize(Node node)
         {
@@ -75,7 +78,7 @@ namespace _Project.Scripts.Game
         {
             _shootCts?.Cancel();
             _shootCts = new CancellationTokenSource();
-
+            ResetDirection();
             _onConveyor = true;
             try
             {
@@ -83,7 +86,7 @@ namespace _Project.Scripts.Game
                 {
                     var pos = transform.position;
                     pos.y = 0.282f;
-                    var ray = new Ray(pos, -transform.right);
+                    var ray = new Ray(pos, GetRayDirection());
 
                     if (Physics.Raycast(ray, out var hit, 10f, _layerColorCube))
                     {
@@ -129,7 +132,47 @@ namespace _Project.Scripts.Game
             transform.DOJump(reservedSlot.transform.position, 1f, 1, 0.5f);
             transform.DORotate(reservedSlot.transform.rotation.eulerAngles, 0.5f);
             model.transform.DOLocalRotate(Vector3.zero, 0.5f);
-            _reservedSlot  = reservedSlot;
+            _reservedSlot = reservedSlot;
         }
+
+        public void NextDirection()
+        {
+            int next = ((int)_currentDirection + 1) % Enum.GetValues(typeof(ShooterDirection)).Length;
+            _currentDirection = (ShooterDirection)next;
+        }
+
+        public void ResetDirection()
+        {
+            _currentDirection = ShooterDirection.Forward;
+        }
+
+        private Vector3 GetRayDirection()
+        {
+            switch (_currentDirection)
+            {
+                case ShooterDirection.Forward:
+                    return Vector3.forward;
+                    break;
+                case ShooterDirection.Left:
+                    return Vector3.left;
+                    break;
+                case ShooterDirection.Back:
+                    return Vector3.back;
+                    break;
+                case ShooterDirection.Right:
+                    return Vector3.right;
+                    break;
+            }
+
+            return Vector3.forward;
+        }
+    }
+
+    public enum ShooterDirection
+    {
+        Forward,
+        Left,
+        Back,
+        Right
     }
 }
