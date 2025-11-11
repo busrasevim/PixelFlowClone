@@ -9,9 +9,11 @@ namespace _Project.Scripts.Game
         [SerializeField] private Renderer cubeRenderer;
         public int colorID;
 
+        public ColorCubeNode CurrentNode { get; set; }
+
         public void Initialize(Node node)
         {
-        
+            CurrentNode = node as ColorCubeNode;
         }
 
         public void Init(Color pixelColor, List<LevelData.LevelColorData> levelColors, float threshold)

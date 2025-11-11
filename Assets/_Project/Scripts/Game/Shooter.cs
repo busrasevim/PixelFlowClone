@@ -31,6 +31,9 @@ namespace _Project.Scripts.Game
         public bool IsSelectable => _currentShooterNode.IsFrontNode();
 
         private CancellationTokenSource _shootCts;
+        
+        private List<int> blastedCoordinateValues = new List<int>();
+        
 
 
         public void Initialize(Node node)
@@ -91,9 +94,10 @@ namespace _Project.Scripts.Game
                     if (Physics.Raycast(ray, out var hit, 10f, _layerColorCube))
                     {
                         var colorCube = hit.collider.GetComponentInParent<ColorCube>();
-                        if (colorCube != null && colorCube.colorID == colorID)
+                        if (colorCube != null && colorCube.colorID == colorID && CanBlast(colorCube.CurrentNode.GridPosition))
                         {
                             colorCube.Blast();
+                            AddBlastValue(colorCube.CurrentNode.GridPosition);
                             ShootCount--;
                             SetShootCountText();
                             if (ShootCount == 0)
@@ -139,6 +143,8 @@ namespace _Project.Scripts.Game
         {
             int next = ((int)_currentDirection + 1) % Enum.GetValues(typeof(ShooterDirection)).Length;
             _currentDirection = (ShooterDirection)next;
+
+            ResetBlastData();
         }
 
         public void ResetDirection()
@@ -165,6 +171,32 @@ namespace _Project.Scripts.Game
             }
 
             return Vector3.forward;
+        }
+
+        private bool CanBlast(Vector2Int coordinate)
+        {
+            if (_currentDirection == ShooterDirection.Forward || _currentDirection == ShooterDirection.Back)
+            {
+                return !blastedCoordinateValues.Contains(coordinate.x);
+            }
+            
+            return !blastedCoordinateValues.Contains(coordinate.y);
+        }
+        
+        private void AddBlastValue(Vector2Int coordinate)
+        {
+            if (_currentDirection == ShooterDirection.Forward || _currentDirection == ShooterDirection.Back)
+            {
+                blastedCoordinateValues.Add(coordinate.x);
+                return;
+            }
+            
+            blastedCoordinateValues.Add(coordinate.y);
+        }
+
+        private void ResetBlastData()
+        {
+            blastedCoordinateValues.Clear();
         }
     }
 
