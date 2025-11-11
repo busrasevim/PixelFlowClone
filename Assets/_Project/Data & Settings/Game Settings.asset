@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultLevelEarnMoneyCount: 30
   randomStartIndex: 0
+  shooterSpeed: 3
+  conveyorShooterLimit: 5
   levelCompletedUIDelay: 1
   levelFailedUIDelay: 2
   levels:

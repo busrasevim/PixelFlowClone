@@ -16,6 +16,9 @@ namespace _Project.Scripts.Data
         
         [TabGroup("General")] [MinValue(0), LabelText("Shooter Speed")]
         public int shooterSpeed = 3;
+        
+        [TabGroup("General")] [MinValue(0), LabelText("Conveyor Shooter Limit")]
+        public int conveyorShooterLimit = 5;
 
         [TabGroup("General")] public float levelCompletedUIDelay = 1f;
         [TabGroup("General")]public float levelFailedUIDelay = 2f;

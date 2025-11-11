@@ -11,5 +11,18 @@ namespace _Project.Scripts.Game
             
             base.Init(size);
         }
+
+        public bool IsPictureComplete()
+        {
+            for (int x = 0; x < _nodes.GetLength(0); x++)
+            {
+                for (int y = 0; y < _nodes.GetLength(1); y++)
+                {
+                    if (_nodes[x, y].IsFull) return false;
+                }
+            }
+
+            return true;
+        }
     }
 }

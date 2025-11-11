@@ -11,5 +11,26 @@ namespace _Project.Scripts.Game
 
             base.Init(size);
         }
+
+        public void TransferShooters(int shooterXValue)
+        {
+            for (int i = _nodes.GetLength(1)-2; i >= 0; i--)
+            {
+                var from = _nodes[shooterXValue, i];
+                var to = _nodes[shooterXValue, i + 1];
+                if (to.IsFull) continue;
+                if (!from.IsFull) continue;
+
+                Transfer(from as ShooterNode, to as ShooterNode);
+            }
+        }
+        
+        public void Transfer(ShooterNode from, ShooterNode to)
+        {
+            var shooter = from.NodeObject as Shooter;
+            from.SetEmpty(shooter);
+            to.AssignNodeObject(shooter);
+            shooter.SetNewNode(to);
+        }
     }
 }

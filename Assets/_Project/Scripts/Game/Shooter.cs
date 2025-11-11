@@ -18,6 +18,7 @@ namespace _Project.Scripts.Game
         [SerializeField] private GameObject model;
 
         private ShooterNode _currentShooterNode;
+        public ShooterNode CurrentShooterNode => _currentShooterNode;
         private ReservedSlot _reservedSlot;
 
         private LayerMask _layerColorCube;
@@ -28,12 +29,11 @@ namespace _Project.Scripts.Game
 
         public int ShootCount { get; set; }
 
-        public bool IsSelectable => _currentShooterNode.IsFrontNode();
+        public bool IsSelectable => _currentShooterNode == null || _currentShooterNode.IsFrontNode(); 
 
         private CancellationTokenSource _shootCts;
-        
+
         private List<int> blastedCoordinateValues = new List<int>();
-        
 
 
         public void Initialize(Node node)
@@ -65,6 +65,14 @@ namespace _Project.Scripts.Game
 
         public void Selected(SplineComputer conveyorSpline, ShooterManager shooterManager)
         {
+            if (_reservedSlot != null)
+            {
+                _reservedSlot.SetEmpty(this);
+                _reservedSlot = null;
+            }
+
+            _currentShooterNode = null;
+
             var position = conveyorSpline.GetPointPosition(0);
             transform.DOJump(position, 1f, 1, 0.5f).OnComplete(() =>
             {
@@ -94,15 +102,18 @@ namespace _Project.Scripts.Game
                     if (Physics.Raycast(ray, out var hit, 10f, _layerColorCube))
                     {
                         var colorCube = hit.collider.GetComponentInParent<ColorCube>();
-                        if (colorCube != null && colorCube.colorID == colorID && CanBlast(colorCube.CurrentNode.GridPosition))
+                        if (colorCube != null && colorCube.colorID == colorID &&
+                            CanBlast(colorCube.CurrentNode.GridPosition))
                         {
                             colorCube.Blast();
+                            shooterManager.ColorCubeBlasted();
                             AddBlastValue(colorCube.CurrentNode.GridPosition);
                             ShootCount--;
                             SetShootCountText();
                             if (ShootCount == 0)
                             {
                                 _onConveyor = false;
+                                shooterManager.RemoveShooterFromConveyor(this);
                                 gameObject.SetActive(false);
                             }
                         }
@@ -113,6 +124,7 @@ namespace _Project.Scripts.Game
                         _onConveyor = false;
                         splineFollower.follow = false;
                         splineFollower.enabled = false;
+                        shooterManager.RemoveShooterFromConveyor(this);
                         shooterManager.SetReservedSlot(this);
                     }
 
@@ -150,6 +162,7 @@ namespace _Project.Scripts.Game
         public void ResetDirection()
         {
             _currentDirection = ShooterDirection.Forward;
+            blastedCoordinateValues.Clear();
         }
 
         private Vector3 GetRayDirection()
@@ -179,10 +192,10 @@ namespace _Project.Scripts.Game
             {
                 return !blastedCoordinateValues.Contains(coordinate.x);
             }
-            
+
             return !blastedCoordinateValues.Contains(coordinate.y);
         }
-        
+
         private void AddBlastValue(Vector2Int coordinate)
         {
             if (_currentDirection == ShooterDirection.Forward || _currentDirection == ShooterDirection.Back)
@@ -190,13 +203,19 @@ namespace _Project.Scripts.Game
                 blastedCoordinateValues.Add(coordinate.x);
                 return;
             }
-            
+
             blastedCoordinateValues.Add(coordinate.y);
         }
 
         private void ResetBlastData()
         {
             blastedCoordinateValues.Clear();
+        }
+
+        public void SetNewNode(ShooterNode to)
+        {
+            _currentShooterNode = to;
+            transform.DOMove(to.transform.position, 0.3f);
         }
     }
 

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using _Project.Scripts.Level;
+using DG.Tweening;
 using UnityEngine;
 
 namespace _Project.Scripts.Game
@@ -21,7 +22,7 @@ namespace _Project.Scripts.Game
             cubeRenderer.material.color = pixelColor.linear;
             colorID = FindClosestColorID(pixelColor, levelColors, threshold);
         }
-        
+
         private int FindClosestColorID(Color pixelColor, List<LevelData.LevelColorData> levelColors, float threshold)
         {
             float minDistance = float.MaxValue;
@@ -46,7 +47,9 @@ namespace _Project.Scripts.Game
 
         public void Blast()
         {
-            gameObject.SetActive(false);
+            CurrentNode.SetEmpty(this);
+            transform.DOScale(Vector3.zero, 0.1f).SetEase(Ease.InBack)
+                .OnComplete(() => { gameObject.SetActive(false); });
         }
     }
 }

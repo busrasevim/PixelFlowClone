@@ -9,7 +9,7 @@ namespace _Project.Scripts.Level
     public class Level : MonoBehaviour
     {
         [SerializeField] private ShooterGridSystem shooterGridSystem;
-        [SerializeField] private ColorCubeGridSystem colorCubeGridSystem;
+        [SerializeField] public ColorCubeGridSystem colorCubeGridSystem;
         [SerializeField] private ReservedSlotGridSystem reservedSlotGridSystem;
         [SerializeField] private Conveyor conveyor;
 
@@ -18,6 +18,7 @@ namespace _Project.Scripts.Level
         
         public LevelData LevelData { get; private set; }
         public Conveyor Conveyor => conveyor;
+        public ShooterGridSystem ShooterGridSystem => shooterGridSystem;
         
         private GameSettings _gameSettings;
 
@@ -32,6 +33,8 @@ namespace _Project.Scripts.Level
             
             CreateShooters(_gameSettings.shooterSpeed);
             CreateColorCubes();
+
+            conveyor.SetShooterLimit(settings.conveyorShooterLimit);
         }
 
         private void CreateShooters(float shooterFollowSpeed)

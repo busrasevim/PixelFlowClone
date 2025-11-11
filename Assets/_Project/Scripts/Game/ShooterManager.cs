@@ -8,7 +8,7 @@ using Zenject;
 public class ShooterManager
 {
     private LevelManager _levelManager;
-    private GameManager  _gameManager;
+    private GameManager _gameManager;
 
     [Inject]
     public void Construct(LevelManager levelManager, GameManager gameManager)
@@ -16,10 +16,21 @@ public class ShooterManager
         _levelManager = levelManager;
         _gameManager = gameManager;
     }
-    
+
     public void ShooterSelected(Shooter shooter)
     {
-        shooter.Selected(_levelManager.CurrentLevel.Conveyor.SplineComputer, this);
+        var conveyor = _levelManager.CurrentLevel.Conveyor;
+        if (!conveyor.CanGetNewShooter()) return;
+
+        conveyor.AddShooter(shooter);
+
+        if (shooter.CurrentShooterNode != null)
+        {
+            shooter.CurrentShooterNode.SetEmpty(shooter);
+            _levelManager.CurrentLevel.ShooterGridSystem.TransferShooters(shooter.CurrentShooterNode.GridPosition.x);
+        }
+        
+        shooter.Selected(conveyor.SplineComputer, this);
     }
 
     public void SetReservedSlot(Shooter shooter)
@@ -33,5 +44,18 @@ public class ShooterManager
 
         shooter.SetReservedSlot(reservedSlot);
         reservedSlot.AssignNodeObject(shooter);
+    }
+
+    public void RemoveShooterFromConveyor(Shooter shooter)
+    {
+        _levelManager.CurrentLevel.Conveyor.RemoveShooter(shooter);
+    }
+
+    public void ColorCubeBlasted()
+    {
+        if (_levelManager.CurrentLevel.colorCubeGridSystem.IsPictureComplete())
+        {
+            _gameManager.EndLevel(true);
+        }
     }
 }
