@@ -148,3 +148,5 @@ ShaderCache/
 Captures/
 Screenshots/
 ReferenceImages/
+/.utmp
+/Assets/Plugins/Sirenix/Odin Inspector/Config
