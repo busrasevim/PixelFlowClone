@@ -22,7 +22,7 @@ MonoBehaviour:
   conveyorArrowCount: 15
   conveyorArrowSpeed: 3
   levelCompletedUIDelay: 1
-  levelFailedUIDelay: 2
+  levelFailedUIDelay: 1
   reservedSlotWarningEffectDuration: 0.5
   reservedSlotWarningEffectCount: 2
   defaultTextureWidth: 20

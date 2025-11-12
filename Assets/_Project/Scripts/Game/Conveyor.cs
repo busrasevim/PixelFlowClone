@@ -16,6 +16,7 @@ namespace _Project.Scripts.Game
 
         private int _conveyorLimit;
         private List<Shooter> _shootersOnConveyor = new List<Shooter>();
+        private ConveyorArrow[]  _arrows;
 
         private void Start()
         {
@@ -76,10 +77,17 @@ namespace _Project.Scripts.Game
             {
                 shooter.Stop();
             }
+
+            foreach (var arrow in _arrows)
+            {
+                arrow.Stop();
+            }
         }
 
         public void SetArrows(ObjectPool pool, int arrowCount, float arrowSpeed)
         {
+            _arrows = new ConveyorArrow[arrowCount];
+
             if (_spline == null || arrowCount <= 0) return;
 
             // spline'ın gerçek uzunluğunu al
@@ -105,6 +113,8 @@ namespace _Project.Scripts.Game
 
                 // sonraki oka geç
                 distance += stepDistance;
+                
+                _arrows[i]  = arrow;
             }
         }
 

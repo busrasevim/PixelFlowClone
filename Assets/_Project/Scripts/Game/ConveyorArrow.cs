@@ -27,5 +27,10 @@ namespace _Project.Scripts.Game
                 splineFollower.Rebuild();
             }
         }
+
+        public void Stop()
+        {
+            splineFollower.follow = false;
+        }
     }
 }
