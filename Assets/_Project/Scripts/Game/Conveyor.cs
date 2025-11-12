@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using Dreamteck.Splines;
 using TMPro;
 using UnityEngine;
@@ -41,7 +42,7 @@ namespace _Project.Scripts.Game
 
         public void SetShooterLimit(int shooterLimit)
         {
-            _conveyorLimit  = shooterLimit;
+            _conveyorLimit = shooterLimit;
         }
 
         public int GetCurrentShooterCount()
@@ -52,6 +53,23 @@ namespace _Project.Scripts.Game
         private void SetShooterCountText()
         {
             shooterCountText.text = _shootersOnConveyor.Count.ToString() + "/" + _conveyorLimit;
+        }
+
+        public void PlayConveyorIsFullEffect()
+        {
+            shooterCountText.DOComplete();
+            shooterCountText.transform.DOComplete();
+            shooterCountText.DOColor(Color.red, 0.3f);
+            shooterCountText.transform.DOShakePosition(
+                duration: 0.35f,
+                strength: new Vector3(0.05f, 0.05f, 0f),
+                vibrato: 12,
+                randomness: 60f,
+                fadeOut: true
+            ).OnComplete(() =>
+            {
+                shooterCountText.DOColor(Color.white, 0.2f);
+            });
         }
     }
 }

@@ -22,7 +22,11 @@ public class ShooterManager
     public void ShooterSelected(Shooter shooter)
     {
         var conveyor = _levelManager.CurrentLevel.Conveyor;
-        if (!conveyor.CanGetNewShooter()) return;
+        if (!conveyor.CanGetNewShooter())
+        {
+            conveyor.PlayConveyorIsFullEffect();
+            return;
+        }
 
         conveyor.AddShooter(shooter);
 

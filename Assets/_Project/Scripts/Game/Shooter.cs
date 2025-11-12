@@ -105,7 +105,7 @@ namespace _Project.Scripts.Game
             _onConveyor = true;
             try
             {
-                while (_onConveyor && !_shootCts.IsCancellationRequested)
+                while (_onConveyor && !_shootCts.IsCancellationRequested && gameObject.activeSelf)
                 {
                     var pos = transform.position;
                     pos.y = 0.282f;
