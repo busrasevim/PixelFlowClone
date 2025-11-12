@@ -63,6 +63,7 @@ namespace _Project.Scripts.Level
                 for (int j = 0; j < LevelData.CellsData.GetLength(1); j++)
                 {
                     var data = LevelData.CellsData[i, j];
+                    if (data.shootCount == 0) continue;
                     var node = shooterGridSystem.GetNode(i, shooterGridSystem.gridHeight - j - 1);
 
                     var shooter = Instantiate(shooterPrefab, node.transform).GetComponent<Shooter>();

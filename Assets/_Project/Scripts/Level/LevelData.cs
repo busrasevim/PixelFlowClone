@@ -183,6 +183,7 @@ namespace _Project.Scripts.Level
                 {
                     shooterData[lc.color].Add(lc.size);
                     remainder = 0;
+                    totalShooterCount++;
                 }
 
                 for (int y = 0; y < remainder; y++)
