@@ -86,6 +86,7 @@ namespace _Project.Scripts.Game
             transform.DOJump(position, 1f, 1, 0.5f).OnComplete(() =>
             {
                 splineFollower.spline = conveyorSpline;
+                splineFollower.RebuildImmediate();
                 splineFollower.SetPercent(0f);
                 splineFollower.follow = true;
                 splineFollower.enabled = true;
