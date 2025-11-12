@@ -91,7 +91,7 @@ namespace _Project.Scripts.Game
             var shooter = from.NodeObject as Shooter;
             from.SetEmpty(shooter);
             to.AssignNodeObject(shooter);
-            shooter.SetNewReservedSlot(to);
+            shooter.SetReservedSlot(to);
         }
     }
 }

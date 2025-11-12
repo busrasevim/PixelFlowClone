@@ -38,7 +38,7 @@ namespace _Project.Scripts.Game
         private List<int> blastedCoordinateValues = new List<int>();
 
         private static MaterialPropertyBlock _mpb;
-
+        
         public void Initialize(Node node)
         {
             _currentShooterNode = node as ShooterNode;
@@ -167,6 +167,7 @@ namespace _Project.Scripts.Game
 
         public void SetReservedSlot(ReservedSlot reservedSlot)
         {
+            transform.DOKill();
             transform.DOJump(reservedSlot.transform.position, 1f, 1, 0.5f);
             transform.DORotate(reservedSlot.transform.rotation.eulerAngles, 0.5f);
             model.transform.DOLocalRotate(Vector3.zero, 0.5f);
@@ -241,13 +242,6 @@ namespace _Project.Scripts.Game
         public void SetSpeed(float lastShooterEffectFastSpeed)
         {
             splineFollower.followSpeed = lastShooterEffectFastSpeed;
-        }
-
-        public void SetNewReservedSlot(ReservedSlot to)
-        {
-            _reservedSlot = to;
-            transform.DOKill();
-            transform.DOJump(to.transform.position, 1f, 1, 0.3f);
         }
 
         public void Stop()
