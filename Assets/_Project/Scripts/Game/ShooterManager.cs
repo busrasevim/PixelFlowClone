@@ -12,15 +12,18 @@ public class ShooterManager
     private GameManager _gameManager;
     private GameSettings _gameSettings;
     private ObjectPool _objectPool;
+    private FXManager _fxManager;
 
     public bool OnLastShooterEffect { get; set; }
 
     [Inject]
-    public void Construct(LevelManager levelManager, GameSettings gameSettings, ObjectPool objectPool)
+    public void Construct(LevelManager levelManager, GameSettings gameSettings, ObjectPool objectPool,
+        FXManager fxManager)
     {
         _levelManager = levelManager;
         _gameSettings = gameSettings;
         _objectPool = objectPool;
+        _fxManager = fxManager;
     }
 
     public void ShooterSelected(Shooter shooter)
@@ -32,6 +35,7 @@ public class ShooterManager
             return;
         }
 
+        _fxManager.PlayShooterSelectedFX();
         conveyor.AddShooter(shooter);
 
         if (shooter.CurrentShooterNode != null)
@@ -41,7 +45,7 @@ public class ShooterManager
         }
 
         shooter.Selected(conveyor.SplineComputer, this, _objectPool, _gameSettings.bulletSpeed,
-            _gameSettings.bulletFireEase);
+            _gameSettings.bulletFireEase, _fxManager);
 
         _levelManager.CurrentLevel.ReservedSlotGridSystem.SetWarningEffect();
         _levelManager.CurrentLevel.ReservedSlotGridSystem.TransferShooters();

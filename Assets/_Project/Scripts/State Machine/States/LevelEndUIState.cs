@@ -23,7 +23,7 @@ namespace _Project.Scripts.State_Machine.States
         {
             if (_isWin)
             {
-                DelayComplete(_settings.levelCompletedUIDelay);
+                Complete();
             }
             else
             {
@@ -37,9 +37,8 @@ namespace _Project.Scripts.State_Machine.States
             _uiManager.ShowFail();
         }
         
-        private async UniTask DelayComplete(float delay)
+        private void Complete()
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(delay-1f));
             _uiManager.ShowCompleted(_settings.defaultLevelEarnMoneyCount);
         }
 

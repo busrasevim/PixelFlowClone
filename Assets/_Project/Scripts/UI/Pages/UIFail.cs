@@ -16,12 +16,6 @@ public class UIFail : UIPage
         _signalBus  = signalBus;
         _levelManager = levelManager;
     }
-    
-    protected override void Start()
-    {
-        base.Start();
-        Taptic.Failure();
-    }
 
     public void OnTapPlayAgain()
     {

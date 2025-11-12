@@ -18,6 +18,30 @@ namespace _Project.Scripts.Managers
         {
             _psPoolParent = new GameObject(Constants.ParticleParentGameObjectName).transform;
         }
+
+        public void PlayShooterSelectedFX()
+        {
+            Taptic.Selection();
+            _audioManager.PlaySoundEffect(SoundEffectKey.ShooterSelected);
+        }
+
+        public void PlayBulletFireFX()
+        {
+            Taptic.Medium();
+            _audioManager.PlaySoundEffect(SoundEffectKey.BulletFired);
+        }
+
+        public void PlayLevelCompletedFX()
+        {
+            Taptic.Success();
+            _audioManager.PlaySoundEffect(SoundEffectKey.LevelCompleted);
+        }
+
+        public void PlayLevelFailedFX()
+        {
+            Taptic.Failure();
+            _audioManager.PlaySoundEffect(SoundEffectKey.LevelFailed);
+        }
     }
 
     public class ParticleSystemPool

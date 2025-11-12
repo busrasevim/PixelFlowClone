@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a64999c1a798e4ba6a63c85bbabc033e, type: 3}
-  m_Name: Loop Example
+  m_Name: Bullet Fired SFX
   m_EditorClassIdentifier: 
-  soundEffectKey: 1
-  Category: 1
-  clip: {fileID: 8300000, guid: 3d85b608930cb4732abf60bdc5685512, type: 3}
-  loop: 1
+  soundEffectKey: 2
+  Category: 0
+  clip: {fileID: 8300000, guid: 34c638d8d99ccfd44a261f13505ab317, type: 3}
+  loop: 0
   volume: 1
   pitch: 1
   pitchRandomness: 0

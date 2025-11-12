@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using _Project.Scripts.Level;
+using _Project.Scripts.Managers;
 using _Project.Scripts.Pools;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -71,7 +72,8 @@ namespace _Project.Scripts.Game
             shootCountText.text = ShootCount.ToString();
         }
 
-        public void Selected(SplineComputer conveyorSpline, ShooterManager shooterManager, ObjectPool pool, float bulletSpeed, Ease bulletFireEase)
+        public void Selected(SplineComputer conveyorSpline, ShooterManager shooterManager, ObjectPool pool, float bulletSpeed, Ease bulletFireEase,
+            FXManager fxManager)
         {
             if (_reservedSlot != null)
             {
@@ -91,11 +93,12 @@ namespace _Project.Scripts.Game
                 splineFollower.follow = true;
                 splineFollower.enabled = true;
                 model.transform.localEulerAngles = Vector3.up * -90f;
-                StartShootControl(shooterManager, pool, bulletSpeed, bulletFireEase);
+                StartShootControl(shooterManager, pool, bulletSpeed, bulletFireEase, fxManager);
             });
         }
 
-        private async UniTask StartShootControl(ShooterManager shooterManager, ObjectPool pool, float bulletSpeed, Ease bulletFireEase)
+        private async UniTask StartShootControl(ShooterManager shooterManager, ObjectPool pool, float bulletSpeed, Ease bulletFireEase,
+            FXManager fxManager)
         {
             _shootCts?.Cancel();
             _shootCts = new CancellationTokenSource();
@@ -118,6 +121,7 @@ namespace _Project.Scripts.Game
                             var bullet = pool.SpawnFromPool(PoolTags.Bullet, bulletFirePosition.position, model.transform.rotation)
                                 .GetComponent<Bullet>();
                             bullet.Fire(colorCube, bulletSpeed, bulletFireEase, shooterManager);
+                            fxManager.PlayBulletFireFX();
                             colorCube.Reserve();
                             AddBlastValue(colorCube.CurrentNode.GridPosition);
                             ShootCount--;

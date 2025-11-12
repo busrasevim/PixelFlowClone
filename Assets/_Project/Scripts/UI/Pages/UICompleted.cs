@@ -1,4 +1,5 @@
 using System;
+using _Project.Scripts.Data;
 using DG.Tweening;
 using UnityEngine;
 using Zenject;
@@ -15,11 +16,13 @@ namespace _Project.Scripts.UI.Pages
         private Action _onCompleted;
 
         private SignalBus _signalBus;
+        private GameSettings _gameSettings;
 
         [Inject]
-        public void Construct(SignalBus signalBus)
+        public void Construct(SignalBus signalBus, GameSettings gameSettings)
         {
             _signalBus = signalBus;
+            _gameSettings = gameSettings;
         }
 
         protected override void Awake()
@@ -32,10 +35,8 @@ namespace _Project.Scripts.UI.Pages
         {
             foreach (var confetti in confettis)
                 confetti.Play();
-
-            Taptic.Success();
-
-            DOVirtual.DelayedCall(1f, () =>
+            
+            DOVirtual.DelayedCall(_gameSettings.levelCompletedUIDelay, () =>
             {
                 goPage.SetActive(true);
                 base.Start();

@@ -123,12 +123,14 @@ namespace _Project.Scripts.Managers
         private void LevelCompleted()
         {
             _levelManager.NextLevel();
+            _fxManager.PlayLevelCompletedFX();
             Debug.Log("Level completed.");
         }
 
         private void LevelFailed()
         {
             Debug.Log("Level failed.");
+            _fxManager.PlayLevelFailedFX();
             _levelManager.CurrentLevel.Conveyor.LevelFailed();
         }
 

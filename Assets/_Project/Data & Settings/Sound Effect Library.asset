@@ -15,3 +15,5 @@ MonoBehaviour:
   soundEffects:
   - {fileID: 11400000, guid: 663e0cdd398f049adb36703cbcb0e3ae, type: 2}
   - {fileID: 11400000, guid: 5ab53aed8b41a4ac18bf7f3d1a47aaf3, type: 2}
+  - {fileID: 11400000, guid: 603fbcfe178fe49e3a00739678212bfb, type: 2}
+  - {fileID: 11400000, guid: 732a937c92df44257a51b5e32e3ec482, type: 2}

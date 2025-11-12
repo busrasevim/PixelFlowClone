@@ -10,9 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a64999c1a798e4ba6a63c85bbabc033e, type: 3}
-  m_Name: Normal Example
+  m_Name: Shooter Selected SFX
   m_EditorClassIdentifier: 
-  soundEffectKey: 2
-  clip: {fileID: 8300000, guid: 6af41db9ae8a743b2883def429b47ce2, type: 3}
+  soundEffectKey: 1
+  Category: 0
+  clip: {fileID: 8300000, guid: f9517356afb533a41b9e7cb6f155031e, type: 3}
   loop: 0
   volume: 1
+  pitch: 1
+  pitchRandomness: 0
