@@ -26,37 +26,31 @@ namespace _Project.Scripts.Level
             }
         }
 
-        [TableList(AlwaysExpanded = true)] public List<LevelColorData> levelColors = new();
+        [TableList(AlwaysExpanded = true)] [BoxGroup("Level Color Settings")]
+        public List<LevelColorData> levelColors = new();
 
-        [Range(0.01f, 0.5f)] [Tooltip("Color difference threshold (higher = fewer color groups)")]
+        [Range(0.01f, 0.5f)]
+        [Tooltip("Color difference threshold (higher = fewer color groups)")]
+        [BoxGroup("Level Color Settings")]
         public float colorThreshold = 0.1f;
 
-        public Texture2D levelTexture;
+        [BoxGroup("Level Texture Settings")] public Texture2D levelTexture;
 
+        [BoxGroup("Level Texture Settings")]
         [ReadOnly, Tooltip("Automatically set from the level texture. Do not modify manually.")]
         public Vector2Int colorCubeGridSize;
+
 
         // for Color Palette Preview data
         [HideInInspector] public List<LevelColorData> runtimeColorStats = new();
 
-        [Button("Set Cube Grid Size")]
-        public void SetCubeSize()
-        {
-            if (levelTexture == null)
-            {
-                Debug.LogError("Texture is missing!");
-                return;
-            }
-
-            colorCubeGridSize = new Vector2Int(levelTexture.width, levelTexture.height);
-        }
-
-        [Title("Grid Setup")] public Vector2Int shooterGridSize = new Vector2Int(3, 5);
+        [BoxGroup("Shooter Grid Settings")] public Vector2Int shooterGridSize = new Vector2Int(3, 5);
 
 #if UNITY_EDITOR
         [TableMatrix(DrawElementMethod = "DrawElement", SquareCells = true)]
 #else
         [TableMatrix(SquareCells = true)]
+                [BoxGroup("🧩 Shooter Grid Setup")]
 #endif
         public CellData[,] CellsData;
 
@@ -78,6 +72,7 @@ namespace _Project.Scripts.Level
         }
 
 #if UNITY_EDITOR
+        [BoxGroup("Shooter Grid Settings")]
         [Button("Initialize Grid")]
         public void InitializeGrid()
         {
@@ -95,6 +90,87 @@ namespace _Project.Scripts.Level
             runtimeColorStats = levelColors.Select(c => new LevelColorData(c.id, c.color, c.size)).ToList();
         }
 
+        [OnInspectorGUI("DrawColorGrid")]
+        [BoxGroup("Color Palette Preview")]
+        private void DrawColorGrid()
+        {
+            if (runtimeColorStats == null || runtimeColorStats.Count == 0)
+            {
+                GUILayout.Label("No color stats yet. Run CreateColors first.");
+                return;
+            }
+
+            const int cellSize = 40;
+            const int columns = 6;
+            int padding = 4;
+
+            int total = runtimeColorStats.Count;
+            int rows = Mathf.CeilToInt(total / (float)columns);
+
+            GUILayout.BeginVertical();
+            for (int y = 0; y < rows; y++)
+            {
+                GUILayout.BeginHorizontal();
+                for (int x = 0; x < columns; x++)
+                {
+                    int index = y * columns + x;
+                    if (index >= total)
+                        break;
+
+                    var colorData = runtimeColorStats[index];
+                    var rect = GUILayoutUtility.GetRect(cellSize, cellSize, GUILayout.Width(cellSize),
+                        GUILayout.Height(cellSize));
+
+                    UnityEditor.EditorGUI.DrawRect(rect, colorData.color);
+
+                    // outline
+                    if (index == selectedColorIndex)
+                        UnityEditor.Handles.DrawSolidRectangleWithOutline(rect, Color.clear, Color.yellow);
+                    else
+                        UnityEditor.Handles.DrawSolidRectangleWithOutline(rect, Color.clear, Color.black * 0.4f);
+
+                    // size değeri her daim ortada
+                    GUIStyle sizeStyle = new GUIStyle(GUI.skin.label)
+                    {
+                        alignment = TextAnchor.MiddleCenter,
+                        fontSize = 11,
+                        fontStyle = FontStyle.Bold,
+                        normal = { textColor = GetReadableTextColor(colorData.color) }
+                    };
+                    GUI.Label(rect, colorData.size.ToString(), sizeStyle);
+
+                    // seçili yazısı
+                    if (index == selectedColorIndex)
+                    {
+                        Rect selectedRect = new Rect(rect.x, rect.y + 2, rect.width, 14);
+                        GUIStyle selectedStyle = new GUIStyle(GUI.skin.label)
+                        {
+                            alignment = TextAnchor.UpperCenter,
+                            fontSize = 10,
+                            fontStyle = FontStyle.Bold,
+                            normal = { textColor = GetReadableTextColor(colorData.color) }
+                        };
+                        GUI.Label(selectedRect, "Selected", selectedStyle);
+                    }
+
+                    // fare tıklaması
+                    if (Event.current.type == EventType.MouseDown && rect.Contains(Event.current.mousePosition))
+                    {
+                        selectedColorIndex = index;
+                        GUI.changed = true;
+                    }
+
+                    GUILayout.Space(padding);
+                }
+
+                GUILayout.EndHorizontal();
+                GUILayout.Space(padding);
+            }
+
+            GUILayout.EndVertical();
+        }
+
+        [BoxGroup("🧩 Shooter Grid Setup")]
         private CellData DrawElement(Rect rect, CellData value, int x, int y)
         {
             if (value == null)
@@ -177,7 +253,7 @@ namespace _Project.Scripts.Level
             return value;
         }
 
-
+        [BoxGroup("Level Color Settings")]
         [Button("Create Colors")]
         private void CreateColors()
         {
@@ -319,95 +395,24 @@ namespace _Project.Scripts.Level
             return brightness > 0.5f ? Color.black : Color.white;
         }
 
-        // 🎨 Renk paleti önizleme
-        [Title("Color Palette Preview")] [ShowInInspector, PropertyOrder(-4)] [HideLabel, NonSerialized]
-        private bool _drawColorGrid;
-
-        [OnInspectorGUI("DrawColorGrid")]
-        private void DrawColorGrid()
-        {
-            if (runtimeColorStats == null || runtimeColorStats.Count == 0)
-            {
-                GUILayout.Label("No color stats yet. Run CreateColors first.");
-                return;
-            }
-
-            const int cellSize = 40;
-            const int columns = 6;
-            int padding = 4;
-
-            int total = runtimeColorStats.Count;
-            int rows = Mathf.CeilToInt(total / (float)columns);
-
-            GUILayout.BeginVertical();
-            for (int y = 0; y < rows; y++)
-            {
-                GUILayout.BeginHorizontal();
-                for (int x = 0; x < columns; x++)
-                {
-                    int index = y * columns + x;
-                    if (index >= total)
-                        break;
-
-                    var colorData = runtimeColorStats[index];
-                    var rect = GUILayoutUtility.GetRect(cellSize, cellSize, GUILayout.Width(cellSize),
-                        GUILayout.Height(cellSize));
-
-                    UnityEditor.EditorGUI.DrawRect(rect, colorData.color);
-
-                    // outline
-                    if (index == selectedColorIndex)
-                        UnityEditor.Handles.DrawSolidRectangleWithOutline(rect, Color.clear, Color.yellow);
-                    else
-                        UnityEditor.Handles.DrawSolidRectangleWithOutline(rect, Color.clear, Color.black * 0.4f);
-
-                    // size değeri her daim ortada
-                    GUIStyle sizeStyle = new GUIStyle(GUI.skin.label)
-                    {
-                        alignment = TextAnchor.MiddleCenter,
-                        fontSize = 11,
-                        fontStyle = FontStyle.Bold,
-                        normal = { textColor = GetReadableTextColor(colorData.color) }
-                    };
-                    GUI.Label(rect, colorData.size.ToString(), sizeStyle);
-
-                    // seçili yazısı
-                    if (index == selectedColorIndex)
-                    {
-                        Rect selectedRect = new Rect(rect.x, rect.y + 2, rect.width, 14);
-                        GUIStyle selectedStyle = new GUIStyle(GUI.skin.label)
-                        {
-                            alignment = TextAnchor.UpperCenter,
-                            fontSize = 10,
-                            fontStyle = FontStyle.Bold,
-                            normal = { textColor = GetReadableTextColor(colorData.color) }
-                        };
-                        GUI.Label(selectedRect, "Selected", selectedStyle);
-                    }
-
-                    // fare tıklaması
-                    if (Event.current.type == EventType.MouseDown && rect.Contains(Event.current.mousePosition))
-                    {
-                        selectedColorIndex = index;
-                        GUI.changed = true;
-                    }
-
-                    GUILayout.Space(padding);
-                }
-
-                GUILayout.EndHorizontal();
-                GUILayout.Space(padding);
-            }
-
-            GUILayout.EndVertical();
-        }
-
-
         private void OnValidate()
         {
             //auto cube grid size
             if (levelTexture != null)
                 SetCubeSize();
+        }
+
+        [BoxGroup("Level Texture Settings")]
+        [Button("Set Cube Grid Size")]
+        public void SetCubeSize()
+        {
+            if (levelTexture == null)
+            {
+                Debug.LogError("Texture is missing!");
+                return;
+            }
+
+            colorCubeGridSize = new Vector2Int(levelTexture.width, levelTexture.height);
         }
 
         [Button]
@@ -446,11 +451,11 @@ namespace _Project.Scripts.Level
                 var dif = lc.size - sizeDict[lc.id];
                 if (dif > 0)
                 {
-                    Debug.LogError("Add " + dif + " with ID -" + lc.id+"-");
+                    Debug.LogError("Add " + dif + " with ID -" + lc.id + "-");
                 }
                 else
                 {
-                    Debug.LogError("Remove " + Mathf.Abs(dif) + " with ID -" + lc.id+"-");
+                    Debug.LogError("Remove " + Mathf.Abs(dif) + " with ID -" + lc.id + "-");
                 }
             }
 
