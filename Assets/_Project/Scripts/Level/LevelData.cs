@@ -303,6 +303,11 @@ namespace _Project.Scripts.Level
             }
 
             levelColors = levelColors.OrderByDescending(c => c.size).ToList();
+            
+            // id'leri yeniden sırala
+            for (int i = 0; i < levelColors.Count; i++)
+                levelColors[i].id = i;
+            
             Debug.Log($"Detected {levelColors.Count} grouped colors from {levelTexture.name}");
 
             SetRuntimeColorStats();
