@@ -25,6 +25,10 @@ namespace _Project.Scripts.Data
         [TabGroup("General")] public int reservedSlotWarningEffectCount = 2;
 
 
+        [TabGroup("General")] public float defaultTextureWidth;
+        [TabGroup("General")] public float defaultTextureHeight;
+
+
         [TabGroup("Levels")] [ListDrawerSettings(Expanded = true, DraggableItems = false, ShowIndexLabels = true)]
         public LevelData[] levels;
 

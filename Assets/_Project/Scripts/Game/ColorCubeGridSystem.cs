@@ -9,6 +9,8 @@ namespace _Project.Scripts.Game
             gridWidth  = size.x;
             gridHeight = size.y;
             
+           
+            
             base.Init(size);
         }
 

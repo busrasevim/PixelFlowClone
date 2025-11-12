@@ -21,6 +21,8 @@ MonoBehaviour:
   levelFailedUIDelay: 2
   reservedSlotWarningEffectDuration: 0.5
   reservedSlotWarningEffectCount: 2
+  defaultTextureWidth: 20
+  defaultTextureHeight: 20
   levels:
   - {fileID: 11400000, guid: 55f2d825637da4355836a812427c3067, type: 2}
   - {fileID: 11400000, guid: ad04f998e47bf44329f139092b9ce3a6, type: 2}

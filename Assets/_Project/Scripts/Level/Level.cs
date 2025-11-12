@@ -1,3 +1,4 @@
+using System;
 using _Project.Scripts.Data;
 using _Project.Scripts.Game;
 using _Project.Scripts.Managers;
@@ -29,11 +30,26 @@ namespace _Project.Scripts.Level
             _gameSettings = settings;
 
             shooterGridSystem.Init(data.shooterGridSize);
+
+            var spaceX = colorCubeGridSystem.gridSpaceX *
+                         (_gameSettings.defaultTextureWidth / data.colorCubeGridSize.x);
+            var spaceZ = colorCubeGridSystem.gridSpaceZ *
+                         (_gameSettings.defaultTextureHeight / data.colorCubeGridSize.y);
+
+            spaceX = spaceZ = Mathf.Min(spaceX, spaceZ);
+
+            colorCubeGridSystem.gridSpaceX = spaceX;
+            colorCubeGridSystem.gridSpaceZ = spaceZ;
+
+            var cubeScale = 1f * (data.colorCubeGridSize.x > data.colorCubeGridSize.y
+                ? _gameSettings.defaultTextureWidth / data.colorCubeGridSize.x
+                : _gameSettings.defaultTextureHeight / data.colorCubeGridSize.y);
+
             colorCubeGridSystem.Init(data.colorCubeGridSize);
             reservedSlotGridSystem.Init();
 
             CreateShooters(_gameSettings.shooterSpeed);
-            CreateColorCubes();
+            CreateColorCubes(cubeScale);
             reservedSlotGridSystem.SetSlotValues(_gameSettings.reservedSlotWarningEffectDuration,
                 _gameSettings.reservedSlotWarningEffectCount);
 
@@ -57,7 +73,7 @@ namespace _Project.Scripts.Level
             }
         }
 
-        private void CreateColorCubes()
+        private void CreateColorCubes(float scale)
         {
             Texture2D texture = LevelData.levelTexture;
             for (int i = 0; i < texture.width; i++)
@@ -69,6 +85,7 @@ namespace _Project.Scripts.Level
                     var node = colorCubeGridSystem.GetNode(i, j);
                     var cube = Instantiate(colorCubePrefab, node.transform).GetComponent<ColorCube>();
 
+                    cube.transform.localScale = new Vector3(scale, cube.transform.localScale.y, scale);
                     cube.Init(texture.GetPixel(i, j), LevelData.levelColors,
                         LevelData.colorThreshold);
                     cube.Initialize(node);
