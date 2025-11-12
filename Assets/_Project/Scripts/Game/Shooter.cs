@@ -114,7 +114,7 @@ namespace _Project.Scripts.Game
                         if (colorCube != null && colorCube.colorID == colorID &&
                             CanBlast(colorCube.CurrentNode.GridPosition))
                         {
-                            var bullet = pool.SpawnFromPool(PoolTags.Bullet, transform.position, model.transform.rotation)
+                            var bullet = pool.SpawnFromPool(PoolTags.Bullet, bulletFirePosition.position, model.transform.rotation)
                                 .GetComponent<Bullet>();
                             bullet.Fire(colorCube, bulletSpeed, bulletFireEase);
                             colorCube.Reserve();

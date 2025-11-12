@@ -44,17 +44,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc1a8dd60dcd94fcd81172f36e6c4006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridWidth: 1
-  gridHeight: 1
+  gridWidth: 4
+  gridHeight: 7
   coordinateXY: 0
   coordinateXZ: 1
   coordinateYZ: 0
   centerX: 0
   centerY: 0
   centerZ: 0
-  gridSpaceX: 1
+  gridSpaceX: 0.79
   gridSpaceY: 1
-  gridSpaceZ: 1
+  gridSpaceZ: 0.87
   nodePrefab: {fileID: 8871067700690599841, guid: cdd9b6f941a6046a6b9eb72a0763d450, type: 3}
   useCustomZStart: 0
   customZStart: 0

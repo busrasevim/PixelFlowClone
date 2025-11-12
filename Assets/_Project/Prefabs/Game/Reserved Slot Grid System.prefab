@@ -52,7 +52,7 @@ MonoBehaviour:
   centerX: 0
   centerY: 0
   centerZ: 0
-  gridSpaceX: 1
+  gridSpaceX: 0.85
   gridSpaceY: 1
   gridSpaceZ: 1
   nodePrefab: {fileID: 4787271265891423120, guid: 4acc9fdd41438412c86caa7cc05079f1, type: 3}
