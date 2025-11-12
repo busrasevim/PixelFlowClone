@@ -7,9 +7,9 @@ namespace _Project.Scripts.Game
         public bool IsFull { get; protected set; }
         public INodeObject NodeObject { get; private set; }
         protected GridSystem _gridSystem;
-        
+
         public Vector2Int GridPosition { get; private set; }
-        
+
 
         public void Initialize(GridSystem system)
         {
@@ -26,9 +26,10 @@ namespace _Project.Scripts.Game
             NodeObject = nodeObj;
             IsFull = true;
         }
-        
+
         public virtual void SetEmpty(INodeObject nodeObj)
         {
+            if (nodeObj != NodeObject) return;
             IsFull = false;
             NodeObject = null;
         }
