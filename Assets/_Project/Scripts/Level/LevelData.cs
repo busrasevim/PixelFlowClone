@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 
 namespace _Project.Scripts.Level
 {
-    [CreateAssetMenu(menuName = "Levels/Level Data", fileName = "Level_")]
+    [CreateAssetMenu(menuName = "Levels/Level Data", fileName = "Level ")]
     public class LevelData : SerializedScriptableObject
     {
         [Serializable]
@@ -28,16 +28,18 @@ namespace _Project.Scripts.Level
 
         [TableList(AlwaysExpanded = true)] public List<LevelColorData> levelColors = new();
 
-        [Range(0.01f, 0.5f)] [Tooltip("Renkler arasındaki fark eşiği (daha yüksek = daha az renk grubu)")]
+        [Range(0.01f, 0.5f)] [Tooltip("Color difference threshold (higher = fewer color groups)")]
         public float colorThreshold = 0.1f;
 
         public Texture2D levelTexture;
+
+        [ReadOnly, Tooltip("Automatically set from the level texture. Do not modify manually.")]
         public Vector2Int colorCubeGridSize;
 
-        // runtime tarafında kullanılacak geçici renk değerleri (Color Palette Preview için)
+        // for Color Palette Preview data
         [HideInInspector] public List<LevelColorData> runtimeColorStats = new();
 
-        [Button("Set Cube Size")]
+        [Button("Set Cube Grid Size")]
         public void SetCubeSize()
         {
             if (levelTexture == null)
@@ -84,6 +86,14 @@ namespace _Project.Scripts.Level
             for (int x = 0; x < shooterGridSize.x; x++)
             for (int y = 0; y < shooterGridSize.y; y++)
                 CellsData[x, y] = new CellData(new Vector2Int(x, y));
+
+            SetRuntimeColorStats();
+        }
+
+        private void SetRuntimeColorStats()
+        {
+            // runtimeColorStats'i sıfırla ve kopyala
+            runtimeColorStats = levelColors.Select(c => new LevelColorData(c.id, c.color, c.size)).ToList();
         }
 
         private CellData DrawElement(Rect rect, CellData value, int x, int y)
@@ -91,10 +101,10 @@ namespace _Project.Scripts.Level
             if (value == null)
                 value = new CellData(new Vector2Int(x, y));
 
-            // Hücre arka planını çiz
+            //draw bg
             UnityEditor.EditorGUI.DrawRect(rect, value.cellColor);
 
-            // Eğer renk atanmışsa (gray değilse), shootCount yaz
+            //write shoot count
             if (value.cellColor != Color.gray)
             {
                 GUIStyle style = new GUIStyle(GUI.skin.label)
@@ -106,31 +116,28 @@ namespace _Project.Scripts.Level
                 GUI.Label(rect, value.shootCount.ToString(), style);
             }
 
-            // Hücreye tıklama (renk ataması)
+            // assign color
             if (Event.current.type == EventType.MouseDown && rect.Contains(Event.current.mousePosition))
             {
                 if (selectedColorIndex >= 0 && selectedColorIndex < levelColors.Count)
                 {
                     var data = levelColors[selectedColorIndex];
 
+                    //reset shoot count
                     if (value.cellColor != data.color)
                     {
                         value.shootCount = 0;
                     }
-                    
+
                     value.cellColor = data.color;
                     value.colorID = data.id;
-
-                    // Eğer shootCount daha önce tanımlı değilse, 0 olarak başlat
-                    if (value.shootCount == 0)
-                        value.shootCount = 0;
                 }
 
-                // Grid anında yenilensin
                 GUI.changed = true;
                 UnityEditor.EditorUtility.SetDirty(this);
             }
 
+            //update shoot count
             if (rect.Contains(Event.current.mousePosition) && value.colorID >= 0 &&
                 value.colorID < runtimeColorStats.Count && value.cellColor != Color.gray)
             {
@@ -145,6 +152,7 @@ namespace _Project.Scripts.Level
 
                 if (Event.current.type == EventType.KeyDown)
                 {
+                    //increase shoot count
                     if (Event.current.keyCode == KeyCode.Z && colorData.size > 0)
                     {
                         value.shootCount++;
@@ -153,6 +161,7 @@ namespace _Project.Scripts.Level
                         GUI.changed = true;
                         UnityEditor.EditorUtility.SetDirty(this);
                     }
+                    //decrease shoot count
                     else if (Event.current.keyCode == KeyCode.X && value.shootCount > 0)
                     {
                         value.shootCount--;
@@ -213,8 +222,7 @@ namespace _Project.Scripts.Level
             levelColors = levelColors.OrderByDescending(c => c.size).ToList();
             Debug.Log($"Detected {levelColors.Count} grouped colors from {levelTexture.name}");
 
-            // runtimeColorStats'i sıfırla ve kopyala
-            runtimeColorStats = levelColors.Select(c => new LevelColorData(c.id, c.color, c.size)).ToList();
+            SetRuntimeColorStats();
         }
 
         [Button("Distribute Colors To Grid")]
@@ -272,11 +280,13 @@ namespace _Project.Scripts.Level
             for (int x = 0; x < width; x++)
             for (int y = 0; y < height; y++)
             {
+                if (shooterData.Count == 0) continue;
                 var cell = CellsData[x, y];
                 cell.cellColor = Color.gray;
                 cell.shootCount = 0;
 
                 var randomColor = colors.GetRandomElement();
+                if (!shooterData.ContainsKey(randomColor)) continue;
                 var dictIndex = Random.Range(0, shooterData[randomColor].Count);
                 cell.cellColor = randomColor;
                 cell.shootCount = shooterData[randomColor][dictIndex];
@@ -288,6 +298,11 @@ namespace _Project.Scripts.Level
             }
 
             Debug.Log("✅ Colors distributed evenly across grid.");
+
+            foreach (var runtimeColorStat in runtimeColorStats)
+            {
+                runtimeColorStat.size = 0;
+            }
         }
 
         private bool IsSimilarColor(Color a, Color b, float threshold)
@@ -388,6 +403,13 @@ namespace _Project.Scripts.Level
             GUILayout.EndVertical();
         }
 
+
+        private void OnValidate()
+        {
+            //auto cube grid size
+            if (levelTexture != null)
+                SetCubeSize();
+        }
 
 #endif
     }
