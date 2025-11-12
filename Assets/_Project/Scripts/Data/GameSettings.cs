@@ -20,6 +20,9 @@ namespace _Project.Scripts.Data
         [TabGroup("General")] public Ease bulletFireEase = Ease.Linear;
 
         [TabGroup("General")] public int conveyorShooterLimit = 5;
+        [TabGroup("General")] public int conveyorArrowCount;
+        [TabGroup("General")]public float conveyorArrowSpeed = 5f;
+
 
         [TabGroup("General")] public float levelCompletedUIDelay = 1f;
         [TabGroup("General")] public float levelFailedUIDelay = 2f;

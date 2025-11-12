@@ -19,6 +19,8 @@ MonoBehaviour:
   bulletSpeed: 5
   bulletFireEase: 1
   conveyorShooterLimit: 5
+  conveyorArrowCount: 15
+  conveyorArrowSpeed: 3
   levelCompletedUIDelay: 1
   levelFailedUIDelay: 2
   reservedSlotWarningEffectDuration: 0.5

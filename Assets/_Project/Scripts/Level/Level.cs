@@ -2,6 +2,7 @@ using System;
 using _Project.Scripts.Data;
 using _Project.Scripts.Game;
 using _Project.Scripts.Managers;
+using _Project.Scripts.Pools;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -24,7 +25,7 @@ namespace _Project.Scripts.Level
 
         private GameSettings _gameSettings;
 
-        public void Init(LevelData data, GameSettings settings)
+        public void Init(LevelData data, GameSettings settings, ObjectPool pool)
         {
             LevelData = data;
             _gameSettings = settings;
@@ -54,6 +55,7 @@ namespace _Project.Scripts.Level
                 _gameSettings.reservedSlotWarningEffectCount);
 
             conveyor.SetShooterLimit(settings.conveyorShooterLimit);
+            conveyor.SetArrows(pool, _gameSettings.conveyorArrowCount, _gameSettings.conveyorArrowSpeed);
         }
 
         private void CreateShooters(float shooterFollowSpeed)

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using _Project.Scripts.Pools;
 using DG.Tweening;
 using Dreamteck.Splines;
 using TMPro;
@@ -66,10 +67,7 @@ namespace _Project.Scripts.Game
                 vibrato: 12,
                 randomness: 60f,
                 fadeOut: true
-            ).OnComplete(() =>
-            {
-                shooterCountText.DOColor(Color.white, 0.2f);
-            });
+            ).OnComplete(() => { shooterCountText.DOColor(Color.white, 0.2f); });
         }
 
         public void LevelFailed()
@@ -79,5 +77,36 @@ namespace _Project.Scripts.Game
                 shooter.Stop();
             }
         }
+
+        public void SetArrows(ObjectPool pool, int arrowCount, float arrowSpeed)
+        {
+            if (_spline == null || arrowCount <= 0) return;
+
+            // spline'ın gerçek uzunluğunu al
+            double splineLength = _spline.CalculateLength();
+
+            // oklar arası world-space mesafesi
+            double stepDistance = splineLength / (arrowCount - 1);
+
+            double distance = 0;
+
+            for (int i = 0; i < arrowCount; i++)
+            {
+                var arrowObj = pool.SpawnFromPool(PoolTags.ConveyorArrow, transform.position, Quaternion.identity);
+                var arrow = arrowObj.GetComponent<ConveyorArrow>();
+
+                arrow.transform.SetParent(transform, worldPositionStays: true);
+
+                // Bu distance değerinin spline üzerinde normalized karşılığını bul
+                double percent = _spline.Travel(0.0, (float)distance, Spline.Direction.Forward);
+
+                // Oka spline ve yüzdesini ver
+                arrow.SetSpline(_spline, percent, arrowSpeed);
+
+                // sonraki oka geç
+                distance += stepDistance;
+            }
+        }
+
     }
 }

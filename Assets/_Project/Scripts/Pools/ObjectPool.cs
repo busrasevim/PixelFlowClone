@@ -118,6 +118,7 @@ namespace _Project.Scripts.Pools
         ColorCube,
         Shooter,
         Bullet,
+        ConveyorArrow,
     }
 }
 
