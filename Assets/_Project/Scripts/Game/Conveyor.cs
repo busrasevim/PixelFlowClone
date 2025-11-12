@@ -16,7 +16,7 @@ namespace _Project.Scripts.Game
 
         private int _conveyorLimit;
         private List<Shooter> _shootersOnConveyor = new List<Shooter>();
-        private ConveyorArrow[]  _arrows;
+        private ConveyorArrow[] _arrows;
 
         private void Start()
         {
@@ -54,7 +54,7 @@ namespace _Project.Scripts.Game
 
         private void SetShooterCountText()
         {
-            shooterCountText.text = _shootersOnConveyor.Count.ToString() + "/" + _conveyorLimit;
+            shooterCountText.text = (_conveyorLimit - _shootersOnConveyor.Count).ToString() + "/" + _conveyorLimit;
         }
 
         public void PlayConveyorIsFullEffect()
@@ -113,10 +113,9 @@ namespace _Project.Scripts.Game
 
                 // sonraki oka geç
                 distance += stepDistance;
-                
-                _arrows[i]  = arrow;
+
+                _arrows[i] = arrow;
             }
         }
-
     }
 }
