@@ -13,8 +13,8 @@ namespace _Project.Scripts.Data
 
         [TabGroup("General")] public int randomStartIndex = 3;
 
-        [TabGroup("General")] public int shooterSpeed = 3;
-        [TabGroup("General")] public int lastShooterEffectFastSpeed = 3;
+        [TabGroup("General")] public float shooterSpeed = 3;
+        [TabGroup("General")] public float lastShooterEffectTimeScale = 2f;
         
         [TabGroup("General")] public float bulletSpeed = 3f;
         [TabGroup("General")] public Ease bulletFireEase = Ease.Linear;

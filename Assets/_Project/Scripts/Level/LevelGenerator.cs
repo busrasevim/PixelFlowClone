@@ -38,6 +38,7 @@ namespace _Project.Scripts.Level
 
         private void ResetLevel()
         {
+            Time.timeScale = 1;
             if (_levelManager.CurrentLevel == null) return;
 
             Object.Destroy(_levelManager.CurrentLevel.gameObject);

@@ -55,11 +55,13 @@ namespace _Project.Scripts.Game
             return bestID;
         }
 
-        public void Blast()
+        public void Blast(ShooterManager shooterManager)
         {
             CurrentNode.SetEmpty(this);
             transform.DOScale(Vector3.zero, 0.1f).SetEase(Ease.InBack)
                 .OnComplete(() => { gameObject.SetActive(false); });
+            
+            shooterManager.ColorCubeBlasted();
         }
 
         public void Reserve()

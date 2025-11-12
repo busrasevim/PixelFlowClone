@@ -88,11 +88,7 @@ public class ShooterManager
         if (count <= _gameSettings.conveyorShooterLimit)
         {
             OnLastShooterEffect = true;
-            var shooters = Object.FindObjectsByType<Shooter>(FindObjectsSortMode.None);
-            foreach (var shooter in shooters)
-            {
-                shooter.SetSpeed(_gameSettings.lastShooterEffectFastSpeed);
-            }
+            Time.timeScale = _gameSettings.lastShooterEffectTimeScale;
         }
     }
 

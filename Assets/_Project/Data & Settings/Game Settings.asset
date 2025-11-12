@@ -15,7 +15,7 @@ MonoBehaviour:
   defaultLevelEarnMoneyCount: 30
   randomStartIndex: 0
   shooterSpeed: 3
-  lastShooterEffectFastSpeed: 6
+  lastShooterEffectTimeScale: 1.4
   bulletSpeed: 5
   bulletFireEase: 1
   conveyorShooterLimit: 5

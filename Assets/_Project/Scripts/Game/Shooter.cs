@@ -116,9 +116,8 @@ namespace _Project.Scripts.Game
                         {
                             var bullet = pool.SpawnFromPool(PoolTags.Bullet, bulletFirePosition.position, model.transform.rotation)
                                 .GetComponent<Bullet>();
-                            bullet.Fire(colorCube, bulletSpeed, bulletFireEase);
+                            bullet.Fire(colorCube, bulletSpeed, bulletFireEase, shooterManager);
                             colorCube.Reserve();
-                            shooterManager.ColorCubeBlasted();
                             AddBlastValue(colorCube.CurrentNode.GridPosition);
                             ShootCount--;
                             SetShootCountText();
