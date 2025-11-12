@@ -9,7 +9,7 @@ namespace _Project.Scripts.Level
         private LevelManager _levelManager;
         private GameObject _levelPrefab;
         private GameSettings _gameSettings;
-        private ObjectPool  _objectPool;
+        private ObjectPool _objectPool;
 
         public LevelGenerator(LevelManager levelManager, GameObject levelPrefab, GameSettings gameSettings,
             ObjectPool objectPool)
@@ -40,6 +40,8 @@ namespace _Project.Scripts.Level
         {
             Time.timeScale = 1;
             if (_levelManager.CurrentLevel == null) return;
+
+            _levelManager.CurrentLevel.Reset();
 
             Object.Destroy(_levelManager.CurrentLevel.gameObject);
         }

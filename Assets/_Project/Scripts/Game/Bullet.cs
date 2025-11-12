@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace _Project.Scripts.Game
 {
-    public class Bullet : MonoBehaviour
+    public class Bullet : MonoBehaviour, IPoolObject
     {
         public void Fire(ColorCube targetCube, float bulletSpeed, Ease bulletFireEase, ShooterManager shooterManager)
         {
@@ -14,6 +14,16 @@ namespace _Project.Scripts.Game
                 targetCube.Blast(shooterManager);
                 transform.DOScale(Vector3.zero, 0.1f);
             });
+        }
+
+        public void Init()
+        {
+            
+        }
+
+        public void Reset()
+        {
+            transform.localScale = Vector3.one;
         }
     }
 }

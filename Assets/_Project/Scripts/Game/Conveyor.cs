@@ -84,7 +84,7 @@ namespace _Project.Scripts.Game
             }
         }
 
-        public void SetArrows(ObjectPool pool, int arrowCount, float arrowSpeed)
+        public void SetArrows(ObjectPool pool, int arrowCount, float arrowSpeed, Level.Level level)
         {
             _arrows = new ConveyorArrow[arrowCount];
 
@@ -115,6 +115,8 @@ namespace _Project.Scripts.Game
                 distance += stepDistance;
 
                 _arrows[i] = arrow;
+
+                level.SpawnedNewArrows(arrow);
             }
         }
     }

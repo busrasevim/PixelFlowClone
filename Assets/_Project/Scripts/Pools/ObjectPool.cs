@@ -72,7 +72,9 @@ namespace _Project.Scripts.Pools
             objectToSpawn.transform.position = position;
             objectToSpawn.transform.rotation = rotation;
             objectToSpawn.SetActive(true);
-
+           
+            var iPool = objectToSpawn.GetComponent<IPoolObject>();
+            iPool?.Init();
 
             return objectToSpawn;
         }
@@ -89,7 +91,7 @@ namespace _Project.Scripts.Pools
 
 
             var iPool = poolObj.GetComponent<IPoolObject>();
-            iPool?.Init();
+            iPool?.Reset();
 
             _poolDictionary[poolTag].Enqueue(poolObj);
         }
@@ -119,6 +121,9 @@ namespace _Project.Scripts.Pools
         Shooter,
         Bullet,
         ConveyorArrow,
+        ReservedSlot,
+        ShooterNode,
+        ColorCubeNode,
     }
 }
 

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using _Project.Scripts.Data;
 using _Project.Scripts.Game;
 using _Project.Scripts.Managers;
@@ -15,9 +16,6 @@ namespace _Project.Scripts.Level
         [SerializeField] private ReservedSlotGridSystem reservedSlotGridSystem;
         [SerializeField] private Conveyor conveyor;
 
-        [SerializeField] private GameObject shooterPrefab;
-        [SerializeField] private GameObject colorCubePrefab;
-
         public LevelData LevelData { get; private set; }
         public Conveyor Conveyor => conveyor;
         public ShooterGridSystem ShooterGridSystem => shooterGridSystem;
@@ -25,12 +23,23 @@ namespace _Project.Scripts.Level
 
         private GameSettings _gameSettings;
 
+        private List<ColorCube> _cubes = new List<ColorCube>();
+        private List<Shooter> _shooters = new List<Shooter>();
+        private List<Bullet> _bullets = new List<Bullet>();
+        private List<ConveyorArrow> _arrows = new List<ConveyorArrow>();
+        private List<Node> _reservedSlots = new List<Node>();
+        private List<Node> _shooterNodes = new List<Node>();
+        private List<Node> _colorCubeNodes = new List<Node>();
+
+        private ObjectPool _pool;
+
         public void Init(LevelData data, GameSettings settings, ObjectPool pool)
         {
             LevelData = data;
             _gameSettings = settings;
+            _pool = pool;
 
-            shooterGridSystem.Init(data.shooterGridSize);
+            shooterGridSystem.Init(pool, data.shooterGridSize);
 
             var spaceX = colorCubeGridSystem.gridSpaceX *
                          (_gameSettings.defaultTextureWidth / data.colorCubeGridSize.x);
@@ -46,19 +55,19 @@ namespace _Project.Scripts.Level
                 ? _gameSettings.defaultTextureWidth / data.colorCubeGridSize.x
                 : _gameSettings.defaultTextureHeight / data.colorCubeGridSize.y);
 
-            colorCubeGridSystem.Init(data.colorCubeGridSize);
-            reservedSlotGridSystem.Init();
+            colorCubeGridSystem.Init(pool, data.colorCubeGridSize);
+            reservedSlotGridSystem.Init(pool);
 
-            CreateShooters(_gameSettings.shooterSpeed);
-            CreateColorCubes(cubeScale);
+            CreateShooters(_gameSettings.shooterSpeed, pool);
+            CreateColorCubes(cubeScale, pool);
             reservedSlotGridSystem.SetSlotValues(_gameSettings.reservedSlotWarningEffectDuration,
                 _gameSettings.reservedSlotWarningEffectCount);
 
             conveyor.SetShooterLimit(settings.conveyorShooterLimit);
-            conveyor.SetArrows(pool, _gameSettings.conveyorArrowCount, _gameSettings.conveyorArrowSpeed);
+            conveyor.SetArrows(pool, _gameSettings.conveyorArrowCount, _gameSettings.conveyorArrowSpeed, this);
         }
 
-        private void CreateShooters(float shooterFollowSpeed)
+        private void CreateShooters(float shooterFollowSpeed, ObjectPool pool)
         {
             for (int i = 0; i < LevelData.CellsData.GetLength(0); i++)
             {
@@ -68,15 +77,19 @@ namespace _Project.Scripts.Level
                     if (data.shootCount == 0) continue;
                     var node = shooterGridSystem.GetNode(i, shooterGridSystem.gridHeight - j - 1);
 
-                    var shooter = Instantiate(shooterPrefab, node.transform).GetComponent<Shooter>();
+                    var shooter = pool.SpawnFromPool(PoolTags.Shooter, node.transform.position,
+                        node.transform.rotation).GetComponent<Shooter>();
+                    shooter.transform.SetParent(node.transform);
                     shooter.Init(data, shooterFollowSpeed);
                     shooter.Initialize(node);
                     node.AssignNodeObject(shooter);
+
+                    _shooters.Add(shooter);
                 }
             }
         }
 
-        private void CreateColorCubes(float scale)
+        private void CreateColorCubes(float scale, ObjectPool pool)
         {
             Texture2D texture = LevelData.levelTexture;
             for (int i = 0; i < texture.width; i++)
@@ -86,13 +99,17 @@ namespace _Project.Scripts.Level
                     if (texture.GetPixel(i, j).a <= 0.1f) continue;
 
                     var node = colorCubeGridSystem.GetNode(i, j);
-                    var cube = Instantiate(colorCubePrefab, node.transform).GetComponent<ColorCube>();
+                    var cube = pool.SpawnFromPool(PoolTags.ColorCube, node.transform.position, node.transform.rotation)
+                        .GetComponent<ColorCube>();
+                    cube.transform.SetParent(node.transform);
 
                     cube.transform.localScale = new Vector3(scale, cube.transform.localScale.y, scale);
                     cube.Init(texture.GetPixel(i, j), LevelData.levelColors,
                         LevelData.colorThreshold);
                     cube.Initialize(node);
                     node.AssignNodeObject(cube);
+
+                    _cubes.Add(cube);
                 }
             }
         }
@@ -101,6 +118,72 @@ namespace _Project.Scripts.Level
         {
             var slot = reservedSlotGridSystem.GetAvailableSlot();
             return slot;
+        }
+
+        public void Reset()
+        {
+            foreach (var colorCube in _cubes)
+            {
+                colorCube.transform.SetParent(_pool.transform);
+                _pool.DestroyToPool(PoolTags.ColorCube, colorCube.gameObject);
+            }
+
+            foreach (var shooter in _shooters)
+            {
+                shooter.transform.SetParent(_pool.transform);
+                _pool.DestroyToPool(PoolTags.Shooter, shooter.gameObject);
+            }
+
+            foreach (var bullet in _bullets)
+            {
+                bullet.transform.SetParent(_pool.transform);
+                _pool.DestroyToPool(PoolTags.Bullet, bullet.gameObject);
+            }
+
+            foreach (var arrow in _arrows)
+            {
+                arrow.transform.SetParent(_pool.transform);
+                _pool.DestroyToPool(PoolTags.ConveyorArrow, arrow.gameObject);
+            }
+
+            _reservedSlots.AddRange(reservedSlotGridSystem.GetAllNodes());
+            foreach (var slot in _reservedSlots)
+            {
+                slot.transform.SetParent(_pool.transform);
+                _pool.DestroyToPool(PoolTags.ReservedSlot, slot.gameObject);
+            }
+
+            _shooterNodes.AddRange(shooterGridSystem.GetAllNodes());
+            foreach (var node in _shooterNodes)
+            {
+                node.transform.SetParent(_pool.transform);
+                _pool.DestroyToPool(PoolTags.ShooterNode, node.gameObject);
+            }
+
+            _colorCubeNodes.AddRange(colorCubeGridSystem.GetAllNodes());
+            foreach (var cubeNode in _colorCubeNodes)
+            {
+                cubeNode.transform.SetParent(_pool.transform);
+                _pool.DestroyToPool(PoolTags.ColorCubeNode, cubeNode.gameObject);
+            }
+
+            _cubes.Clear();
+            _shooters.Clear();
+            _bullets.Clear();
+            _arrows.Clear();
+            _reservedSlots.Clear();
+            _shooterNodes.Clear();
+            _colorCubeNodes.Clear();
+        }
+
+        public void SpawnNewBullet(Bullet bullet)
+        {
+            _bullets.Add(bullet);
+        }
+
+        public void SpawnedNewArrows(ConveyorArrow arrow)
+        {
+            _arrows.Add(arrow);
         }
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace _Project.Scripts.Game
 {
-    public class ConveyorArrow : MonoBehaviour
+    public class ConveyorArrow : MonoBehaviour, IPoolObject
     {
         [SerializeField] private SplineFollower  splineFollower;
 
@@ -31,6 +31,17 @@ namespace _Project.Scripts.Game
         public void Stop()
         {
             splineFollower.follow = false;
+        }
+
+        public void Init()
+        {
+            
+        }
+
+        public void Reset()
+        {
+            splineFollower.follow = false;
+            splineFollower.spline = null;
         }
     }
 }

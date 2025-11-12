@@ -61,3 +61,15 @@ MonoBehaviour:
     prefab: {fileID: 8718456199327258174, guid: 3a65791da3901459891167c80d3f0937, type: 3}
     size: 60
     poolParent: {fileID: 0}
+  - tag: 5
+    prefab: {fileID: 4787271265891423120, guid: 4acc9fdd41438412c86caa7cc05079f1, type: 3}
+    size: 10
+    poolParent: {fileID: 0}
+  - tag: 6
+    prefab: {fileID: 8871067700690599841, guid: cdd9b6f941a6046a6b9eb72a0763d450, type: 3}
+    size: 100
+    poolParent: {fileID: 0}
+  - tag: 7
+    prefab: {fileID: 5842881658341230400, guid: 70c9ad60ed219450e90ea71b573ab28c, type: 3}
+    size: 500
+    poolParent: {fileID: 0}

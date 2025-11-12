@@ -105,4 +105,9 @@ public class ShooterManager
     {
         _gameManager = gameManager;
     }
+
+    public void SpawnNewBullet(Bullet bullet)
+    {
+        _levelManager.CurrentLevel.SpawnNewBullet(bullet);
+    }
 }

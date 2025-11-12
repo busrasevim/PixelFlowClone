@@ -55,7 +55,7 @@ MonoBehaviour:
   gridSpaceX: 0.79
   gridSpaceY: 1
   gridSpaceZ: 0.87
-  nodePrefab: {fileID: 8871067700690599841, guid: cdd9b6f941a6046a6b9eb72a0763d450, type: 3}
+  nodePoolTag: 6
   useCustomZStart: 0
   customZStart: 0
   useCustomZEnd: 1

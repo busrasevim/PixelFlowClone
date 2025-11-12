@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace _Project.Scripts.Game
 {
-    public class ColorCube : MonoBehaviour, INodeObject
+    public class ColorCube : MonoBehaviour, INodeObject, IPoolObject
     {
         [SerializeField] private Renderer cubeRenderer;
         [SerializeField] private Collider cubeCollider;
@@ -67,6 +67,19 @@ namespace _Project.Scripts.Game
         public void Reserve()
         {
             cubeCollider.enabled = false;
+        }
+
+        public void Init()
+        {
+            
+        }
+
+        public void Reset()
+        {
+            transform.localScale = Vector3.one;
+            cubeCollider.enabled = true;
+            colorID = -1;
+            CurrentNode = null;
         }
     }
 }

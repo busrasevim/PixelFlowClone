@@ -1,15 +1,16 @@
+using _Project.Scripts.Pools;
 using UnityEngine;
 
 namespace _Project.Scripts.Game
 {
     public class ShooterGridSystem : GridSystem
     {
-        public override void Init(Vector2Int size = default)
+        public override void Init(ObjectPool pool, Vector2Int size = default)
         {
             gridWidth = size.x;
             gridHeight = size.y;
 
-            base.Init(size);
+            base.Init(pool, size);
         }
 
         public void TransferShooters(int shooterXValue)

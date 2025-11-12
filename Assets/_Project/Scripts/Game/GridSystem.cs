@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using _Project.Scripts.Pools;
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
@@ -41,7 +43,7 @@ namespace _Project.Scripts.Game
 
         protected Node[,] _nodes;
 
-        public GameObject nodePrefab;
+        public PoolTags nodePoolTag;
 
         [Header("Z Position Control")]
 #if UNITY_EDITOR
@@ -62,12 +64,12 @@ namespace _Project.Scripts.Game
 #endif
         public float customZEnd;
 
-        public virtual void Init(Vector2Int size = default)
+        public virtual void Init(ObjectPool pool, Vector2Int size = default)
         {
-            SpawnNodes(transform);
+            SpawnNodes(pool, transform);
         }
 
-        protected virtual void SpawnNodes(Transform parent = null, bool editorSpawn = false)
+        protected virtual void SpawnNodes(ObjectPool pool, Transform parent = null, bool editorSpawn = false)
         {
             // Initialize the grid array
             _nodes = new Node[gridWidth, gridHeight];
@@ -83,24 +85,12 @@ namespace _Project.Scripts.Game
                 for (int j = 0; j < gridHeight; j++)
                 {
                     var position = GetNodePosition(i, j);
-                    Node node;
 
-#if UNITY_EDITOR
-                    // If we are spawning in the editor using PrefabUtility
-                    if (editorSpawn)
-                    {
-                        var obj = (GameObject)PrefabUtility.InstantiatePrefab(nodePrefab, parent);
 
-                        obj.transform.position = position;
-                        node = obj.GetComponent<Node>();
-                    }
-                    else
-#endif
-                    {
-                        // If we are spawning in runtime
-                        node = Instantiate(nodePrefab, position,
-                            Quaternion.identity, parent).GetComponent<Node>();
-                    }
+                    // If we are spawning in runtime
+                    var node = pool.SpawnFromPool(nodePoolTag, position, Quaternion.identity).GetComponent<Node>();
+                    node.transform.SetParent(parent);
+
 
                     // Set grid coordinates and initialize
                     node.SetCoordination(i, j);
@@ -108,12 +98,27 @@ namespace _Project.Scripts.Game
 
                     // Store the grid object in the array
                     _nodes[i, j] = node;
+
+                    node.gameObject.name = "Node_" + i + "_" + j;
                     
-                    node.gameObject.name ="Node_" + i + "_" + j;
+                    
                 }
             }
         }
 
+        public Node[] GetAllNodes()
+        {
+            var nodeList = new List<Node>();
+            for (int i = 0; i < _nodes.GetLength(0); i++)
+            {
+                for (int j = 0; j < _nodes.GetLength(1); j++)
+                {
+                    nodeList.Add(_nodes[i, j]);
+                }
+            }
+
+            return nodeList.ToArray();
+        }
         public virtual void ResetSystem()
         {
             for (int i = 0; i < _nodes.GetLength(0); i++)

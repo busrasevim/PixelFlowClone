@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace _Project.Scripts.Game
 {
-    public class Node : MonoBehaviour
+    public class Node : MonoBehaviour, IPoolObject
     {
         public bool IsFull { get; protected set; }
         public INodeObject NodeObject { get; private set; }
@@ -34,9 +34,17 @@ namespace _Project.Scripts.Game
             NodeObject = null;
         }
 
+        public void Init()
+        {
+            
+        }
+
         public virtual void Reset()
         {
-            SetEmpty(null);
+            IsFull = false;
+            NodeObject = null;
+            _gridSystem  = null;
+            GridPosition = new Vector2Int(-1, -1);
         }
     }
 }

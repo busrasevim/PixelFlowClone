@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace _Project.Scripts.Game
 {
-    public class Shooter : MonoBehaviour, INodeObject
+    public class Shooter : MonoBehaviour, INodeObject, IPoolObject
     {
         [SerializeField] private Renderer[] renderers;
         [SerializeField] private TMP_Text shootCountText;
@@ -40,7 +40,12 @@ namespace _Project.Scripts.Game
 
         private static MaterialPropertyBlock _mpb;
         private Vector3 _defaultTextEulerAngles;
-        
+
+        private void Start()
+        {
+            _defaultTextEulerAngles = shootCountText.transform.eulerAngles;
+        }
+
         public void Initialize(Node node)
         {
             _currentShooterNode = node as ShooterNode;
@@ -66,8 +71,6 @@ namespace _Project.Scripts.Game
             _layerColorCube = LayerMask.GetMask("ColorCube");
 
             colorID = data.colorID;
-
-            _defaultTextEulerAngles = shootCountText.transform.eulerAngles;
         }
 
         private void SetShootCountText()
@@ -124,6 +127,8 @@ namespace _Project.Scripts.Game
                         {
                             var bullet = pool.SpawnFromPool(PoolTags.Bullet, bulletFirePosition.position, model.transform.rotation)
                                 .GetComponent<Bullet>();
+                            
+                            shooterManager.SpawnNewBullet(bullet);
                             bullet.Fire(colorCube, bulletSpeed, bulletFireEase, shooterManager);
                             fxManager.PlayBulletFireFX();
                             colorCube.Reserve();
@@ -260,6 +265,26 @@ namespace _Project.Scripts.Game
             _shootCts?.Cancel();
             splineFollower.follow = false;
             transform.DOKill();
+        }
+
+        public void Init()
+        {
+            
+        }
+
+        public void Reset()
+        {
+            splineFollower.follow = false;
+            splineFollower.enabled = false;
+            model.transform.localEulerAngles = Vector3.zero;
+            _currentShooterNode = null;
+            _reservedSlot = null;
+            colorID = -1;
+            _onConveyor = false;
+            ResetDirection();
+            ShootCount = 0;
+            _shootCts?.Cancel();
+            shootCountText.transform.eulerAngles = _defaultTextEulerAngles;
         }
     }
 
