@@ -175,9 +175,17 @@ namespace _Project.Scripts.Level
         {
             if (value == null)
                 value = new CellData(new Vector2Int(x, y));
-
+            
             //draw bg
-            UnityEditor.EditorGUI.DrawRect(rect, value.cellColor);
+            float padding = 1.5f;
+            Rect innerRect = new Rect(
+                rect.x + padding,
+                rect.y + padding,
+                rect.width - padding * 2f,
+                rect.height - padding * 2f
+            );
+            
+            UnityEditor.EditorGUI.DrawRect(innerRect, value.cellColor);
 
             //write shoot count
             if (value.cellColor != Color.gray)
