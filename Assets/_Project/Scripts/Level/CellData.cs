@@ -15,6 +15,7 @@ namespace _Project.Scripts.Level
         {
             this.coordinates = coordinates;
             shootCount = 0;
+            cellColor = Color.gray;
         }
     }
 }
