@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using _Project.Scripts.Utils;
+using Project.Scripts.Core;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -265,6 +266,7 @@ namespace _Project.Scripts.Level
         [Button("Create Colors")]
         private void CreateColors()
         {
+            ConsoleClearer.ClearConsole();
             if (levelTexture == null)
             {
                 Debug.LogError("Level texture is missing!");
@@ -316,6 +318,7 @@ namespace _Project.Scripts.Level
         [Button("Distribute Colors To Grid")]
         private void DistributeColorsToGrid()
         {
+            ConsoleClearer.ClearConsole();
             if (CellsData == null || CellsData.Length == 0)
             {
                 Debug.LogError("Grid not initialized!");
@@ -431,6 +434,7 @@ namespace _Project.Scripts.Level
         [Button]
         public void CheckShooterValues()
         {
+            ConsoleClearer.ClearConsole();
             var sizeDict = new Dictionary<int, int>();
             for (int i = 0; i < CellsData.GetLength(0); i++)
             {
