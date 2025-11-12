@@ -108,6 +108,8 @@ namespace _Project.Scripts.Game
 
                     // Store the grid object in the array
                     _nodes[i, j] = node;
+                    
+                    node.gameObject.name ="Node_" + i + "_" + j;
                 }
             }
         }
