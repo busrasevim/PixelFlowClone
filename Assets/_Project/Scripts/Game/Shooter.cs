@@ -39,6 +39,7 @@ namespace _Project.Scripts.Game
         private List<int> blastedCoordinateValues = new List<int>();
 
         private static MaterialPropertyBlock _mpb;
+        private Vector3 _defaultTextEulerAngles;
         
         public void Initialize(Node node)
         {
@@ -65,6 +66,8 @@ namespace _Project.Scripts.Game
             _layerColorCube = LayerMask.GetMask("ColorCube");
 
             colorID = data.colorID;
+
+            _defaultTextEulerAngles = shootCountText.transform.eulerAngles;
         }
 
         private void SetShootCountText()
@@ -108,6 +111,7 @@ namespace _Project.Scripts.Game
             {
                 while (_onConveyor && !_shootCts.IsCancellationRequested && gameObject.activeSelf)
                 {
+                    shootCountText.transform.eulerAngles = _defaultTextEulerAngles;
                     var pos = transform.position;
                     pos.y = 0.282f;
                     var ray = new Ray(pos, GetRayDirection());
@@ -173,7 +177,10 @@ namespace _Project.Scripts.Game
         {
             transform.DOKill();
             transform.DOJump(reservedSlot.transform.position, 1f, 1, 0.5f);
-            transform.DORotate(reservedSlot.transform.rotation.eulerAngles, 0.5f);
+            transform.DORotate(reservedSlot.transform.rotation.eulerAngles, 0.5f).OnUpdate(() =>
+            {
+                shootCountText.transform.eulerAngles = _defaultTextEulerAngles;
+            });
             model.transform.DOLocalRotate(Vector3.zero, 0.5f);
             _reservedSlot = reservedSlot;
         }
