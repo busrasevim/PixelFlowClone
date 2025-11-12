@@ -49,7 +49,6 @@ namespace _Project.Scripts.Level
             }
 
             colorCubeGridSize = new Vector2Int(levelTexture.width, levelTexture.height);
-            Debug.Log($"✅ Cube size set: {colorCubeGridSize.x}x{colorCubeGridSize.y}");
         }
 
         [Title("Grid Setup")] public Vector2Int shooterGridSize = new Vector2Int(3, 5);
@@ -409,6 +408,53 @@ namespace _Project.Scripts.Level
             //auto cube grid size
             if (levelTexture != null)
                 SetCubeSize();
+        }
+
+        [Button]
+        public void CheckShooterValues()
+        {
+            var sizeDict = new Dictionary<int, int>();
+            for (int i = 0; i < CellsData.GetLength(0); i++)
+            {
+                for (int j = 0; j < CellsData.GetLength(1); j++)
+                {
+                    var id = CellsData[i, j].colorID;
+                    foreach (var lc in levelColors)
+                    {
+                        if (lc.id == id)
+                        {
+                            if (sizeDict.ContainsKey(id))
+                            {
+                                sizeDict[id] += CellsData[i, j].shootCount;
+                            }
+                            else
+                            {
+                                sizeDict.Add(id, CellsData[i, j].shootCount);
+                            }
+                        }
+                    }
+                }
+            }
+
+            foreach (var lc in levelColors)
+            {
+                if (sizeDict[lc.id] == lc.size)
+                {
+                    continue;
+                }
+
+                var dif = lc.size - sizeDict[lc.id];
+                if (dif > 0)
+                {
+                    Debug.LogError("Add " + dif + " with ID -" + lc.id+"-");
+                }
+                else
+                {
+                    Debug.LogError("Remove " + Mathf.Abs(dif) + " with ID -" + lc.id+"-");
+                }
+            }
+
+            Debug.Log("Check is completed.");
         }
 
 #endif
