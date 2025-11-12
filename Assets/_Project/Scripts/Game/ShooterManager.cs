@@ -35,6 +35,7 @@ public class ShooterManager
         shooter.Selected(conveyor.SplineComputer, this);
         
         _levelManager.CurrentLevel.ReservedSlotGridSystem.SetWarningEffect();
+        _levelManager.CurrentLevel.ReservedSlotGridSystem.TransferShooters();
     }
 
     public void SetReservedSlot(Shooter shooter)

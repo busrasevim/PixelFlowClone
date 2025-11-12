@@ -85,6 +85,7 @@ namespace _Project.Scripts.Game
             _currentShooterNode = null;
 
             var position = conveyorSpline.GetPointPosition(0);
+            transform.DOKill();
             transform.DOJump(position, 1f, 1, 0.5f).OnComplete(() =>
             {
                 splineFollower.spline = conveyorSpline;
@@ -240,6 +241,13 @@ namespace _Project.Scripts.Game
         public void SetSpeed(float lastShooterEffectFastSpeed)
         {
             splineFollower.followSpeed = lastShooterEffectFastSpeed;
+        }
+
+        public void SetNewReservedSlot(ReservedSlot to)
+        {
+            _reservedSlot = to;
+            transform.DOKill();
+            transform.DOJump(to.transform.position, 1f, 1, 0.3f);
         }
     }
 

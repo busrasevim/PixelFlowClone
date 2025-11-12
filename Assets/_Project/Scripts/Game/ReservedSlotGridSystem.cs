@@ -8,8 +8,8 @@ namespace _Project.Scripts.Game
             {
                 for (int j = 0; j < _nodes.GetLength(1); j++)
                 {
-                    if(_nodes[i, j].IsFull) continue;
-                    
+                    if (_nodes[i, j].IsFull) continue;
+
                     return _nodes[i, j] as ReservedSlot;
                 }
             }
@@ -24,11 +24,11 @@ namespace _Project.Scripts.Game
             {
                 for (int j = 0; j < _nodes.GetLength(1); j++)
                 {
-                    if(_nodes[i,j].IsFull)
+                    if (_nodes[i, j].IsFull)
                         count++;
                 }
             }
-            
+
             return count;
         }
 
@@ -45,7 +45,7 @@ namespace _Project.Scripts.Game
                     }
                 }
             }
-            
+
             ActivateWarningEffect(true);
         }
 
@@ -71,6 +71,27 @@ namespace _Project.Scripts.Game
                     slot.SetEffectValues(reservedSlotWarningEffectDuration, reservedSlotWarningEffectCount);
                 }
             }
+        }
+
+        public void TransferShooters()
+        {
+            for (int i = 1; i < _nodes.GetLength(0); i++)
+            {
+                var from = _nodes[i, 0];
+                var to = _nodes[i - 1, 0];
+                if (to.IsFull) continue;
+                if (!from.IsFull) continue;
+
+                Transfer(from as ReservedSlot, to as ReservedSlot);
+            }
+        }
+
+        public void Transfer(ReservedSlot from, ReservedSlot to)
+        {
+            var shooter = from.NodeObject as Shooter;
+            from.SetEmpty(shooter);
+            to.AssignNodeObject(shooter);
+            shooter.SetNewReservedSlot(to);
         }
     }
 }
