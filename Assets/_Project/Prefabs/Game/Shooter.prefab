@@ -322,8 +322,8 @@ Transform:
   m_GameObject: {fileID: 6391420446167929823}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 0.51100004, z: 0.16599998}
-  m_LocalScale: {x: 0.29999992, y: 1, z: 0.3}
+  m_LocalPosition: {x: 0, y: 0.599, z: 0.193}
+  m_LocalScale: {x: 0.19128296, y: 0.33331066, z: 0.19128302}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3100220304695074922}
@@ -436,6 +436,7 @@ MonoBehaviour:
   shootCountText: {fileID: 3731292888902696484}
   splineFollower: {fileID: 6231850460208604983}
   model: {fileID: 2426173967662180050}
+  bulletFirePosition: {fileID: 3369586083354953968}
 --- !u!114 &6231850460208604983
 MonoBehaviour:
   m_ObjectHideFlags: 0

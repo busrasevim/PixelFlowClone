@@ -16,6 +16,8 @@ MonoBehaviour:
   randomStartIndex: 0
   shooterSpeed: 3
   lastShooterEffectFastSpeed: 6
+  bulletSpeed: 5
+  bulletFireEase: 1
   conveyorShooterLimit: 5
   levelCompletedUIDelay: 1
   levelFailedUIDelay: 2

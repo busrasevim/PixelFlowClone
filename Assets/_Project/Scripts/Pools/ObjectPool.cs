@@ -115,6 +115,9 @@ namespace _Project.Scripts.Pools
     public enum PoolTags
     {
         None,
+        ColorCube,
+        Shooter,
+        Bullet,
     }
 }
 

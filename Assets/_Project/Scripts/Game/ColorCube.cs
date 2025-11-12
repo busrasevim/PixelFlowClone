@@ -8,6 +8,8 @@ namespace _Project.Scripts.Game
     public class ColorCube : MonoBehaviour, INodeObject
     {
         [SerializeField] private Renderer cubeRenderer;
+        [SerializeField] private Collider cubeCollider;
+        public Transform getBulletTr;
         public int colorID;
 
         public ColorCubeNode CurrentNode { get; set; }
@@ -58,6 +60,11 @@ namespace _Project.Scripts.Game
             CurrentNode.SetEmpty(this);
             transform.DOScale(Vector3.zero, 0.1f).SetEase(Ease.InBack)
                 .OnComplete(() => { gameObject.SetActive(false); });
+        }
+
+        public void Reserve()
+        {
+            cubeCollider.enabled = false;
         }
     }
 }

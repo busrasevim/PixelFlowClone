@@ -2,6 +2,7 @@ using _Project.Scripts.Data;
 using _Project.Scripts.Game;
 using _Project.Scripts.Level;
 using _Project.Scripts.Managers;
+using _Project.Scripts.Pools;
 using UnityEngine;
 using Zenject;
 
@@ -9,14 +10,17 @@ public class ShooterManager
 {
     private LevelManager _levelManager;
     private GameManager _gameManager;
-    private GameSettings  _gameSettings;
+    private GameSettings _gameSettings;
+    private ObjectPool _objectPool;
 
-    public bool  OnLastShooterEffect { get; set; }
+    public bool OnLastShooterEffect { get; set; }
+
     [Inject]
-    public void Construct(LevelManager levelManager, GameSettings gameSettings)
+    public void Construct(LevelManager levelManager, GameSettings gameSettings, ObjectPool objectPool)
     {
         _levelManager = levelManager;
         _gameSettings = gameSettings;
+        _objectPool = objectPool;
     }
 
     public void ShooterSelected(Shooter shooter)
@@ -35,9 +39,10 @@ public class ShooterManager
             shooter.CurrentShooterNode.SetEmpty(shooter);
             _levelManager.CurrentLevel.ShooterGridSystem.TransferShooters(shooter.CurrentShooterNode.GridPosition.x);
         }
-        
-        shooter.Selected(conveyor.SplineComputer, this);
-        
+
+        shooter.Selected(conveyor.SplineComputer, this, _objectPool, _gameSettings.bulletSpeed,
+            _gameSettings.bulletFireEase);
+
         _levelManager.CurrentLevel.ReservedSlotGridSystem.SetWarningEffect();
         _levelManager.CurrentLevel.ReservedSlotGridSystem.TransferShooters();
     }
@@ -58,7 +63,7 @@ public class ShooterManager
 
     //hızlan
     //bitince konumu sıfırla devam etsin aynen
-    
+
     public void RemoveShooterFromConveyor(Shooter shooter)
     {
         _levelManager.CurrentLevel.Conveyor.RemoveShooter(shooter);
@@ -74,8 +79,8 @@ public class ShooterManager
 
     public void ControlLastShooters()
     {
-        if(OnLastShooterEffect) return;
-        
+        if (OnLastShooterEffect) return;
+
         var count = _levelManager.CurrentLevel.ShooterGridSystem.GetCurrentShooterCount();
         count += _levelManager.CurrentLevel.ReservedSlotGridSystem.GetCurrentShooterCount();
         count += _levelManager.CurrentLevel.Conveyor.GetCurrentShooterCount();
@@ -98,6 +103,6 @@ public class ShooterManager
 
     public void SetGameManager(GameManager gameManager)
     {
-        _gameManager  = gameManager;
+        _gameManager = gameManager;
     }
 }

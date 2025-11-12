@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using _Project.Scripts.Level;
+using _Project.Scripts.Pools;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Dreamteck.Splines;
@@ -16,6 +17,7 @@ namespace _Project.Scripts.Game
         [SerializeField] private TMP_Text shootCountText;
         [SerializeField] private SplineFollower splineFollower;
         [SerializeField] private GameObject model;
+        [SerializeField] private Transform bulletFirePosition;
 
         private ShooterNode _currentShooterNode;
         public ShooterNode CurrentShooterNode => _currentShooterNode;
@@ -53,11 +55,6 @@ namespace _Project.Scripts.Game
                 _mpb.SetColor("_Color", data.cellColor.linear);
                 renderer.SetPropertyBlock(_mpb);
             }
-            
-            // foreach (var renderer in renderers)
-            // {
-            //     renderer.material.color = data.cellColor.linear;
-            // }
 
             ShootCount = data.shootCount;
             SetShootCountText();
@@ -74,7 +71,7 @@ namespace _Project.Scripts.Game
             shootCountText.text = ShootCount.ToString();
         }
 
-        public void Selected(SplineComputer conveyorSpline, ShooterManager shooterManager)
+        public void Selected(SplineComputer conveyorSpline, ShooterManager shooterManager, ObjectPool pool, float bulletSpeed, Ease bulletFireEase)
         {
             if (_reservedSlot != null)
             {
@@ -93,11 +90,11 @@ namespace _Project.Scripts.Game
                 splineFollower.follow = true;
                 splineFollower.enabled = true;
                 model.transform.localEulerAngles = Vector3.up * -90f;
-                StartShootControl(shooterManager);
+                StartShootControl(shooterManager, pool, bulletSpeed, bulletFireEase);
             });
         }
 
-        private async UniTask StartShootControl(ShooterManager shooterManager)
+        private async UniTask StartShootControl(ShooterManager shooterManager, ObjectPool pool, float bulletSpeed, Ease bulletFireEase)
         {
             _shootCts?.Cancel();
             _shootCts = new CancellationTokenSource();
@@ -117,7 +114,10 @@ namespace _Project.Scripts.Game
                         if (colorCube != null && colorCube.colorID == colorID &&
                             CanBlast(colorCube.CurrentNode.GridPosition))
                         {
-                            colorCube.Blast();
+                            var bullet = pool.SpawnFromPool(PoolTags.Bullet, transform.position, model.transform.rotation)
+                                .GetComponent<Bullet>();
+                            bullet.Fire(colorCube, bulletSpeed, bulletFireEase);
+                            colorCube.Reserve();
                             shooterManager.ColorCubeBlasted();
                             AddBlastValue(colorCube.CurrentNode.GridPosition);
                             ShootCount--;

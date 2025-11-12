@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using _Project.Scripts.Level;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -14,6 +15,9 @@ namespace _Project.Scripts.Data
 
         [TabGroup("General")] public int shooterSpeed = 3;
         [TabGroup("General")] public int lastShooterEffectFastSpeed = 3;
+        
+        [TabGroup("General")] public float bulletSpeed = 3f;
+        [TabGroup("General")] public Ease bulletFireEase = Ease.Linear;
 
         [TabGroup("General")] public int conveyorShooterLimit = 5;
 
