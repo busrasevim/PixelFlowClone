@@ -129,6 +129,7 @@ namespace _Project.Scripts.Managers
         private void LevelFailed()
         {
             Debug.Log("Level failed.");
+            _levelManager.CurrentLevel.Conveyor.LevelFailed();
         }
 
         #endregion

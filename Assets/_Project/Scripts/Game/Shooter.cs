@@ -249,6 +249,13 @@ namespace _Project.Scripts.Game
             transform.DOKill();
             transform.DOJump(to.transform.position, 1f, 1, 0.3f);
         }
+
+        public void Stop()
+        {
+            _shootCts?.Cancel();
+            splineFollower.follow = false;
+            transform.DOKill();
+        }
     }
 
     public enum ShooterDirection

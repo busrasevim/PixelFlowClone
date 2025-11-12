@@ -71,5 +71,13 @@ namespace _Project.Scripts.Game
                 shooterCountText.DOColor(Color.white, 0.2f);
             });
         }
+
+        public void LevelFailed()
+        {
+            foreach (var shooter in _shootersOnConveyor)
+            {
+                shooter.Stop();
+            }
+        }
     }
 }
