@@ -140,7 +140,7 @@ namespace _Project.Scripts.Game
                                 _onConveyor = false;
                                 shooterManager.RemoveShooterFromConveyor(this);
                                 shooterManager.ControlLastShooters();
-                                gameObject.SetActive(false);
+                                PlayShootCompletedEffect();
                             }
                         }
                     }
@@ -267,6 +267,18 @@ namespace _Project.Scripts.Game
             transform.DOKill();
         }
 
+        private void PlayShootCompletedEffect()
+        {
+            splineFollower.follow = false;
+            transform.DOKill();
+            transform.DOMoveZ(transform.position.z + 1f, 0.5f);
+            transform.DORotate(Vector3.up *180f, 0.5f, RotateMode.WorldAxisAdd);
+            transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InBack).OnComplete(() =>
+            {
+                gameObject.SetActive(false);
+            });
+        }
+
         public void Init()
         {
             
@@ -284,6 +296,8 @@ namespace _Project.Scripts.Game
             ResetDirection();
             ShootCount = 0;
             _shootCts?.Cancel();
+            transform.localScale = Vector3.one;
+            transform.localEulerAngles = Vector3.zero;
             shootCountText.transform.eulerAngles = _defaultTextEulerAngles;
         }
     }
