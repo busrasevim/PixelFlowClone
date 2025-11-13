@@ -12,6 +12,25 @@ namespace _Project.Scripts.Level
     [CreateAssetMenu(menuName = "Levels/Level Data", fileName = "Level ")]
     public class LevelData : SerializedScriptableObject
     {
+        [InfoBox(
+            "🧩 LEVEL CREATION GUIDE\n\n" +
+            "1️⃣ **Assign Texture** → Under *Level Texture Settings*, drag & drop a texture you want to use as the color source.\n" +
+            "   - The system will automatically detect its width/height as the cube grid size.\n\n" +
+            "2️⃣ **Click 'Create Colors'** → This analyzes the texture and groups similar colors.\n" +
+            "   - Use *Color Threshold* to control how close colors need to be to count as the same.\n\n" +
+            "3️⃣ **Initialize Grid** → Generates an empty shooter grid with your defined grid size.\n" +
+            "   - You can later resize it safely using 'Update Shooter Grid Size'.\n\n" +
+            "4️⃣ **Select Colors Below** → In the *Color Palette Preview* section at the bottom, click on any color box.\n" +
+            "   - The selected color will be highlighted as 'Selected'.\n\n" +
+            "5️⃣ **Paint the Grid** → Click on cells in the grid to assign the currently selected color.\n" +
+            "   - Press **Z** to increase the shoot count, **X** to decrease it for the hovered cell.\n\n" +
+            "6️⃣ **Auto Distribution (Optional)** → 'Distribute Colors To Grid' automatically fills the grid based on color sizes.\n\n" +
+            "7️⃣ **Validation** → Use 'Check Shooter Values' to confirm that total shoot counts match the color data sizes.\n\n" +
+            "💡 Tip: Keep the grid clean — gray cells are considered empty. Use smaller thresholds for more color variety.",
+            InfoMessageType = InfoMessageType.Info)]
+        [ShowInInspector, ReadOnly, PropertyOrder(-100)]
+        private string _infoBoxHeader => "";
+
         [Serializable]
         public class LevelColorData
         {
@@ -27,6 +46,12 @@ namespace _Project.Scripts.Level
             }
         }
 
+        [BoxGroup("Level Texture Settings")] public Texture2D levelTexture;
+
+        [BoxGroup("Level Texture Settings")]
+        [ReadOnly, Tooltip("Automatically set from the level texture. Do not modify manually.")]
+        public Vector2Int colorCubeGridSize;
+
         [TableList(AlwaysExpanded = true)] [BoxGroup("Level Color Settings")]
         public List<LevelColorData> levelColors = new();
 
@@ -34,12 +59,6 @@ namespace _Project.Scripts.Level
         [Tooltip("Color difference threshold (higher = fewer color groups)")]
         [BoxGroup("Level Color Settings")]
         public float colorThreshold = 0.1f;
-
-        [BoxGroup("Level Texture Settings")] public Texture2D levelTexture;
-
-        [BoxGroup("Level Texture Settings")]
-        [ReadOnly, Tooltip("Automatically set from the level texture. Do not modify manually.")]
-        public Vector2Int colorCubeGridSize;
 
 
         // for Color Palette Preview data
