@@ -176,7 +176,7 @@ namespace _Project.Scripts.Level
         {
             if (value == null)
                 value = new CellData(new Vector2Int(x, y));
-            
+
             //draw bg
             float padding = 1.5f;
             Rect innerRect = new Rect(
@@ -185,7 +185,7 @@ namespace _Project.Scripts.Level
                 rect.width - padding * 2f,
                 rect.height - padding * 2f
             );
-            
+
             UnityEditor.EditorGUI.DrawRect(innerRect, value.cellColor);
 
             //write shoot count
@@ -305,11 +305,11 @@ namespace _Project.Scripts.Level
             }
 
             levelColors = levelColors.OrderByDescending(c => c.size).ToList();
-            
+
             // id'leri yeniden sırala
             for (int i = 0; i < levelColors.Count; i++)
                 levelColors[i].id = i;
-            
+
             Debug.Log($"Detected {levelColors.Count} grouped colors from {levelTexture.name}");
 
             SetRuntimeColorStats();
@@ -430,6 +430,56 @@ namespace _Project.Scripts.Level
 
             colorCubeGridSize = new Vector2Int(levelTexture.width, levelTexture.height);
         }
+
+        [BoxGroup("Shooter Grid Settings")]
+        [Button]
+        public void UpdateShooterGridSize()
+        {
+            if (CellsData == null)
+            {
+                // hiç grid yoksa sıfırdan oluştur
+                InitializeGrid();
+                return;
+            }
+
+            int newWidth = shooterGridSize.x;
+            int newHeight = shooterGridSize.y;
+
+            int oldWidth = CellsData.GetLength(0);
+            int oldHeight = CellsData.GetLength(1);
+
+            // yeni grid oluştur
+            var newGrid = new CellData[newWidth, newHeight];
+
+            // ortak alanı kopyala (mevcut verileri korur)
+            for (int x = 0; x < Mathf.Min(oldWidth, newWidth); x++)
+            {
+                for (int y = 0; y < Mathf.Min(oldHeight, newHeight); y++)
+                {
+                    newGrid[x, y] = CellsData[x, y];
+                }
+            }
+
+            // yeni eklenen hücreleri oluştur
+            for (int x = 0; x < newWidth; x++)
+            {
+                for (int y = 0; y < newHeight; y++)
+                {
+                    if (newGrid[x, y] == null)
+                        newGrid[x, y] = new CellData(new Vector2Int(x, y));
+                }
+            }
+
+            // grid değişimini uygula
+            CellsData = newGrid;
+
+#if UNITY_EDITOR
+            UnityEditor.EditorUtility.SetDirty(this);
+#endif
+
+            Debug.Log($"✅ Shooter grid resized to {newWidth}x{newHeight}. Old: {oldWidth}x{oldHeight}");
+        }
+
 
         [Button]
         public void CheckShooterValues()
