@@ -113,8 +113,8 @@ namespace _Project.Scripts.Game
                 });
 
             this._currentPlate = plate;
-            plate.transform.DOJump(position, 1f, 1, 0.5f);
-            plate.transform.DORotate(Vector3.zero, 0.5f);
+            plate.transform.DOJump(position, 1f, 1, _gameSettings.shooterSlotToConveyorJumpDuration);
+            plate.transform.DORotate(Vector3.zero, _gameSettings.shooterSlotToConveyorJumpDuration);
         }
 
         private async UniTask StartShootControl(ShooterManager shooterManager, ObjectPool pool,

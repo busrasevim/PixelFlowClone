@@ -18,11 +18,37 @@ MonoBehaviour:
   randomStartIndex: 0
   shooterSpeed: 3
   lastShooterEffectTimeScale: 1.4
+  shooterSlotToConveyorJumpDuration: 0.25
+  shooterSlotToConveyorJumpPower: 2
+  shooterSlotToConveyorJumpEase: 1
+  shooterToReservedSlotJumpDuration: 0.25
+  shooterToReservedSlotJumpPower: 1
+  shooterToReservedSlotJumpEase: 1
+  shooterNodeTransferDuration: 0.2
+  shooterNodeTransferEase: 1
+  shooterCompleteEffectZPositionPlusValue: 1
+  shooterCompleteEffectDuration: 0.5
+  shooterCompleteEffectScaleDownEase: 26
+  shooterFireEffectZValue: 0.05
+  shooterFireEffectDuration: 0.15
+  shooterFireEffectStrength: {x: 2, y: 2, z: 2}
+  shooterFireEffectVibrato: 10
+  shooterFireEffectRandomness: 90
   bulletSpeed: 5
   bulletFireEase: 1
+  bulletScaleDownDuration: 0.1
   conveyorShooterLimit: 5
   conveyorArrowCount: 15
   conveyorArrowSpeed: 3
+  conveyorIsFullEffectTextColor: {r: 1, g: 0, b: 0, a: 1}
+  conveyorIsFullEffectTextColorChangeDuration: 0.3
+  conveyorIsFullEffectTextShakeDuration: 0.35
+  conveyorIsFullEffectTextShakeStrength: {x: 0.05, y: 0.05, z: 0}
+  conveyorIsFullEffectTextShakeVibrato: 12
+  conveyorIsFullEffectTextShakeRandomness: 60
+  conveyorIsFullEffectTextColorFixDuration: 0.2
+  conveyorShooterPlatePositionDistance: 0.1
+  plateMoveDuration: 0.3
   reservedSlotCount: 5
   reservedSlotWarningEffectCount: 2
   reservedSlotWarningEffectDuration: 0.5
