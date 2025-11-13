@@ -81,3 +81,7 @@ Scripts/
 🛠️ Tech Stack
 
 Unity 6000.0.58f2 • Zenject • DOTween • Odin Inspector • Dreamteck Splines • UniTask • TextMeshPro
+
+📁 Note: All required ScriptableObjects (LevelData, GameSettings) 
+and level textures are included under /Data & Settings and /LevelTexture folders. 
+Simply open GameScene and press Play.
