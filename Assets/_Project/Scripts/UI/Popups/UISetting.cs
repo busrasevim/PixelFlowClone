@@ -32,7 +32,6 @@ public class UISetting : UIPopup
 
     public override void OnTapClose()
     {
-        _uiManager.ShowHome();
         Close();
     }
 
