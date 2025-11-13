@@ -33,11 +33,6 @@ namespace _Project.Scripts.Game
             splineFollower.follow = false;
         }
 
-        public void Init()
-        {
-            
-        }
-
         public void Reset()
         {
             splineFollower.follow = false;

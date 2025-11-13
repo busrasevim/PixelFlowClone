@@ -29,6 +29,7 @@ namespace _Project.Scripts.Game
 
         private bool _onConveyor;
         private ShooterDirection _currentDirection;
+        private GameObject _currentPlate;
 
         public int ShootCount { get; set; }
 
@@ -79,7 +80,7 @@ namespace _Project.Scripts.Game
         }
 
         public void Selected(SplineComputer conveyorSpline, ShooterManager shooterManager, ObjectPool pool, float bulletSpeed, Ease bulletFireEase,
-            FXManager fxManager)
+            FXManager fxManager, GameObject plate)
         {
             if (_reservedSlot != null)
             {
@@ -93,6 +94,7 @@ namespace _Project.Scripts.Game
             transform.DOKill();
             transform.DOJump(position, 1f, 1, 0.5f).OnComplete(() =>
             {
+                plate.transform.SetParent(transform);
                 splineFollower.spline = conveyorSpline;
                 splineFollower.RebuildImmediate();
                 splineFollower.SetPercent(0f);
@@ -101,6 +103,10 @@ namespace _Project.Scripts.Game
                 model.transform.localEulerAngles = Vector3.up * -90f;
                 StartShootControl(shooterManager, pool, bulletSpeed, bulletFireEase, fxManager);
             });
+
+            this._currentPlate  = plate;
+            plate.transform.DOJump(position, 1f, 1, 0.5f);
+            plate.transform.DORotate(Vector3.zero, 0.5f);
         }
 
         private async UniTask StartShootControl(ShooterManager shooterManager, ObjectPool pool, float bulletSpeed, Ease bulletFireEase,
@@ -138,7 +144,8 @@ namespace _Project.Scripts.Game
                             if (ShootCount == 0)
                             {
                                 _onConveyor = false;
-                                shooterManager.RemoveShooterFromConveyor(this);
+                                shooterManager.RemoveShooterFromConveyor(this, _currentPlate);
+                                _currentPlate = null;
                                 shooterManager.ControlLastShooters();
                                 PlayShootCompletedEffect();
                             }
@@ -158,7 +165,8 @@ namespace _Project.Scripts.Game
                             _onConveyor = false;
                             splineFollower.follow = false;
                             splineFollower.enabled = false;
-                            shooterManager.RemoveShooterFromConveyor(this);
+                            shooterManager.RemoveShooterFromConveyor(this, _currentPlate);
+                            _currentPlate  = null;
                             shooterManager.SetReservedSlot(this);
                         }
                     }
@@ -277,11 +285,6 @@ namespace _Project.Scripts.Game
             {
                 gameObject.SetActive(false);
             });
-        }
-
-        public void Init()
-        {
-            
         }
 
         public void Reset()

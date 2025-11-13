@@ -45,7 +45,7 @@ public class ShooterManager
         }
 
         shooter.Selected(conveyor.SplineComputer, this, _objectPool, _gameSettings.bulletSpeed,
-            _gameSettings.bulletFireEase, _fxManager);
+            _gameSettings.bulletFireEase, _fxManager, conveyor.GetPlate());
 
         _levelManager.CurrentLevel.ReservedSlotGridSystem.SetWarningEffect();
         _levelManager.CurrentLevel.ReservedSlotGridSystem.TransferShooters();
@@ -68,9 +68,9 @@ public class ShooterManager
     //hızlan
     //bitince konumu sıfırla devam etsin aynen
 
-    public void RemoveShooterFromConveyor(Shooter shooter)
+    public void RemoveShooterFromConveyor(Shooter shooter, GameObject plate)
     {
-        _levelManager.CurrentLevel.Conveyor.RemoveShooter(shooter);
+        _levelManager.CurrentLevel.Conveyor.RemoveShooter(shooter, plate);
     }
 
     public void ColorCubeBlasted()

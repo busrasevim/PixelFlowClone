@@ -34,11 +34,6 @@ namespace _Project.Scripts.Game
             NodeObject = null;
         }
 
-        public void Init()
-        {
-            
-        }
-
         public virtual void Reset()
         {
             IsFull = false;

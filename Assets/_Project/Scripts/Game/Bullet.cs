@@ -16,11 +16,6 @@ namespace _Project.Scripts.Game
             });
         }
 
-        public void Init()
-        {
-            
-        }
-
         public void Reset()
         {
             transform.localScale = Vector3.one;

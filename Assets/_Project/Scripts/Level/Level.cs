@@ -31,6 +31,8 @@ namespace _Project.Scripts.Level
         private List<Node> _shooterNodes = new List<Node>();
         private List<Node> _colorCubeNodes = new List<Node>();
 
+        private List<GameObject> _plates = new List<GameObject>();
+
         private ObjectPool _pool;
 
         public void Init(LevelData data, GameSettings settings, ObjectPool pool)
@@ -63,8 +65,8 @@ namespace _Project.Scripts.Level
             reservedSlotGridSystem.SetSlotValues(_gameSettings.reservedSlotWarningEffectDuration,
                 _gameSettings.reservedSlotWarningEffectCount);
 
-            conveyor.SetShooterLimit(settings.conveyorShooterLimit);
-            conveyor.SetArrows(pool, _gameSettings.conveyorArrowCount, _gameSettings.conveyorArrowSpeed, this);
+            conveyor.Init(pool, _gameSettings.conveyorArrowCount, _gameSettings.conveyorArrowSpeed,
+                this, _gameSettings.conveyorShooterLimit);
         }
 
         private void CreateShooters(float shooterFollowSpeed, ObjectPool pool)
@@ -167,6 +169,12 @@ namespace _Project.Scripts.Level
                 _pool.DestroyToPool(PoolTags.ColorCubeNode, cubeNode.gameObject);
             }
 
+            foreach (var plate in _plates)
+            {
+                plate.transform.SetParent(_pool.transform);
+                _pool.DestroyToPool(PoolTags.ShooterPlate, plate);
+            }
+
             _cubes.Clear();
             _shooters.Clear();
             _bullets.Clear();
@@ -174,6 +182,7 @@ namespace _Project.Scripts.Level
             _reservedSlots.Clear();
             _shooterNodes.Clear();
             _colorCubeNodes.Clear();
+            _plates.Clear();
         }
 
         public void SpawnNewBullet(Bullet bullet)
@@ -184,6 +193,11 @@ namespace _Project.Scripts.Level
         public void SpawnedNewArrows(ConveyorArrow arrow)
         {
             _arrows.Add(arrow);
+        }
+
+        public void SpawnedPlate(GameObject plate)
+        {
+            _plates.Add(plate);
         }
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using _Project.Scripts.Pools;
 using DG.Tweening;
@@ -13,14 +12,23 @@ namespace _Project.Scripts.Game
         [SerializeField] private SplineComputer _spline;
         public SplineComputer SplineComputer => _spline;
         [SerializeField] private TMP_Text shooterCountText;
+        [SerializeField] private Transform plateStartPosition;
 
         private int _conveyorLimit;
         private List<Shooter> _shootersOnConveyor = new List<Shooter>();
         private ConveyorArrow[] _arrows;
+        private List<GameObject> _shooterPlates;
 
         private void Start()
         {
             SetShooterCountText();
+        }
+
+        public void Init(ObjectPool pool, int arrowCount, float arrowSpeed, Level.Level level, int shooterLimit)
+        {
+            this._conveyorLimit = shooterLimit;
+            SetArrows(pool, arrowCount, arrowSpeed, level);
+            SetPlates(pool, shooterLimit, level);
         }
 
         public bool CanGetNewShooter()
@@ -36,16 +44,14 @@ namespace _Project.Scripts.Game
             SetShooterCountText();
         }
 
-        public void RemoveShooter(Shooter shooter)
+        public void RemoveShooter(Shooter shooter, GameObject plate)
         {
             _shootersOnConveyor.Remove(shooter);
             SetShooterCountText();
+
+            PutPlate(plate);
         }
 
-        public void SetShooterLimit(int shooterLimit)
-        {
-            _conveyorLimit = shooterLimit;
-        }
 
         public int GetCurrentShooterCount()
         {
@@ -117,6 +123,44 @@ namespace _Project.Scripts.Game
                 _arrows[i] = arrow;
 
                 level.SpawnedNewArrows(arrow);
+            }
+        }
+
+        public void SetPlates(ObjectPool pool, int plateCount, Level.Level level)
+        {
+            _shooterPlates = new List<GameObject>();
+            for (int i = 0; i < plateCount; i++)
+            {
+                var position = plateStartPosition.position - Vector3.right * (0.1f * i);
+                var plate = pool.SpawnFromPool(PoolTags.ShooterPlate, position, plateStartPosition.rotation);
+                _shooterPlates.Add(plate);
+
+                level.SpawnedPlate(plate);
+            }
+        }
+
+        public GameObject GetPlate()
+        {
+            var plate = _shooterPlates[0];
+            _shooterPlates.RemoveAt(0);
+            plate.transform.DOKill();
+            FixNextPlatesPosition();
+            return plate;
+        }
+
+        private void PutPlate(GameObject plate)
+        {
+            plate.transform.SetParent(transform);
+            plate.transform.DOMove(plateStartPosition.position - Vector3.right * 0.1f * _shooterPlates.Count, 0.3f);
+            plate.transform.DORotate(plateStartPosition.eulerAngles, 0.3f);
+            _shooterPlates.Add(plate);
+        }
+
+        private void FixNextPlatesPosition()
+        {
+            for (int i = 0; i < _shooterPlates.Count; i++)
+            {
+                _shooterPlates[i].transform.DOMove(plateStartPosition.position - Vector3.right * 0.1f * i, 0.1f);
             }
         }
     }

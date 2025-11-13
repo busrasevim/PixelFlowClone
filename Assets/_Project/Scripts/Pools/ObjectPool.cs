@@ -46,9 +46,6 @@ namespace _Project.Scripts.Pools
                     obj.SetActive(false);
                     objectPool.Enqueue(obj);
                     obj.name = obj.name + " clone " + i;
-
-                    var iPool = obj.GetComponent<IPoolObject>();
-                    iPool?.Init();
                 }
 
                 _poolDictionary.Add(pool.tag, objectPool);
@@ -72,9 +69,6 @@ namespace _Project.Scripts.Pools
             objectToSpawn.transform.position = position;
             objectToSpawn.transform.rotation = rotation;
             objectToSpawn.SetActive(true);
-           
-            var iPool = objectToSpawn.GetComponent<IPoolObject>();
-            iPool?.Init();
 
             return objectToSpawn;
         }
@@ -124,11 +118,11 @@ namespace _Project.Scripts.Pools
         ReservedSlot,
         ShooterNode,
         ColorCubeNode,
+        ShooterPlate,
     }
 }
 
 public interface IPoolObject
 {
-    void Init();
     void Reset();
 }

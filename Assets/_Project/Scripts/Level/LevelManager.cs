@@ -28,7 +28,7 @@ namespace _Project.Scripts.Level
         private void SpecialInit(DataManager dataManager, 
             GameSettings settings, SignalBus signal,
             [Inject(Id = "LevelPrefab")] GameObject levelPrefab,
-            ObjectPool pool)
+            ObjectPool pool, ShooterManager shooterManager)
         {
             _dataManager = dataManager;
             _signalBus = signal;

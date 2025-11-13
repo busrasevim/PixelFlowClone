@@ -69,11 +69,6 @@ namespace _Project.Scripts.Game
             cubeCollider.enabled = false;
         }
 
-        public void Init()
-        {
-            
-        }
-
         public void Reset()
         {
             transform.localScale = Vector3.one;
