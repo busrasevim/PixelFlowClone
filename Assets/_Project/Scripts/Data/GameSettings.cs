@@ -33,6 +33,14 @@ namespace _Project.Scripts.Data
         [Space(10)] [TabGroup("General")] public float shooterCompleteEffectZPositionPlusValue = 1f;
         [TabGroup("General")] public float shooterCompleteEffectDuration = 0.5f;
         [TabGroup("General")] public Ease shooterCompleteEffectScaleDownEase = Ease.InBack;
+    [Space(10)]
+    [TabGroup("General")] public float shooterFireEffectZValue = 0.05f;
+    [TabGroup("General")] public float shooterFireEffectDuration = 0.15f;
+    [TabGroup("General")] public Vector3 shooterFireEffectStrength = new Vector3(2f, 2f, 2f);
+    [TabGroup("General")] public int shooterFireEffectVibrato = 10;
+    [TabGroup("General")] public float shooterFireEffectRandomness = 90f;
+    
+    
 
         [Space(15)] [TabGroup("General")] [Header("BULLET SETTINGS")]
         public float bulletSpeed = 3f;

@@ -144,6 +144,7 @@ namespace _Project.Scripts.Game
                                 .GetComponent<Bullet>();
 
                             shooterManager.SpawnNewBullet(bullet);
+                            PlayFireEffect();
                             bullet.Fire(colorCube, _gameSettings.bulletSpeed, _gameSettings.bulletFireEase,
                                 _gameSettings.bulletScaleDownDuration, shooterManager);
                             fxManager.PlayBulletFireFX();
@@ -194,6 +195,32 @@ namespace _Project.Scripts.Game
                 _shootCts.Dispose();
                 _shootCts = null;
             }
+        }
+
+        private Tween recoilTween;
+
+        private void PlayFireEffect()
+        {
+            recoilTween?.Complete();
+
+            var originalLocalPos = model.transform.localPosition;
+
+            recoilTween = DOTween.Sequence()
+                // Geriye çekilme (local space'te)
+                .Append(model.transform.DOLocalMoveZ(-_gameSettings.shooterFireEffectZValue,
+                        _gameSettings.shooterFireEffectDuration * 0.4f)
+                    .SetEase(Ease.OutQuad)
+                    .SetRelative(true))
+                // Hafif sarsıntı
+                .Join(model.transform.DOShakeRotation(
+                    _gameSettings.shooterFireEffectDuration,
+                    _gameSettings.shooterFireEffectStrength,
+                    vibrato: _gameSettings.shooterFireEffectVibrato,
+                    randomness: _gameSettings.shooterFireEffectRandomness,
+                    fadeOut: true))
+                // Geri dönme
+                .Append(model.transform.DOLocalMove(originalLocalPos, _gameSettings.shooterFireEffectDuration * 0.6f)
+                    .SetEase(Ease.InOutQuad));
         }
 
         public void SetReservedSlot(ReservedSlot reservedSlot)
