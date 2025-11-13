@@ -58,18 +58,18 @@ namespace _Project.Scripts.Level
                 : _gameSettings.defaultTextureHeight / data.colorCubeGridSize.y);
 
             colorCubeGridSystem.Init(pool, data.colorCubeGridSize);
-            reservedSlotGridSystem.Init(pool);
+            reservedSlotGridSystem.Init(pool, new Vector2Int(_gameSettings.reservedSlotCount, 1));
 
-            CreateShooters(_gameSettings.shooterSpeed, pool);
+            CreateShooters(pool);
             CreateColorCubes(cubeScale, pool);
             reservedSlotGridSystem.SetSlotValues(_gameSettings.reservedSlotWarningEffectDuration,
                 _gameSettings.reservedSlotWarningEffectCount);
 
-            conveyor.Init(pool, _gameSettings.conveyorArrowCount, _gameSettings.conveyorArrowSpeed,
-                this, _gameSettings.conveyorShooterLimit);
+            conveyor.Init(pool,
+                this, _gameSettings);
         }
 
-        private void CreateShooters(float shooterFollowSpeed, ObjectPool pool)
+        private void CreateShooters(ObjectPool pool)
         {
             for (int i = 0; i < LevelData.CellsData.GetLength(0); i++)
             {
@@ -82,7 +82,7 @@ namespace _Project.Scripts.Level
                     var shooter = pool.SpawnFromPool(PoolTags.Shooter, node.transform.position,
                         node.transform.rotation).GetComponent<Shooter>();
                     shooter.transform.SetParent(node.transform);
-                    shooter.Init(data, shooterFollowSpeed);
+                    shooter.Init(data, _gameSettings);
                     shooter.Initialize(node);
                     node.AssignNodeObject(shooter);
 

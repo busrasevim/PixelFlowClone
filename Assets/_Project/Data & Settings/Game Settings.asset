@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Game Settings
   m_EditorClassIdentifier: 
   defaultLevelEarnMoneyCount: 30
+  levelCompletedUIDelay: 1
+  levelFailedUIDelay: 1
   randomStartIndex: 0
   shooterSpeed: 3
   lastShooterEffectTimeScale: 1.4
@@ -21,10 +23,9 @@ MonoBehaviour:
   conveyorShooterLimit: 5
   conveyorArrowCount: 15
   conveyorArrowSpeed: 3
-  levelCompletedUIDelay: 1
-  levelFailedUIDelay: 1
-  reservedSlotWarningEffectDuration: 0.5
+  reservedSlotCount: 5
   reservedSlotWarningEffectCount: 2
+  reservedSlotWarningEffectDuration: 0.5
   defaultTextureWidth: 20
   defaultTextureHeight: 20
   levels:

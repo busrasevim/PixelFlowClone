@@ -44,8 +44,7 @@ public class ShooterManager
             _levelManager.CurrentLevel.ShooterGridSystem.TransferShooters(shooter.CurrentShooterNode.GridPosition.x);
         }
 
-        shooter.Selected(conveyor.SplineComputer, this, _objectPool, _gameSettings.bulletSpeed,
-            _gameSettings.bulletFireEase, _fxManager, conveyor.GetPlate());
+        shooter.Selected(conveyor.SplineComputer, this, _objectPool, _fxManager, conveyor.GetPlate());
 
         _levelManager.CurrentLevel.ReservedSlotGridSystem.SetWarningEffect();
         _levelManager.CurrentLevel.ReservedSlotGridSystem.TransferShooters();

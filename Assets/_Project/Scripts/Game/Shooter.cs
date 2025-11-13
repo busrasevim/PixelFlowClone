@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using _Project.Scripts.Data;
 using _Project.Scripts.Level;
 using _Project.Scripts.Managers;
 using _Project.Scripts.Pools;
@@ -42,6 +43,8 @@ namespace _Project.Scripts.Game
         private static MaterialPropertyBlock _mpb;
         private Vector3 _defaultTextEulerAngles;
 
+        private GameSettings _gameSettings;
+
         private void Start()
         {
             _defaultTextEulerAngles = shootCountText.transform.eulerAngles;
@@ -52,7 +55,7 @@ namespace _Project.Scripts.Game
             _currentShooterNode = node as ShooterNode;
         }
 
-        public void Init(CellData data, float followerSpeed)
+        public void Init(CellData data, GameSettings settings)
         {
             if (_mpb == null)
                 _mpb = new MaterialPropertyBlock();
@@ -64,10 +67,11 @@ namespace _Project.Scripts.Game
                 renderer.SetPropertyBlock(_mpb);
             }
 
+            _gameSettings = settings;
             ShootCount = data.shootCount;
             SetShootCountText();
 
-            splineFollower.followSpeed = followerSpeed;
+            splineFollower.followSpeed = _gameSettings.shooterSpeed;
 
             _layerColorCube = LayerMask.GetMask("ColorCube");
 
@@ -79,7 +83,7 @@ namespace _Project.Scripts.Game
             shootCountText.text = ShootCount.ToString();
         }
 
-        public void Selected(SplineComputer conveyorSpline, ShooterManager shooterManager, ObjectPool pool, float bulletSpeed, Ease bulletFireEase,
+        public void Selected(SplineComputer conveyorSpline, ShooterManager shooterManager, ObjectPool pool,
             FXManager fxManager, GameObject plate)
         {
             if (_reservedSlot != null)
@@ -92,24 +96,28 @@ namespace _Project.Scripts.Game
 
             var position = conveyorSpline.GetPointPosition(0);
             transform.DOKill();
-            transform.DOJump(position, 1f, 1, 0.5f).OnComplete(() =>
-            {
-                plate.transform.SetParent(transform);
-                splineFollower.spline = conveyorSpline;
-                splineFollower.RebuildImmediate();
-                splineFollower.SetPercent(0f);
-                splineFollower.follow = true;
-                splineFollower.enabled = true;
-                model.transform.localEulerAngles = Vector3.up * -90f;
-                StartShootControl(shooterManager, pool, bulletSpeed, bulletFireEase, fxManager);
-            });
+            transform.DOJump(position, _gameSettings.shooterSlotToConveyorJumpPower, 1,
+                    _gameSettings.shooterSlotToConveyorJumpDuration)
+                .SetEase(_gameSettings.shooterSlotToConveyorJumpEase)
+                .OnComplete(() =>
+                {
+                    plate.transform.SetParent(transform);
+                    splineFollower.spline = conveyorSpline;
+                    splineFollower.RebuildImmediate();
+                    splineFollower.SetPercent(0f);
+                    splineFollower.follow = true;
+                    splineFollower.enabled = true;
+                    model.transform.localEulerAngles = Vector3.up * -90f;
+                    StartShootControl(shooterManager, pool,
+                        fxManager);
+                });
 
-            this._currentPlate  = plate;
+            this._currentPlate = plate;
             plate.transform.DOJump(position, 1f, 1, 0.5f);
             plate.transform.DORotate(Vector3.zero, 0.5f);
         }
 
-        private async UniTask StartShootControl(ShooterManager shooterManager, ObjectPool pool, float bulletSpeed, Ease bulletFireEase,
+        private async UniTask StartShootControl(ShooterManager shooterManager, ObjectPool pool,
             FXManager fxManager)
         {
             _shootCts?.Cancel();
@@ -131,11 +139,13 @@ namespace _Project.Scripts.Game
                         if (colorCube != null && colorCube.colorID == colorID &&
                             CanBlast(colorCube.CurrentNode.GridPosition))
                         {
-                            var bullet = pool.SpawnFromPool(PoolTags.Bullet, bulletFirePosition.position, model.transform.rotation)
+                            var bullet = pool.SpawnFromPool(PoolTags.Bullet, bulletFirePosition.position,
+                                    model.transform.rotation)
                                 .GetComponent<Bullet>();
-                            
+
                             shooterManager.SpawnNewBullet(bullet);
-                            bullet.Fire(colorCube, bulletSpeed, bulletFireEase, shooterManager);
+                            bullet.Fire(colorCube, _gameSettings.bulletSpeed, _gameSettings.bulletFireEase,
+                                _gameSettings.bulletScaleDownDuration, shooterManager);
                             fxManager.PlayBulletFireFX();
                             colorCube.Reserve();
                             AddBlastValue(colorCube.CurrentNode.GridPosition);
@@ -166,7 +176,7 @@ namespace _Project.Scripts.Game
                             splineFollower.follow = false;
                             splineFollower.enabled = false;
                             shooterManager.RemoveShooterFromConveyor(this, _currentPlate);
-                            _currentPlate  = null;
+                            _currentPlate = null;
                             shooterManager.SetReservedSlot(this);
                         }
                     }
@@ -189,12 +199,14 @@ namespace _Project.Scripts.Game
         public void SetReservedSlot(ReservedSlot reservedSlot)
         {
             transform.DOKill();
-            transform.DOJump(reservedSlot.transform.position, 1f, 1, 0.5f);
-            transform.DORotate(reservedSlot.transform.rotation.eulerAngles, 0.5f).OnUpdate(() =>
+            transform.DOJump(reservedSlot.transform.position, _gameSettings.shooterToReservedSlotJumpPower, 1,
+                _gameSettings.shooterToReservedSlotJumpDuration).SetEase(_gameSettings.shooterToReservedSlotJumpEase);
+            transform.DORotate(reservedSlot.transform.rotation.eulerAngles,
+                _gameSettings.shooterToReservedSlotJumpDuration).OnUpdate(() =>
             {
                 shootCountText.transform.eulerAngles = _defaultTextEulerAngles;
             });
-            model.transform.DOLocalRotate(Vector3.zero, 0.5f);
+            model.transform.DOLocalRotate(Vector3.zero, _gameSettings.shooterToReservedSlotJumpDuration);
             _reservedSlot = reservedSlot;
         }
 
@@ -254,7 +266,8 @@ namespace _Project.Scripts.Game
         public void SetNewNode(ShooterNode to)
         {
             _currentShooterNode = to;
-            transform.DOMove(to.transform.position, 0.3f);
+            transform.DOMove(to.transform.position, _gameSettings.shooterNodeTransferDuration)
+                .SetEase(_gameSettings.shooterNodeTransferEase);
         }
 
         public void SetDirection(ShooterDirection shooterNextDirection)
@@ -279,12 +292,12 @@ namespace _Project.Scripts.Game
         {
             splineFollower.follow = false;
             transform.DOKill();
-            transform.DOMoveZ(transform.position.z + 1f, 0.5f);
-            transform.DORotate(Vector3.up *180f, 0.5f, RotateMode.WorldAxisAdd);
-            transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InBack).OnComplete(() =>
-            {
-                gameObject.SetActive(false);
-            });
+            transform.DOMoveZ(transform.position.z + _gameSettings.shooterCompleteEffectZPositionPlusValue,
+                _gameSettings.shooterCompleteEffectDuration);
+            transform.DORotate(Vector3.up * 180f, _gameSettings.shooterCompleteEffectDuration, RotateMode.WorldAxisAdd);
+            transform.DOScale(Vector3.zero, _gameSettings.shooterCompleteEffectDuration)
+                .SetEase(_gameSettings.shooterCompleteEffectScaleDownEase)
+                .OnComplete(() => { gameObject.SetActive(false); });
         }
 
         public void Reset()

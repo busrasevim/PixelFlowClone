@@ -1,7 +1,18 @@
+using _Project.Scripts.Pools;
+using UnityEngine;
+
 namespace _Project.Scripts.Game
 {
     public class ReservedSlotGridSystem : GridSystem
     {
+        public override void Init(ObjectPool pool, Vector2Int size = default)
+        {
+            gridWidth = size.x;
+            gridHeight = size.y;
+            
+            base.Init(pool, size);
+        }
+
         public ReservedSlot GetAvailableSlot()
         {
             for (int i = 0; i < _nodes.GetLength(0); i++)

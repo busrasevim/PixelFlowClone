@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using _Project.Scripts.Data;
 using _Project.Scripts.Pools;
 using DG.Tweening;
 using Dreamteck.Splines;
@@ -19,16 +20,19 @@ namespace _Project.Scripts.Game
         private ConveyorArrow[] _arrows;
         private List<GameObject> _shooterPlates;
 
+        private GameSettings _gameSettings;
+
         private void Start()
         {
             SetShooterCountText();
         }
 
-        public void Init(ObjectPool pool, int arrowCount, float arrowSpeed, Level.Level level, int shooterLimit)
+        public void Init(ObjectPool pool, Level.Level level, GameSettings settings)
         {
-            this._conveyorLimit = shooterLimit;
-            SetArrows(pool, arrowCount, arrowSpeed, level);
-            SetPlates(pool, shooterLimit, level);
+            _gameSettings = settings;
+            this._conveyorLimit = settings.conveyorShooterLimit;
+            SetArrows(pool, level);
+            SetPlates(pool, level);
         }
 
         public bool CanGetNewShooter()
@@ -67,14 +71,18 @@ namespace _Project.Scripts.Game
         {
             shooterCountText.DOComplete();
             shooterCountText.transform.DOComplete();
-            shooterCountText.DOColor(Color.red, 0.3f);
+            shooterCountText.DOColor(_gameSettings.conveyorIsFullEffectTextColor,
+                _gameSettings.conveyorIsFullEffectTextColorChangeDuration);
             shooterCountText.transform.DOShakePosition(
-                duration: 0.35f,
-                strength: new Vector3(0.05f, 0.05f, 0f),
-                vibrato: 12,
-                randomness: 60f,
+                duration: _gameSettings.conveyorIsFullEffectTextShakeDuration,
+                strength: _gameSettings.conveyorIsFullEffectTextShakeStrength,
+                vibrato: _gameSettings.conveyorIsFullEffectTextShakeVibrato,
+                randomness: _gameSettings.conveyorIsFullEffectTextShakeRandomness,
                 fadeOut: true
-            ).OnComplete(() => { shooterCountText.DOColor(Color.white, 0.2f); });
+            ).OnComplete(() =>
+            {
+                shooterCountText.DOColor(Color.white, _gameSettings.conveyorIsFullEffectTextColorFixDuration);
+            });
         }
 
         public void LevelFailed()
@@ -90,21 +98,21 @@ namespace _Project.Scripts.Game
             }
         }
 
-        public void SetArrows(ObjectPool pool, int arrowCount, float arrowSpeed, Level.Level level)
+        public void SetArrows(ObjectPool pool, Level.Level level)
         {
-            _arrows = new ConveyorArrow[arrowCount];
+            _arrows = new ConveyorArrow[_gameSettings.conveyorArrowCount];
 
-            if (_spline == null || arrowCount <= 0) return;
+            if (_spline == null || _gameSettings.conveyorArrowCount <= 0) return;
 
             // spline'ın gerçek uzunluğunu al
             double splineLength = _spline.CalculateLength();
 
             // oklar arası world-space mesafesi
-            double stepDistance = splineLength / (arrowCount - 1);
+            double stepDistance = splineLength / (_gameSettings.conveyorArrowCount - 1);
 
             double distance = 0;
 
-            for (int i = 0; i < arrowCount; i++)
+            for (int i = 0; i < _gameSettings.conveyorArrowCount; i++)
             {
                 var arrowObj = pool.SpawnFromPool(PoolTags.ConveyorArrow, transform.position, Quaternion.identity);
                 var arrow = arrowObj.GetComponent<ConveyorArrow>();
@@ -115,7 +123,7 @@ namespace _Project.Scripts.Game
                 double percent = _spline.Travel(0.0, (float)distance, Spline.Direction.Forward);
 
                 // Oka spline ve yüzdesini ver
-                arrow.SetSpline(_spline, percent, arrowSpeed);
+                arrow.SetSpline(_spline, percent, _gameSettings.conveyorArrowSpeed);
 
                 // sonraki oka geç
                 distance += stepDistance;
@@ -126,12 +134,13 @@ namespace _Project.Scripts.Game
             }
         }
 
-        public void SetPlates(ObjectPool pool, int plateCount, Level.Level level)
+        public void SetPlates(ObjectPool pool, Level.Level level)
         {
             _shooterPlates = new List<GameObject>();
-            for (int i = 0; i < plateCount; i++)
+            for (int i = 0; i < _gameSettings.conveyorShooterLimit; i++)
             {
-                var position = plateStartPosition.position - Vector3.right * (0.1f * i);
+                var position = plateStartPosition.position -
+                               Vector3.right * (_gameSettings.conveyorShooterPlatePositionDistance * i);
                 var plate = pool.SpawnFromPool(PoolTags.ShooterPlate, position, plateStartPosition.rotation);
                 _shooterPlates.Add(plate);
 
@@ -151,8 +160,11 @@ namespace _Project.Scripts.Game
         private void PutPlate(GameObject plate)
         {
             plate.transform.SetParent(transform);
-            plate.transform.DOMove(plateStartPosition.position - Vector3.right * 0.1f * _shooterPlates.Count, 0.3f);
-            plate.transform.DORotate(plateStartPosition.eulerAngles, 0.3f);
+            plate.transform.DOMove(
+                plateStartPosition.position - Vector3.right *
+                (_gameSettings.conveyorShooterPlatePositionDistance * _shooterPlates.Count),
+                _gameSettings.plateMoveDuration);
+            plate.transform.DORotate(plateStartPosition.eulerAngles, _gameSettings.plateMoveDuration);
             _shooterPlates.Add(plate);
         }
 
@@ -160,7 +172,10 @@ namespace _Project.Scripts.Game
         {
             for (int i = 0; i < _shooterPlates.Count; i++)
             {
-                _shooterPlates[i].transform.DOMove(plateStartPosition.position - Vector3.right * 0.1f * i, 0.1f);
+                _shooterPlates[i].transform
+                    .DOMove(
+                        plateStartPosition.position -
+                        Vector3.right * (_gameSettings.conveyorShooterPlatePositionDistance * i), 0.1f);
             }
         }
     }
