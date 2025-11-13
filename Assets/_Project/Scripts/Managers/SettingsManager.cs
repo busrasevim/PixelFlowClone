@@ -25,6 +25,8 @@ public class SettingsManager : ISettingsProvider, IInitializable
     {
         _soundEnabled = PlayerPrefs.GetInt(Constants.SoundKey, 1) == 1;
         _vibrationEnabled = PlayerPrefs.GetInt(Constants.HapticKey, 1) == 1;
+
+        Taptic.tapticOn = _vibrationEnabled;
     }
 
     public void SetSound(bool value)
@@ -39,6 +41,7 @@ public class SettingsManager : ISettingsProvider, IInitializable
     public void SetVibration(bool value)
     {
         _vibrationEnabled = value;
+        Taptic.tapticOn = value;
         PlayerPrefs.SetInt(Constants.HapticKey, value ? 1 : 0);
         PlayerPrefs.Save();
     }
