@@ -27,7 +27,7 @@ namespace _Project.Scripts.Game
                 _mpb = new MaterialPropertyBlock();
 
             cubeRenderer.GetPropertyBlock(_mpb);
-            _mpb.SetColor("_Color", pixelColor.linear);
+            _mpb.SetColor("_BaseColor", pixelColor.linear);
             cubeRenderer.SetPropertyBlock(_mpb);
             
             colorID = FindClosestColorID(pixelColor, levelColors, threshold);

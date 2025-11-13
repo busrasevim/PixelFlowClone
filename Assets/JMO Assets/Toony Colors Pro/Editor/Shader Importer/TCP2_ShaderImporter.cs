@@ -74,9 +74,7 @@ namespace ToonyColorsPro
                 LessOrEqual
             }
 
-#if UNITY_2022_2_OR_NEWER
-            const int URP_VERSION = 14;
-#elif UNITY_2021_2_OR_NEWER
+#if UNITY_2021_2_OR_NEWER
             const int URP_VERSION = 12;
 #elif UNITY_2021_1_OR_NEWER
             const int URP_VERSION = 11;
@@ -253,7 +251,7 @@ namespace ToonyColorsPro
                         {
                             excludeCurrentLines.Pop();
                         }
-                        else if (!excludeThisLine && line.StartsWith("/*** #define URP_VERSION ***/"))
+                        else if (!excludeThisLine && line.StartsWith("/*** #define URP_VERSION */"))
                         {
                             shaderSource.WriteLine("\t\t\t#define URP_VERSION " + URP_VERSION);
                         }

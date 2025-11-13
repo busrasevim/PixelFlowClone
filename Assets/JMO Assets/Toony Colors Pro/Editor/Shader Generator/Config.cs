@@ -1,5 +1,5 @@
 // Toony Colors Pro+Mobile 2
-// (c) 2014-2023 Jean Moreno
+// (c) 2014-2022 Jean Moreno
 
 #define WRITE_UNCOMPRESSED_SERIALIZED_DATA
 
@@ -1515,12 +1515,6 @@ namespace ToonyColorsPro
 #endif
 #if UNITY_2021_1_OR_NEWER
 				Utils.AddIfMissing(this.Features, "UNITY_2021_1");
-#endif
-#if UNITY_2021_2_OR_NEWER
-				Utils.AddIfMissing(this.Features, "UNITY_2021_2");
-#endif
-#if UNITY_2022_2_OR_NEWER
-				Utils.AddIfMissing(this.Features, "UNITY_2022_2");
 #endif
 				var parsedLines = template.GetParsedLinesFromConditions(this, null, null);
 

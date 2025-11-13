@@ -63,7 +63,7 @@ namespace _Project.Scripts.Game
             foreach (var renderer in renderers)
             {
                 renderer.GetPropertyBlock(_mpb);
-                _mpb.SetColor("_Color", data.cellColor.linear);
+                _mpb.SetColor("_BaseColor", data.cellColor.linear);
                 renderer.SetPropertyBlock(_mpb);
             }
 
