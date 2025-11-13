@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundEffectLibrary: {fileID: 11400000, guid: b6d4c3c3ac30443a99d63cfef789ec33, type: 2}
-  oneShotSourceCount: 3
+  oneShotSourceCount: 7
   masterMixer: {fileID: 24100000, guid: 6f48f2c6a75b14710bf94307040ee527, type: 2}
   musicGroup: {fileID: 1671400138803478224, guid: 6f48f2c6a75b14710bf94307040ee527, type: 2}
   sfxGroup: {fileID: 1252004305131343198, guid: 6f48f2c6a75b14710bf94307040ee527, type: 2}

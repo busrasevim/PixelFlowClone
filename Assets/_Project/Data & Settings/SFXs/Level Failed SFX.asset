@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundEffectKey: 4
   Category: 0
-  clip: {fileID: 8300000, guid: 9cb65eb2505fbf443ac876ba177374f9, type: 3}
+  clip: {fileID: 8300000, guid: 9337c7f1477264ceabb08971320682dd, type: 3}
   loop: 0
-  volume: 1
+  volume: 0.3
   pitch: 1
   pitchRandomness: 0
